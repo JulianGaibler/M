@@ -1,0 +1,71 @@
+const path = require("path");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
+
+const htmlwebpack = new HtmlWebpackPlugin({
+	title: "test??",
+	template: 'src/index.ejs'
+});
+
+module.exports = {
+	entry: "./src/app.js",
+	output: {
+		path: path.join(__dirname, 'dist'),
+		filename: "bundle.js"
+	},
+	module: {
+		rules: [
+			{ test: /\.svg$/, loader: 'svg-inline-loader' },
+			{ test: /\.vue$/, loader: 'vue-loader', options: { loaders: {scss: 'style!css!sass'} } },
+			{ test: /\.s[a|c]ss$/, loader: 'style!css!sass' }
+		],
+		loaders: [ { test: /\.js$/, loader: 'babel-loader', exclude: [/node_modules/, /build/, /__test__/], query: { presets: ['es2015'] } } ]
+	},
+	plugins: [
+		htmlwebpack,
+		new webpack.ProvidePlugin({
+			$: "jquery",
+			jQuery: "jquery",
+			"window.jQuery": "jquery"
+		})
+	],
+	stats: {
+		colors: true
+	},
+	resolve: {
+		alias: {
+		  'vue$': 'vue/dist/vue.esm.js'
+		}
+	},
+	devServer: {
+		historyApiFallback: true,
+		noInfo: true,
+		host: "0.0.0.0",
+		disableHostCheck: true
+	},
+	performance: {
+		hints: false
+	},
+	devtool: 'source-map'
+};
+
+if (process.env.NODE_ENV === 'production') {
+	module.exports.devtool = '#source-map'
+	module.exports.plugins = (module.exports.plugins || []).concat([
+		new webpack.DefinePlugin({
+			'process.env': {
+				NODE_ENV: '"production"'
+			}
+		}),
+		new webpack.optimize.UglifyJsPlugin({
+			sourceMap: true,
+			compress: {
+				warnings: false
+			}
+		}),
+		new webpack.LoaderOptionsPlugin({
+			minimize: true
+		})
+	])
+}
