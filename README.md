@@ -1,6 +1,5 @@
 <div align="center">
     <img width="50" vspace="" hspace="25" src="https://qvieo.com/githubimg/mlogo.svg">
-  <h1>M</h1>
   <p>Simplifies Mensa<p>
 </div>
 
