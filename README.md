@@ -3,15 +3,15 @@
   <p>Simplifies Mensa<p>
 </div>
 
-##Client
+## Client
 
-###Installing all dependencies:
+### Installing all dependencies:
 
 ```bash
 npm install
 ```
 
-###Running local Server:
+### Running local Server:
 
 Host is per default `0.0.0.0` and therefore public in your local network. If you don't want this behavior change the host in the webpack.config.js to `localhost`.
 
@@ -19,15 +19,15 @@ Host is per default `0.0.0.0` and therefore public in your local network. If you
 npm run dev
 ```
 
-##Server
+## Server
 
-###Installing all dependencies:
+### Installing all dependencies:
 
 ```bash
 composer install
 ```
 
-###Running local Server:
+### Running local Server:
 
 Replace `localhost` with `0.0.0.0` if you want the server to be public in your local network.
 

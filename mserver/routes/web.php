@@ -12,5 +12,8 @@
 */
 
 $app->group(['prefix' => 'api/{lang}'], function () use ($app) {
-	$app->get('/mensas', 'MensaController@index');
+	$app->get('/mensas', 'MensaController@allMensas');
+	$app->get('/additives', 'MensaController@allAdditives');
+	$app->get('/mensas/{mensaIDmensaID}', 'MensaController@getInfo');
+	$app->get('/mensas/{mensaIDmensaID}/menu', 'MensaController@getMenu');
 });

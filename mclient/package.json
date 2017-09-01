@@ -28,8 +28,12 @@
   "dependencies": {
     "@material/button": "^0.3.10",
     "@material/ripple": "^0.8.0",
+    "cross-env": "^5.0.3",
     "jquery": "^3.2.1",
+    "taffy": "^2.6.2",
     "taffydb": "^2.7.3",
-    "vue": "^2.4.2"
-  }
+    "vue": "^2.4.2",
+    "vue-i18n": "^7.1.1"
+  },
+  "keywords": []
 }

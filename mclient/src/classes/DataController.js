@@ -1,4 +1,4 @@
-import taffy from 'taffy'
+//import taffy from 'taffy'
 
 export default class DataController {
 
@@ -8,7 +8,7 @@ export default class DataController {
 	 * @return nothing
 	 */
 	constructor() {
-		this.menus = taffy();
+		//this.menus = taffy();
 		this.mensas = [];
 	}
 
@@ -26,7 +26,7 @@ export default class DataController {
 
 			$.ajax({
 			  method: "GET",
-			  url: "http://jWels:8000/api/"+lang+"/mensas",
+			  url: "http://localhost:8000/api/"+lang+"/mensas",
 			}).done(function( msg ) {
 				this.mensas = msg;
 				resolve(this.mensas);
