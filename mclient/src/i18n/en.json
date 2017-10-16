@@ -1,8 +1,55 @@
 {
-	"hello": "Hello World!",
+	"hello": "Hello World",
 	"frame": {
-		"mensas": "Mensas",
 		"highlights": "Highlights",
+		"mensa": "Mensa",
 		"settings": "Settings"
+	},
+	"type": {
+		"0": "Mensa | Mensas",
+		"1": "Cafeteria | Cafeterias",
+		"2": "Coffebar | Coffebars",
+		"all": "All",
+		"my": "My"
+	},
+	"prices": {
+		"category": "Price category",
+		"desc_1": "Applies to students for which the studierendenWERK BERLIN is responsible",
+		"desc_2": "Applies to members of the public universities in Berlin as well as to the private universities cooperating with the studierendenWERK BERLIN.",
+		"desc_3": "Applies to guests of Berlin universities and universities of applied sciences.",
+		"more": "More details are available at stw.berlin"
+	},
+	"action": {
+		"next": "Next",
+		"back": "Back",
+		"add": "Add",
+		"remove": "Remove",
+		"search": "Search"
+	},
+	"state": {
+		"added": "Added",
+		"removed": "Removed"
+	},
+	"result": {
+		"noresults_headline": "keine Ergebnisse.",
+		"noresults_quote": "The Magic Conch Shell has spoken!",
+		"loaderror_explain": "An error has occurred while loading",
+		"error_shoutouts": ["Oh my Glob!", "UNACCEPTABLE!", "Shmowzow!", "What the cabbage?!", "Oh Lumps.", "What the flip, man?"]
+	},
+	"food": {
+		"pizza": "Pizza",
+		"cake": "Cake",
+		"spaetzle": "Spaetzle",
+		"risotto": "Risotto",
+		"brownie": "Brownie"
+	},
+	"times": {
+		"opens": "Opens",
+		"closes": "Closes",
+		"closed": "Closed"
+	},
+	"setup": {
+		"intro_highlights": "M can search and hightlight food for you if a certain word occurs.",
+		"intro_prices": "Select the price category which applies to you"
 	}
 }

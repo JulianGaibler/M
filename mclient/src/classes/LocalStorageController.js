@@ -5,13 +5,17 @@ export default class LocalStorageController {
 	 *
 	 * @return nothing
 	 */
-	constructor() {
+	constructor(i18n) {
 		const res = this.storageAvailable('localStorage');
 		this.settings = {};
+		this.i18nhook = i18n;
 		if (res) {
 			if(!localStorage.getItem('settings')) {
 				this.initSettings();
-			} else this.settings = JSON.parse(localStorage.getItem('settings'));
+			} else {
+				this.settings = JSON.parse(localStorage.getItem('settings'));
+				this.i18nhook.locale = this.settings.language;
+			}
 		}
 		else {
 			throw res;
@@ -29,7 +33,9 @@ export default class LocalStorageController {
 			"version": 1,
 			"profileID":"gfdagf",
 			"language": "de",
-			"mensas": [],
+			"pricetype": 0,
+			"primarytype": 0,
+			"mensas": [[],[],[]],
 			"startpage": 0,
 			"highlights": [],
 			"sorting": []
@@ -44,38 +50,82 @@ export default class LocalStorageController {
 	 * @return foo
 	 */
 	hasSettings() {
-		if (this.settings.mensas.length < 1) return false;
-		else return true;
+		for (var i = this.settings.mensas.length - 1; i >= 0; i--) {
+			if (this.settings.mensas[i].length > 0) return true;
+		}
+		return false;
 	}
 
 	/**
 	 * Adds, changes oder deletes user-Mensas
 	 * 
-	 * If a new primary is set, the old one is NOT being replaced
 	 *
-	 * @param id - ID of Mensa
+	 * @param _id - ID of Mensa
 	 * @param name - Name of Mensa
-	 * @param primary - if element is primary mensa (default: false)
 	 * @param remove - if element is to be removed (default: false)
 	 * 
 	 * @return foo
 	 */
-	setMensas(id, name, primary=false, remove=false) {
-		for (var m of this.settings.mensas) {
-			if (m.id === id) {
+	setMensas(_id, nameA, nameB, type, remove=false) {
+		for (var m of this.settings.mensas[type]) {
+			if (m._id === _id) {
 				if (remove) {
 					// removes the element
-					this.arrayRemove(this.settings.mensas, m);
+					this.arrayRemove(this.settings.mensas[type], m);
 				} else {
 					//updates the element
-					m.name = name;
-					m.primary = primary;
+					m = {_id, nameA, nameB};
 				}
 				this.updateStorage();
 				return;
 			}
 		}
-		this.settings.mensas.push({id,name,primary});
+		this.settings.mensas[type].push({_id, nameA, nameB});
+		this.updateStorage();
+	}
+
+	/**
+	 * Gets Primary Mensa
+	 * 
+	 * @return Mensa-Object or undefined
+	 */
+	getPrimaryMensa() {
+			let nr = this.settings.primarytype;
+			if (this.settings.mensas[nr].length < 1) return undefined;
+			return this.settings.mensas[nr][0];
+	}
+
+	/**
+	 * Gets Primary Mensa
+	 * 
+	 * @param _id - ID of Mensa
+	 * 
+	 * @return Mensa-Object if it worked or false if failed
+	 */
+	setPrimaryMensa(_id, type) {
+			this.settings.primarytype = type;
+			for (var i = this.settings.mensas[type].length - 1; i >= 0; i--) {
+				console.log(this.settings.mensas[type][i]._id+" === "+_id);
+				if (this.settings.mensas[type][i]._id===_id) {
+					let saved = this.settings.mensas[type][i];
+					this.settings.mensas[type].splice(i, 1);
+					this.settings.mensas[type].unshift(saved);
+					this.updateStorage();
+					return saved;
+				}
+			}
+		return false;
+	}
+
+
+	/**
+	 * Sets the price type
+	 * 
+	 * @param nr - Number of price type
+	 * 
+	 */
+	setPricetype(nr) {
+		this.settings.pricetype = nr;
 		this.updateStorage();
 	}
 

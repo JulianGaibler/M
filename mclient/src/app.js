@@ -13,7 +13,7 @@ new Vue({
 	i18n,
 	data () {
 		let storageC;
-		try { storageC = new LocalStorageController() } catch(e) { storageC = e };
+		try { storageC = new LocalStorageController(i18n) } catch(e) { storageC = e };
 		let dataC;
 		try { dataC = new DataController() } catch(e) { dataC = e }
 

@@ -1,8 +1,8 @@
 <template>
 	<div v-bind:class="[specialScreen(currentView) ? $style.primebg : '', $style.mount]">
-	<menuhead v-bind:specialScreen="specialScreen(currentView)"></menuhead>
 		<div :class="$style.main">
-			<component :is="currentView"></component>
+			<menuhead v-bind:specialScreen="specialScreen(currentView)"></menuhead>
+			<component :class="$style.viewhook" :is="currentView"></component>
 		</div>
 		<transition name="fadefooter">
 			<menufooter v-if="!specialScreen(currentView)" v-bind:currentView="currentView"></menufooter>
@@ -23,7 +23,6 @@ export default {
 		let startView = 'viewsetup';
 
 		if (this.$root.$data.storageC.hasSettings()) {
-			this.$i18n.locale = this.$root.$data.storageC.settings.language;
 			switch (this.$root.$data.storageC.settings.startpage) {
 				case 0:
 					startView = 'viewmensas';
@@ -63,7 +62,7 @@ export default {
 
 <style src="./../assets/reset.css" />
 <style>
-	@import url('https://fonts.googleapis.com/css?family=Roboto:300,400');
+	@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed|Roboto:300,400');
 	body, html {
 		height: 100%;
 		font-family: 'Roboto', sans-serif;
@@ -83,11 +82,15 @@ export default {
 		display: flex;
 		flex-direction: column;
 		height: 100%;
+		background-color: #f4f5f6;
 		transition: background 0.5s;
 	}
 	.main {
-		flex-grow: 1;
+		flex: 1;
 		overflow-y: scroll;
+		display: inline-flex;
+		flex-direction: column;
+		align-items: stretch;
 		height: 100%;
 	}
 	.main::-webkit-scrollbar {
@@ -101,11 +104,61 @@ export default {
 	.main::-webkit-scrollbar-thumb {
 	  background: rgba(0, 0, 0, 0.2); 
 	}
+	.viewhook {
+		flex: 1;
+	}
 	.primebg {
-		background: #ff543c;
+		background: #651fff;
+		background: linear-gradient(#21064d, #651fff);
 	}
 	hr {
 		border-color: #dadada;
 		margin: 0 25px;
+	}
+</style>
+
+<style>
+	.whitebox {
+		background-color: white;
+		border-radius: 2px;
+		text-align: left;
+		align-items: center;
+		margin-top: 20px;
+		font-size: 14px;
+		color: black;
+		overflow: hidden;
+		box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.15), 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+	}
+	.whitebox_header {
+		color: #817575;
+		padding: 20px 20px 10px 20px;
+		font-size: 14px;
+		text-transform: uppercase;
+		font-family: 'Roboto Condensed', sans-serif;
+	}
+	.whitebox_element {
+		padding: 15px 20px;
+	}
+	.whitebox_element_top {
+		font-size: 14px;
+	}
+	.whitebox_element_bottom {
+		color: #817575;
+		font-size: 12px;
+	}
+
+	@keyframes glow {
+		0% {opacity: 0}
+		50% {opacity: 1}
+		100% {opacity: 0}
+	}
+	.loading {
+		animation-name: glow;
+		animation-duration: 2s;
+		animation-iteration-count: infinite;
+		opacity: 0;
+	}
+	.loading_color {
+		background-color: #aa94ec;
 	}
 </style>

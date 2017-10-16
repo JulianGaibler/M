@@ -1,10 +1,10 @@
 <template>  
-  <div :class="className" v-bind:style="{ fill: logocolor}" v-html="svg"></div>
+  <div :class="className" v-bind:style="{ fill: logocolor, stroke: linecolor}" v-html="svg"></div>
 </template>
 
 <script>  
 export default {  
   name: 'icon',
-  props: ['logocolor', 'className', 'svg']
+  props: ['logocolor', 'linecolor', 'className', 'svg']
 };
 </script>

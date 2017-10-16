@@ -1,8 +1,55 @@
 {
 	"hello": "Hallo Wörld!",
 	"frame": {
-		"mensas": "Mensen",
 		"highlights": "Highlights",
+		"mensa": "Mensa",
 		"settings": "Einstellungen"
+	},
+	"type": {
+		"0": "Mensa | Mensen",
+		"1": "Cafeteria | Cafeterien",
+		"2": "Coffebar | Coffebars",
+		"all": "Alle",
+		"my": "Meine"
+	},
+	"prices": {
+		"category": "Preiskategorie",
+		"desc_1": "Gilt für Studierende der Berliner Hochschulen, für die das studierendenWERK BERLIN zuständig ist.",
+		"desc_2": "Gilt für Hochschulangehörige der öffentlichen Berliner Hochschulen sowie der mit dem studierendenWERK BERLIN kooperierenden privaten Hochschulen.",
+		"desc_3": "Gilt für für Gäste der Berliner Universitäten und Hochschulen.",
+		"more": "Mehr informationen gibt es auf stw.berlin"
+	},
+	"action": {
+		"next": "Weiter",
+		"back": "Zurück",
+		"add": "Hinzufügen",
+		"remove": "Entfernen",
+		"search": "Suchen"
+	},
+	"state": {
+		"added": "Hinzugefügt",
+		"removed": "Entfernt"
+	},
+	"result": {
+		"noresults_headline": "no results.",
+		"noresults_quote": "Die Magische Miesmuschel hat gesprochen!",
+		"loaderror_explain": "Es ist ein fehler beim Laden aufgetreten",
+		"error_shoutouts": ["Oh my Glob!", "UNACCEPTABLE!", "Shmowzow!", "What the cabbage?!", "Oh Lumps.", "What the flip, man?"]
+	},
+	"food": {
+		"pizza": "Pizza",
+		"cake": "Torte",
+		"spaetzle": "Spätzle",
+		"risotto": "Risotto",
+		"brownie": "Brownie"
+	},
+	"times": {
+		"opens": "Öffnet",
+		"closes": "Schließt",
+		"closed": "Geschlossen"
+	},
+	"setup": {
+		"intro_highlights": "M kann nach Essen suchen und es hervorheben, wenn ein bestimmtes Wort vorkommt",
+		"intro_prices": "Wähle aus welche Preiskategorie auf dich zutrifft"
 	}
 }

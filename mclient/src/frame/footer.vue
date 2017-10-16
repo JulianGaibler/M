@@ -10,7 +10,7 @@
 			<div v-ripple :class="['mdc-ripple-surface', $style.elem]" tabindex="0" v-on:click="chviewname('viewmensas')">
 				<div v-bind:class="[currentView=='viewmensas' ? $style.active : '']">
 					<icon :svg="iconrestaurant"></icon>
-					<span>{{ $t('frame.mensas') }}</span>
+					<span>{{ $t('frame.mensa') }}</span>
 				</div>
 			</div>
 			<div v-ripple :class="['mdc-ripple-surface', $style.elem]" tabindex="0" v-on:click="chviewname('viewsettings')">
@@ -33,7 +33,7 @@ export default {
 			iconthumbs: require('./../assets/thumbs.svg'),
 			iconrestaurant: require('./../assets/restaurant.svg'),
 			iconsettings: require('./../assets/settings.svg'),
-			logocolor: "#ff543c"
+			logocolor: "#651fff"
 		}
 	},
 	props: ['currentView'],
@@ -91,10 +91,10 @@ export default {
 	}
 
 	.active {
-		color: #ff543c;
+		color: #651fff;
 	}
 	.active svg {
-		fill: #ff543c;
+		fill: #651fff;
 	}
 
 </style>

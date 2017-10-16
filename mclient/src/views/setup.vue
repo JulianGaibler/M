@@ -1,50 +1,83 @@
 <template>
 	<!-- SETUP: Language -->
 	<div :class="$style.setup" v-if="page==0">
-		<div :class="$style.top">
-			<p>M gets Berlins Mensa-Menus and displays them how you want!{{ $t('hello') }}</p>
-		</div>
-		<div :class="$style.middle">
+		<icon :class="$style.introimg" :svg="intro_img"></icon>
+		<div :class="[$style.middle, $style.paragraphcolor]">
+		<p>M sortiert die Menüs aller Mensen aus Berlin und stellt sie so dar wie du möchtest! Du hast mehr überblick in einem Bruchteil der Zeit.</p>
+		<p><i>M sorts the menus of all the canteens from Berlin and presents them as you wish! You have more overview in a fraction of the time.</i></p>
 		</div>
 		<div :class="$style.bottom">
 			<button v-bind:key="page" v-on:click="proceedLang('de')" class="mdc-button">German</button>
 			<button v-bind:key="page" v-on:click="proceedLang('en')" class="mdc-button">English</button>
 		</div>
 	</div>
-	<!-- SETUP: Select Mensas -->
+
+	<!-- SETUP: HowTo -->
 	<div :class="$style.setup" v-else-if="page==1">
 		<div :class="$style.top">
-			<p>Select Mensas you <b>visit regularly</b> <span :class="$style.mensaslct"></span> and your <b>primary mensa</b> <span :class="[$style.mensaslct, $style.filled]"></span> by tapping it a second time</p>
+			<p>HowTo</p>
 		</div>
+
 		<div :class="$style.middle">
-			<mensaselector :class="[$style.whitebox, $style.selectbox]"></mensaselector>
+			<h1>HowTo</h1>
 		</div>
 		<div :class="$style.bottom">
-			<button v-bind:key="page" v-on:click="goback()" class="mdc-button">Back</button>
-			<button v-bind:key="page" v-on:click="(hasMensas() ? null : gonext())" :disabled="hasMensas()" class="mdc-button">Next</button>
+			<button v-bind:key="page" v-on:click="goback()" class="mdc-button">{{ $t('action.back') }}</button>
+			<button v-bind:key="page" v-on:click="gonext()" class="mdc-button">{{ $t('action.next') }}</button>
 		</div>
 	</div>
-	<!-- SETUP: Select Highlights -->
+
+	<!-- SETUP: Select Mensas -->
 	<div :class="$style.setup" v-else-if="page==2">
 		<div :class="$style.top">
-			<p>M can hightlight certain food for you by word.</p>
+		</div>
+		<div :class="$style.middle">
+			<mensaselector></mensaselector>
+		</div>
+		<div :class="$style.bottom">
+			<button v-bind:key="page" v-on:click="goback()" class="mdc-button">{{ $t('action.back') }}</button>
+			<button v-bind:key="page" v-on:click="(hasMensas() ? null : gonext())" :disabled="hasMensas()" class="mdc-button">{{ $t('action.next') }}</button>
+		</div>
+	</div>
+
+	<!-- SETUP: Select Highlights -->
+	<div :class="$style.setup" v-else-if="page==3">
+		<div :class="$style.top">
+			<p>{{ $t('setup.intro_highlights') }}</p>
 		</div>
 
 		<div :class="$style.middle">
 			<div :class="$style.exampleTags">
-				<template v-for="item in exampleHighlights">
-					<div v-on:click="addToHighlights(item)" v-bind:key="item" :class="$style.exampleChip"><span>{{item}}</span></div>
+				<template v-for="(item, index) in exampleHighlights">
+					<div v-on:click="addToHighlights(item,index)" v-bind:key="item" :class="$style.exampleChip"><span>{{item}}</span></div>
 				</template>
 			</div>
 			<chipsfield :items="this.$root.$data.storageC.settings.highlights" :class="[$style.whitebox]"></chipsfield>
 		</div>
 		<div :class="$style.bottom">
-			<button v-bind:key="page" v-on:click="goback()" class="mdc-button">Back</button>
-			<button v-bind:key="page" v-on:click="gonext()" class="mdc-button">Next</button>
+			<button v-bind:key="page" v-on:click="goback()" class="mdc-button">{{ $t('action.back') }}</button>
+			<button v-bind:key="page" v-on:click="gonext()" class="mdc-button">{{ $t('action.next') }}</button>
 		</div>
 	</div>
-	<!-- SETUP: Hooray -->
-	<div :class="$style.setup" v-else-if="page==3">
+
+	<!-- SETUP: Prices -->
+	<div :class="$style.setup" v-else-if="page==4">
+		<div :class="$style.top">
+			<p>{{ $t('setup.intro_prices') }}</p>
+		</div>
+
+		<div :class="$style.middle">
+			<priceSelector></priceSelector>
+			<p :class="$style.disclaim">{{ $t('prices.more') }}</p>
+		</div>
+		<div :class="$style.bottom">
+			<button v-bind:key="page" v-on:click="goback()" class="mdc-button">{{ $t('action.back') }}</button>
+			<button v-bind:key="page" v-on:click="gonext()" class="mdc-button">{{ $t('action.next') }}</button>
+		</div>
+	</div>
+
+	<!-- SETUP: So much more -->
+	<div :class="$style.setup" v-else-if="page==5">
 		<div :class="$style.top">
 			<p>Hooray!</p>
 		</div>
@@ -53,7 +86,7 @@
 			<h1>Hooray!</h1>
 		</div>
 		<div :class="$style.bottom">
-			<button v-bind:key="page" v-on:click="gonext()" class="mdc-button">Next</button>
+			<button v-bind:key="page" v-on:click="gonext()" class="mdc-button">{{ $t('action.next') }}</button>
 		</div>
 	</div>
 </template>
@@ -62,18 +95,22 @@
 
 import mensaselector from './../components/mensaselector.vue';
 import chipsfield from './../components/chipsfield.vue';
+import priceSelector from './../components/price_selector.vue';
 import icon from './../components/icon.vue';
+
 export default {
 	data () {
 		return {
 			page: 0,
 			signature_white: require('./../assets/signature_white.svg'),
-			exampleHighlights: ["Pizza", "Torte", "Spätzle", "Risotto", "Brownie"]
+			intro_img: require('./../assets/intro.svg'),
+			exampleHighlights: [this.$t('food.pizza'),this.$t('food.cake'),this.$t('food.spaetzle'),this.$t('food.risotto'),this.$t('food.brownie')]
 		}
 	},
 	components: {
 		mensaselector,
 		chipsfield,
+		priceSelector,
 		icon
 	},
 	methods: {
@@ -83,16 +120,17 @@ export default {
 			this.page++;
 		},
 		gonext: function () {
-			if (this.page<3) this.page++;
+			if (this.page<5) this.page++;
 			else bus.$emit('changeview', null);
 		},
 		goback: function () {
 			this.page--;
 		},
 		hasMensas: function () {
-			return (this.$root.$data.storageC.settings.mensas.length > 0) ? false: true;
+			return !this.$root.$data.storageC.hasSettings();
 		},
-		addToHighlights: function (item) {
+		addToHighlights: function (item, index) {
+			this.exampleHighlights.splice(index, 1);
 			this.$root.$data.storageC.settings.highlights.push(item);
 			this.$root.$data.storageC.updateStorage();
 		}
@@ -101,57 +139,76 @@ export default {
 </script>
 
 <style src="@material/button/dist/mdc.button.min.css"/>
+<style src="@material/radio/dist/mdc.radio.min.css"/>
 
 <style module>
 	.setup {
 			text-align: center;
 			color: white;
 			font-size: 17px;
-			margin: auto;
-			max-width: 602px;
-			display: flex;
-			height: 100%;
 			flex-direction: column;
-			padding: 0 20px;
+			padding: 0 10px;
+/*			max-width: 602px;
+			align-self: center;*/
 	}
 	.setup p {
 		margin: 10px 10px 20px 10px;
 		line-height: 1.8em;
+		position: relative;
 	}
 
-	.top {
-
+	.top p {
+		margin: 0 20px 20px 20px;
 	}
 	.middle {
 		flex: 1;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		flex-direction: column;
-		min-height: 250px;
+		color: white;
+		margin-bottom: 70px;
+	}
+	.bottom {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		background-color: rgba(96, 29, 243, 0.95);
 	}
 	.bottom > button {
 		color: white;
-		margin: 20px;
+		margin: 10px;
 	}
 
 	.signature svg {
 		height: 50px;
 		margin: 5px;
 	}
-
+	.introimg {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		overflow: hidden;
+		text-align: right;
+	}
+	.introimg svg {
+		height: 100%;
+	}
 	.setup .whitebox {
 		box-shadow: 0px 3px 2px -2px rgba(0, 0, 0, 0.2), 0px 2px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 12px 1px rgba(0, 0, 0, 0.12);
 		background-color: white;
-		width: 100%;
 		overflow: hidden;
 		flex-grow: 1;
 		border-radius: 10px;
+		min-height: 25vh;
 	}
 
-	.setup .selectbox {
-		color: #1a1a1a;
-		flex-grow: 0;
+	.paragraphcolor {
+		position: relative;
+	}
+	.paragraphcolor p {
+		background-color: rgba(101, 31, 255, 0.8);
+		padding: 10px;
+		margin: 0 0 20px 0;
 	}
 
 	.mensaslct {
@@ -180,12 +237,12 @@ export default {
 		text-align: left;
 		padding: 10px;
 		display: flex;
-    	display: flex;
+    	justify-content: center;
     	flex-wrap: wrap;
     	font-size: 14px;
 	}
 	.exampleChip {
-		background-color: #d14531;
+		background-color: #651fff;
 		color: #fff;
 		border-radius: 50px;
 		display: inline-flex;
@@ -203,7 +260,12 @@ export default {
 
 	.exampleChip:hover {
 		background-color: #fff;
-		color: #d14531;
+		color: #651fff;
 		cursor: pointer;
+	}
+
+	.disclaim {
+		font-size: 14px;
+		opacity: .8;
 	}
 </style>

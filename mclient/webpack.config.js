@@ -2,6 +2,7 @@ const path = require("path");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const htmlwebpack = new HtmlWebpackPlugin({
 	title: "test??",
@@ -24,6 +25,11 @@ module.exports = {
 	},
 	plugins: [
 		htmlwebpack,
+		new BundleAnalyzerPlugin(),
+		new webpack.ContextReplacementPlugin(
+			/moment[\/\\]locale$/,
+			/en-gb|de/
+		),
 		new webpack.ProvidePlugin({
 			$: "jquery",
 			jQuery: "jquery",

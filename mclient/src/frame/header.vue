@@ -1,7 +1,7 @@
 <template>
 	<div :class="$style.wrapper">
 		<div :class="$style.a"></div>
-			<icon :class="$style.b" :logocolor='[this.specialScreen ? "#fff" : "#ff543c"]' :svg="logo"></icon>
+			<icon :class="$style.b" :logocolor='[this.specialScreen ? "#fff" : "#651fff"]' :svg="logo"></icon>
 		<div :class="$style.a"></div>
 	</div>
 </template>
@@ -24,8 +24,11 @@ export default {
 
 <style module>
 	.wrapper {
-/*		display: flex;
-*/		padding: 5px;
+		display: flex;
+		margin: 5px;
+		height: 60px;
+		align-items: center;
+		flex-shrink: 0;
 	}
 	.wrapper .a svg {
 		height: 24px;
@@ -33,10 +36,10 @@ export default {
 		opacity: 0.2;
 	}
 	.wrapper .b svg {
-		height: 60px;
+		height: 25px;
 	}
 	.wrapper .b {
-		flex-grow: 1;
+		flex: 1;
 		text-align: center;
 	}
 

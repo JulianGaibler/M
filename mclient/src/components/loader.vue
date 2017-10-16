@@ -1,7 +1,7 @@
 <template>
 	<div :class="$style.wrapper">
 		<div :class="$style.box">
-			<div :class="$style.progress" :style="{ fill: '#ff543c'}" v-html="svg"></div>
+			<div :class="$style.progress" :style="{ fill: '#651fff'}" v-html="svg"></div>
 			<p>It should be set to 'W' for Wumbo.</p>
 		</div>
 	</div>
@@ -30,7 +30,7 @@ export default {
 }
 .box > p {
 	text-transform: uppercase;
-	color: #ff543c;
+	color: #651fff;
 	font-weight: 400;
 	font-size: 17px;
 	line-height: initial;
