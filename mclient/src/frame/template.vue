@@ -2,7 +2,7 @@
 	<div v-bind:class="[specialScreen(currentView) ? $style.primebg : '', $style.mount]">
 		<div :class="$style.main">
 			<menuhead v-bind:specialScreen="specialScreen(currentView)"></menuhead>
-			<component :class="$style.viewhook" :is="currentView"></component>
+			<component :data="currentData" :class="$style.viewhook" :is="currentView"></component>
 		</div>
 		<transition name="fadefooter">
 			<menufooter v-if="!specialScreen(currentView)" v-bind:currentView="currentView"></menufooter>
@@ -15,7 +15,8 @@ import menuhead from './header.vue'
 import menufooter from './footer.vue'
 
 import a from './../views/a.vue'
-import b from './../views/b.vue'
+import mensaoverview from './../views/mensaoverview.vue'
+import singlemensa from './../views/singlemensa.vue'
 import c from './../views/c.vue'
 import viewsetup from './../views/setup.vue'
 export default {
@@ -34,22 +35,25 @@ export default {
 
 		return {
 			currentView: startView,
-			showfooter: true
+			showfooter: true,
+			currentData: {}
 		}
 	},
 	components: {
 		menuhead,
 		menufooter,
 		'viewhighlights':a,
-		'viewmensas':b,
+		'viewmensas':mensaoverview,
 		'viewsettings':c,
-		'viewsetup':viewsetup
+		'viewsetup':viewsetup,
+		'singlemensa':singlemensa
 	},
 	created: function () {
 		bus.$on('changeview', this.changeview);
 	},
 	methods: {
-		'changeview': function (newView) {
+		'changeview': function (newView, data={}) {
+			this.currentData = data;
 			if (!!newView) this.currentView = newView;
 			else this.currentView = 'viewmensas';
 		}, 'specialScreen': function (view) {
@@ -62,7 +66,7 @@ export default {
 
 <style src="./../assets/reset.css" />
 <style>
-	@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed|Roboto:300,400');
+	@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700|Roboto:300,400');
 	body, html {
 		height: 100%;
 		font-family: 'Roboto', sans-serif;

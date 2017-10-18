@@ -27,6 +27,7 @@
 		"search": "Search"
 	},
 	"state": {
+		"loading": "Loading",
 		"added": "Added",
 		"removed": "Removed"
 	},
@@ -44,9 +45,12 @@
 		"brownie": "Brownie"
 	},
 	"times": {
-		"opens": "Opens",
-		"closes": "Closes",
-		"closed": "Closed"
+		"opens": "opens",
+		"closes": "open until",
+		"closed": "closed",
+		"starts": "starts",
+		"ends": "ends",
+		"ended": "ended"
 	},
 	"setup": {
 		"intro_highlights": "M can search and hightlight food for you if a certain word occurs.",

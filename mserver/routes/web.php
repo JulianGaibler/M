@@ -34,7 +34,7 @@ $app->group(['prefix' => 'api/'], function () use ($app) {
 		return $v;
 	});
 
-	$app->get('/menu/{mensaIDmensaID}', 'CrawlerController@getMenu');
+	$app->get('/menu/{mensaID}', 'CrawlerController@getMenu');
 
 	$app->get('/additives', function() {
 		$v = DB::collection('additives')->project(['_id' => 0])->get();

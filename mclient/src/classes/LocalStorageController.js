@@ -98,6 +98,18 @@ export default class LocalStorageController {
 	/**
 	 * Gets Primary Mensa
 	 * 
+	 * @return Mensa-Object or undefined
+	 */
+	getMensa(_id, type) {
+			for (var i = 0; i < this.settings.mensas[type].length; i++) {
+				if (this.settings.mensas[type][i]._id === _id) return this.settings.mensas[type][i];
+			}
+			return undefined;
+	}
+
+	/**
+	 * Gets Primary Mensa
+	 * 
 	 * @param _id - ID of Mensa
 	 * 
 	 * @return Mensa-Object if it worked or false if failed

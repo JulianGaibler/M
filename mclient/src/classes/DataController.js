@@ -34,6 +34,22 @@ export default class DataController {
 	}
 
 	/**
+	 * --
+	 *
+	 * @return --
+	 */
+	getMenu(mensa_id) {
+		return new Promise((resolve, reject) => {
+				this.fetchAPI("api/menu/"+mensa_id).then((result) => {
+					resolve(result);
+				},
+				(reason) => {
+					reject(reason);
+				});
+		});
+	}
+
+	/**
 	 * Gets Mensas from local array or fetches them from the server
 	 *
 	 * @param _ids - Array of _id's

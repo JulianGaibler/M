@@ -3,11 +3,11 @@
 		 <verticalSelect :items="vertical_data" :itemTranslation="[1,0,2]" :activeitem="this.type" v-on:triggered="changeType"></verticalSelect>
 		 <div class="whitebox">
 			<div class="whitebox_header">{{ $t('type.my') }} {{ $tc('type.'+this.type,2) }}</div>
-			<div v-for="item in subscribed[this.type]" class="whitebox_element">
+			<div v-on:click="this.bus.$emit('changeview', 'singlemensa', {_id: item._id, type: type})" v-for="item in subscribed[this.type]" class="whitebox_element">
 				<div class="whitebox_element_top">{{item.nameA}} {{item.nameB}}</div>
 				<div class="whitebox_element_bottom">
-					<div v-if="item.location===undefined" :class="[$style.loading, 'loading', 'loading_color']" :style="{ width: getRandomArbitrary(50,200)+'px', animationDelay: getRandomArbitrary(0.2,1)+'s' }"></div>
-					<span v-else>{{ openingInfo(item.location.times) }}</span>
+					<loadGlow v-if="item.location===undefined" :extStyle="$style.loading" :dimension="{min:50, max:200, end: 'px'}"></loadGlow>
+					<span v-else><openingTimes :times="item.location.times"></openingTimes></span>
 				</div>
 			</div>
 		 </div>
@@ -21,12 +21,10 @@
 </template>
 
 <script>
-import icon from './../components/icon.vue';
 import verticalSelect from './../components/vertical_select.vue';
 import searchBox from './../components/search_box.vue';
-import moment from "moment";
-import locale_de from "moment/locale/de";
-import locale_en from "moment/locale/en-gb";
+import loadGlow from './../components/loadGlow.vue';
+import openingTimes from './../components/opening_times.vue';
 
 export default {
 	data () {
@@ -43,13 +41,6 @@ export default {
 		}
 	},
 	mounted: function() {
-		switch (this.$root.$data.storageC.settings.language) {
-			case 'de':
-				moment.updateLocale("de",locale_de);
-				break;
-			case 'en':
-				moment.updateLocale("en-gb",locale_en);
-		}
 		this.type = this.$root.$data.storageC.settings.primarytype;
 		this.subscribed = this.$root.$data.storageC.settings.mensas;
 
@@ -84,53 +75,13 @@ export default {
 		upgradeSubs: function () {
 			if (!this.loadedsubs[this.type]) {
 				this.$root.$data.dataC.getSingleMensa(this.$root.$data.storageC.settings.mensas[this.type]).then((result) => {
-					this.$set(this.subscribed, [this.type], result);
+					this.$set(this.subscribed, this.type, result);
 					this.loadedsubs[this.type] = true;
 				},
 				(reason) => {
 
 				});
 			}
-		},
-		openingInfo: function (times) {
-			let mmt = moment();
-			let weekday = mmt.day()-1;
-			let mmtMidnight = mmt.clone().startOf('day');
-			let diffMinutes = mmt.diff(mmtMidnight, 'minutes');
-
-			for (var i = 0; i < times.length; i++) {
-				let wd = weekday;
-				while (true) {
-					if (times[i].hours[wd]!==undefined) {
-						if (wd===weekday) {
-							if (diffMinutes-100 < times[i].hours[wd].close) {
-								break;
-							}
-						} else break;
-					}
-					wd = (wd+1)%7;
-					mmtMidnight.add(1, 'd');
-				}
-				let hours = times[i].hours[wd];
-
-				if ((diffMinutes < hours.open && wd===weekday) || (diffMinutes-100 >= hours.close && wd!==weekday)) {
-					//TO BE OPENED
-					let t = mmtMidnight.add(hours.open, 'm');
-					if (hours.open-60 < diffMinutes && wd===weekday) return this.$t('times.opens')+" "+t.fromNow();
-					return this.$t('times.opens')+" "+t.calendar();
-				} else if (diffMinutes >= hours.open && diffMinutes <= hours.close) {
-					//OPEN
-					let t = mmtMidnight.add(hours.close, 'm');
-					if (hours.close-60 < diffMinutes) return this.$t('times.closes')+" "+t.fromNow();
-					return this.$t('times.closes')+" "+t.calendar();
-				} else {
-					//CLOSED RECENTLY
-					return this.$t('times.closed')+" "+mmtMidnight.add(hours.close, 'm').fromNow();
-				}
-			}
-		},
-		getRandomArbitrary: function (min, max) {
-			return Math.random() * (max - min) + min;
 		},
 		changeSearchword: function (string) {
 			this.searchword = string;
@@ -139,8 +90,8 @@ export default {
 	components: {
 		verticalSelect,
 		searchBox,
-		moment,
-		icon
+		loadGlow,
+		openingTimes
 	}
 }
 </script>

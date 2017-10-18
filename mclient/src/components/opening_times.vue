@@ -1,24 +1,8 @@
 <template>
-	<div class="whitebox">
-		<div :class="$style.search">
-			<icon :class="$style.svg" :svg="iconsearch"></icon>
-			<input :disabled="loading==1" @input="debounceInput" v-model="word" :placeholder="placeholder">
+	<div >
+		<div :class="[wrap, $style.wrap, time.statusstyle]" v-for="time in openingInfo">
+			<span :class="[badge, $style.badge]" v-if="time.name">{{time.name}}</span> <span>{{time.text}}</span>
 		</div>
-		<div v-if="loading==1">
-			<div :class="[$style.loading, 'loading']" v-for="index in 15" :style="{ animationDelay: getRandomArbitrary(0.2,1)+'s' }">
-				<div :class="[$style.loading_1, 'loading_color']" :style="{ width: getRandomArbitrary(50,100)+'%' }"></div>
-				<div :class="[$style.loading_2, 'loading_color']" :style="{ width: getRandomArbitrary(50,50)+'%' }"></div>
-			</div>
-		</div>
-		<div v-else-if="loading==2" :class="$style.noresults">
-			<h1>{{ $t('result.error_shoutouts['+getRandomInt(0,5)+']') }}</h1>
-			<p>{{ $t('result.loaderror_explain') }}</p>
-		</div>
-		<div v-else-if="results<1" :class="$style.noresults">
-			<h1>{{ $t('result.noresults_headline') }}</h1>
-			<p>{{ $t('result.noresults_quote') }}</p>
-		</div>
-		<slot v-else>Nothing to hide.</slot>
 	</div>
 </template>
 
@@ -31,84 +15,134 @@ export default {
 	name: 'openingTimes',
 	data () {
 		return {
-			iconsearch: require('./../assets/search.svg'),
-			word: ""
+			now: moment()
 		}
 	},
-	props: ['times'],
-	components: {
-		icon
+	props: ['times', 'wrap', 'badge'],
+	created: function() {
+		setInterval(() => this.now = moment(), 60*1000);
 	},
-	methods: {
-		debounceInput: debounce(function (e) {
-			this.$emit('inputChange', this.word);
-		}, 300),
-		getRandomArbitrary: function (min, max) {
-			return Math.random() * (max - min) + min;
-		},
-		getRandomInt: function (min, max) {
-			return Math.floor(Math.random() * (max - min + 1)) + min;
+	components: {
+		moment
+	},
+	mounted: function() {
+		switch (this.$root.$data.storageC.settings.language) {
+			case 'de':
+				moment.updateLocale("de",locale_de);
+				break;
+			case 'en':
+				moment.updateLocale("en-gb",locale_en);
+		}
+		this.now = moment();
+	},
+	computed: {
+		openingInfo: function () {
+			let mmt = this.now;
+			let weekday = mmt.day()-1;
+			let mmtMidnight = mmt.clone().startOf('day');
+			let diffMinutes = mmt.diff(mmtMidnight, 'minutes');
+
+			let bucket = [];
+			for (var i = 0; i < this.times.length; i++) {
+				let mmtclone = mmtMidnight.clone();
+				let wd = weekday;
+				while (true) {
+					if (this.times[i].hours[wd]!==undefined) {
+						if (wd===weekday) {
+							if (diffMinutes-55 < this.times[i].hours[wd].close) {
+								break;
+							}
+						} else break;
+					}
+					wd = (wd+1)%7;
+					mmtclone.add(1, 'd');
+				}
+				let hours = this.times[i].hours[wd];
+
+				let name = false;
+				if (this.times[i].name_de!==undefined) {
+					switch (this.$root.$data.storageC.settings.language) {
+						case 'de':
+							name = this.times[i].name_de;
+							break;
+						case 'en':
+							name = this.times[i].name_en;
+					}
+				}
+
+				let start = (this.times[i].type==0) ? this.$t('times.opens') : this.$t('times.starts');
+				let ongoing = (this.times[i].type==0) ? this.$t('times.closes') : this.$t('times.ends');
+				let ended = (this.times[i].type==0) ? this.$t('times.closed') : this.$t('times.ended');
+
+				if ((diffMinutes < hours.open && wd===weekday) || (diffMinutes-55 >= hours.close && wd!==weekday)) {
+					//TO BE OPENED
+					let t = mmtclone.add(hours.open, 'm');
+					if (hours.open-10 < diffMinutes && wd===weekday) {
+						bucket.push({
+							statusstyle: this.$style.s3,
+							name: name,
+							text: start+" "+t.fromNow()
+						});
+						continue;
+					}
+					else {
+						bucket.push({
+							statusstyle: '',
+							name: name,
+							text: start+" "+t.calendar()
+						});
+						continue;
+					}
+				} else if (diffMinutes >= hours.open && diffMinutes <= hours.close) {
+					//OPEN
+					let t = mmtclone.add(hours.close, 'm');
+					if (hours.close-60 < diffMinutes) {
+						bucket.push({
+							statusstyle: this.$style.s1,
+							name: name,
+							text: ongoing+" "+t.fromNow()
+						});
+					continue;
+					}
+					else {
+						bucket.push({
+							statusstyle: '',
+							name: name,
+							text: ongoing+" "+t.calendar()
+						});
+					continue;
+					}
+				} else {
+					//CLOSED RECENTLY
+					bucket.push({
+						statusstyle: this.$style.s2,
+						name: name,
+						text: ended+" "+mmtclone.add(hours.close, 'm').fromNow()
+					});
+					continue;
+				}
+			}
+			return bucket;
 		}
 	}
 };
 </script>
 
 <style module>
-	.search {
-		fill: #a3a3a3;
-		display: flex;
-		padding: 20px;
-		padding-bottom: 10px;
-		align-items: center;
+	.wrap {
+		margin: 5px 5px 5px 0;
 	}
-	.search .svg {
-		flex-shrink: 0;
-		width: 25px;
-		height: 25px;
-	}
-	.search .svg svg {
-		width: 100%;
-		height: 100%;
-	}
-	.search input {
-		flex: 1;
-		border: none;
+	.wrap:first-child:first-letter {
 		text-transform: uppercase;
-		padding: 5px;
-		outline: none;
-		font-size: 14px;
-		font-family: 'Roboto Condensed', sans-serif;
 	}
 
-	.loading {
-		padding: 15px 20px;
+	.s1 {
+		color: #FF9800;
 	}
-	.loading_1 {
-		height: 16px;
-		margin-bottom: 10px;
-		width: 100%;
+	.s2 {
+		color: #F44336;
 	}
-	.loading_2 {
-		height: 14px;
-		width: 80%;
-	}
-	.noresults {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		flex-flow: column;
-		min-height: 30vh;
-		color: #651fff;
-		margin: 0 20px 50px 20px;
-		text-align: center;
-		font-family: 'Roboto Condensed', sans-serif;
-	}
-	.noresults > h1 {
-		margin: 10px;
-		font-size: 30px;
-	}
-	.noresults > p {
-		margin: 0;
-		font-size: 16px;
+	.s3 {
+		color: #45c89c;
 	}
 </style>

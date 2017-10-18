@@ -27,6 +27,7 @@
 		"search": "Suchen"
 	},
 	"state": {
+		"loading": "Laden",
 		"added": "Hinzugefügt",
 		"removed": "Entfernt"
 	},
@@ -44,9 +45,12 @@
 		"brownie": "Brownie"
 	},
 	"times": {
-		"opens": "Öffnet",
-		"closes": "Schließt",
-		"closed": "Geschlossen"
+		"opens": "öffnet",
+		"closes": "geöffnet bis",
+		"closed": "geschlossen",
+		"starts": "startet",
+		"ends": "endet",
+		"ended": "endete"
 	},
 	"setup": {
 		"intro_highlights": "M kann nach Essen suchen und es hervorheben, wenn ein bestimmtes Wort vorkommt",
