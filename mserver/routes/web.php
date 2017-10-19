@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\DB;
 use App\Mensas;
 use Illuminate\Http\Request;
 
-$app->group(['prefix' => 'api/'], function () use ($app) {
+
+$app->group(['prefix' => 'api/', 'middleware' => ['cacheFetch', 'cachePut']], function () use ($app) {
 	$app->get('/mensas', function(Request $request) {
 
 		$nolocation = $request->query('nolocation', true);

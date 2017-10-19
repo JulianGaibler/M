@@ -1,6 +1,6 @@
 <template>
 	<div :class="$style.wrapper">
-	<div :class="$style.constraint">
+		<div :class="$style.constraint">
 			<div v-ripple :class="['mdc-ripple-surface', $style.elem]" tabindex="0" v-on:click="chviewname('viewhighlights')">
 				<div v-bind:class="[currentView=='viewhighlights' ? $style.active : '']">
 					<icon :svg="iconthumbs"></icon>

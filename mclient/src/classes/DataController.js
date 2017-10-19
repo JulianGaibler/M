@@ -7,10 +7,11 @@ export default class DataController {
 	 *
 	 * @return nothing
 	 */
-	constructor() {
+	constructor(storageC) {
 		console.log("CONSTRUCTED");
 		this.mensas_light = [];
 		this.mensas_full = [];
+		this.storageC = storageC;
 	}
 
 	/**
@@ -40,7 +41,7 @@ export default class DataController {
 	 */
 	getMenu(mensa_id) {
 		return new Promise((resolve, reject) => {
-				this.fetchAPI("api/menu/"+mensa_id).then((result) => {
+				this.fetchAPI("api/menu/"+mensa_id+"?lang="+this.storageC.settings.language).then((result) => {
 					resolve(result);
 				},
 				(reason) => {

@@ -16,14 +16,12 @@ class CrawlerController extends Controller
 	 * @return void
 	 */
 	public function getMenu(Request $request, $id) {
-		//$lang = $request->query('lang', 'de');
-		$lang = 'de';
+		$lang = $request->query('lang', 'de');
 
 		$mensa = Mensas::where('_id', strval($id))->first();
 		if (is_null($mensa)) return [];
 
 		$mensaID = $mensa->mensa_id;
-		//if (strcmp($lang,"en") == 0) $mensaID = $mensa->mensa_id_en;
 
 		$guzzleClient = new GuzzleClient();
 		$link = "https://www.stw.berlin/xhr/speiseplan-und-standortdaten.html";

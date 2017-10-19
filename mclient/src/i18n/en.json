@@ -12,6 +12,14 @@
 		"all": "All",
 		"my": "My"
 	},
+	"labels": {
+		"vegetarian": "vegetarian",
+		"vegan": "vegan",
+		"eco": "climate-friendly",
+		"bio": "organic",
+		"msc": "from sustainable fish stocks",
+		"additives": "additives"
+	},
 	"prices": {
 		"category": "Price category",
 		"desc_1": "Applies to students for which the studierendenWERK BERLIN is responsible",
@@ -24,7 +32,9 @@
 		"back": "Back",
 		"add": "Add",
 		"remove": "Remove",
-		"search": "Search"
+		"search": "Search",
+		"got_it": "Got it!",
+		"done": "Done"
 	},
 	"state": {
 		"loading": "Loading",
@@ -52,8 +62,16 @@
 		"ends": "ends",
 		"ended": "ended"
 	},
+	"settings": {
+		"search_and_hightlight": "Search and Highlight",
+		"mensa_selector": "Find, remove and move Mensas"
+	},
 	"setup": {
-		"intro_highlights": "M can search and hightlight food for you if a certain word occurs.",
-		"intro_prices": "Select the price category which applies to you"
+		"intro_highlights": "M can highlight food for you if a certain word occurs in it's name.",
+		"intro_prices": "Select the price category which applies to you",
+		"only_minutes": "Just two minutes",
+		"howto_1": "Select mensas, cafeterias and coffeebars which you want to reach quickly",
+		"howto_2": "Make one of them your favorite",
+		"howto_3": "if you want to change the order"
 	}
 }

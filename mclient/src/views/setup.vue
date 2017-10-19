@@ -1,10 +1,8 @@
 <template>
 	<!-- SETUP: Language -->
-	<div :class="$style.setup" v-if="page==0">
+	<div :class="['adaptiveWrap', $style.setup, $style.setupfirst]" v-if="page==0">
 		<icon :class="$style.introimg" :svg="intro_img"></icon>
 		<div :class="[$style.middle, $style.paragraphcolor]">
-		<p>M sortiert die Menüs aller Mensen aus Berlin und stellt sie so dar wie du möchtest! Du hast mehr überblick in einem Bruchteil der Zeit.</p>
-		<p><i>M sorts the menus of all the canteens from Berlin and presents them as you wish! You have more overview in a fraction of the time.</i></p>
 		</div>
 		<div :class="$style.bottom">
 			<button v-bind:key="page" v-on:click="proceedLang('de')" class="mdc-button">German</button>
@@ -13,22 +11,26 @@
 	</div>
 
 	<!-- SETUP: HowTo -->
-	<div :class="$style.setup" v-else-if="page==1">
+	<div :class="['adaptiveWrap', $style.setup, $style.setupfirst]" v-else-if="page==1">
 		<div :class="$style.top">
-			<p>HowTo</p>
+			<h1>{{ $t('setup.only_minutes') }}</h1>
 		</div>
 
-		<div :class="$style.middle">
-			<h1>HowTo</h1>
+		<div :class="[$style.middle, $style.paragraphcolor]">
+			<icon :class="$style.previewsvg" :svg="add_circle_outline"></icon>
+			<p>{{ $t('setup.howto_1') }}</p>
+			<icon :class="$style.previewsvg" :svg="star_border"></icon>
+			<p>{{ $t('setup.howto_2') }}</p>
+			<icon :class="$style.previewsvg" :svg="drag_handle"></icon>
+			<p>{{ $t('setup.howto_3') }}</p>
 		</div>
 		<div :class="$style.bottom">
-			<button v-bind:key="page" v-on:click="goback()" class="mdc-button">{{ $t('action.back') }}</button>
-			<button v-bind:key="page" v-on:click="gonext()" class="mdc-button">{{ $t('action.next') }}</button>
+			<button v-bind:key="page" v-on:click="gonext()" class="mdc-button">{{ $t('action.got_it') }}</button>
 		</div>
 	</div>
 
 	<!-- SETUP: Select Mensas -->
-	<div :class="$style.setup" v-else-if="page==2">
+	<div :class="['adaptiveWrap', $style.setup]" v-else-if="page==2">
 		<div :class="$style.top">
 		</div>
 		<div :class="$style.middle">
@@ -36,12 +38,12 @@
 		</div>
 		<div :class="$style.bottom">
 			<button v-bind:key="page" v-on:click="goback()" class="mdc-button">{{ $t('action.back') }}</button>
-			<button v-bind:key="page" v-on:click="(hasMensas() ? null : gonext())" :disabled="hasMensas()" class="mdc-button">{{ $t('action.next') }}</button>
+			<button v-bind:key="page" v-on:click="(hasMensas() ? null : gonext())" :disabled="hasMensas()" class="mdc-button">{{ $t('action.done') }}</button>
 		</div>
 	</div>
 
 	<!-- SETUP: Select Highlights -->
-	<div :class="$style.setup" v-else-if="page==3">
+	<div :class="['adaptiveWrap', $style.setup]" v-else-if="page==3">
 		<div :class="$style.top">
 			<p>{{ $t('setup.intro_highlights') }}</p>
 		</div>
@@ -61,7 +63,7 @@
 	</div>
 
 	<!-- SETUP: Prices -->
-	<div :class="$style.setup" v-else-if="page==4">
+	<div :class="['adaptiveWrap', $style.setup]" v-else-if="page==4">
 		<div :class="$style.top">
 			<p>{{ $t('setup.intro_prices') }}</p>
 		</div>
@@ -77,7 +79,7 @@
 	</div>
 
 	<!-- SETUP: So much more -->
-	<div :class="$style.setup" v-else-if="page==5">
+	<div :class="['adaptiveWrap', $style.setup]" v-else-if="page==5">
 		<div :class="$style.top">
 			<p>Hooray!</p>
 		</div>
@@ -86,7 +88,7 @@
 			<h1>Hooray!</h1>
 		</div>
 		<div :class="$style.bottom">
-			<button v-bind:key="page" v-on:click="gonext()" class="mdc-button">{{ $t('action.next') }}</button>
+			<button v-bind:key="page" v-on:click="gonext()" class="mdc-button">{{ $t('action.got_it') }}</button>
 		</div>
 	</div>
 </template>
@@ -103,7 +105,11 @@ export default {
 		return {
 			page: 0,
 			signature_white: require('./../assets/signature_white.svg'),
+			add_circle_outline: require('./../assets/add_circle_outline.svg'),
+			star_border: require('./../assets/star_border.svg'),
+			drag_handle: require('./../assets/drag_handle.svg'),
 			intro_img: require('./../assets/intro.svg'),
+			word: "M sortiert die Menüs aller Mensen aus Berlin und stellt sie so dar wie du möchtest! Du hast mehr überblick in einem Bruchteil der Zeit.",
 			exampleHighlights: [this.$t('food.pizza'),this.$t('food.cake'),this.$t('food.spaetzle'),this.$t('food.risotto'),this.$t('food.brownie')]
 		}
 	},
@@ -133,6 +139,9 @@ export default {
 			this.exampleHighlights.splice(index, 1);
 			this.$root.$data.storageC.settings.highlights.push(item);
 			this.$root.$data.storageC.updateStorage();
+		},
+		splitToSpan: function (string) {
+			return string.split(' ')
 		}
 	}
 }
@@ -148,6 +157,7 @@ export default {
 			font-size: 17px;
 			flex-direction: column;
 			padding: 0 10px;
+			margin-bottom: 60px;
 /*			max-width: 602px;
 			align-self: center;*/
 	}
@@ -157,13 +167,20 @@ export default {
 		position: relative;
 	}
 
-	.top p {
-		margin: 0 20px 20px 20px;
+	.setup h1 {
+		font-family: 'Roboto Condensed', sans-serif;
+		font-weight: 400;
+	}
+
+	.top {
+		padding: 0 20px 20px 20px;
+	}
+	.setupfirst {
+		display: flex;
 	}
 	.middle {
 		flex: 1;
 		color: white;
-		margin-bottom: 70px;
 	}
 	.bottom {
 		position: absolute;
@@ -203,13 +220,19 @@ export default {
 	}
 
 	.paragraphcolor {
-		position: relative;
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+  	justify-content: center;
+  	align-items: center;
 	}
 	.paragraphcolor p {
-		background-color: rgba(101, 31, 255, 0.8);
+		font-size: 14px;
 		padding: 10px;
-		margin: 0 0 20px 0;
+		max-width: 450px;
+		padding: 0 10%;
 	}
+
 
 	.mensaslct {
 		border: 1.5px solid white;
@@ -267,5 +290,17 @@ export default {
 	.disclaim {
 		font-size: 14px;
 		opacity: .8;
+	}
+	.previewsvg {
+		background-color: rgba(255, 255, 255, 0.15);
+		border-radius: 50%;
+		height: 35px;
+		width: 35px;
+		padding: 5px;
+	}
+	.previewsvg svg {
+		height: 100%;
+		width: 100%;
+		fill: white;
 	}
 </style>

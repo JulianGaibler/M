@@ -62,6 +62,10 @@ $app->singleton(
 $app->middleware([
 	'Nord\Lumen\Cors\CorsMiddleware'
 ]);
+$app->routeMiddleware([
+    'cachePut' => App\Http\Middleware\CachePut::class,
+    'cacheFetch' => App\Http\Middleware\CacheFetch::class,
+]);
 
 
 /*

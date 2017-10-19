@@ -1,9 +1,9 @@
 <template>
-	<div :class="$style.wrapper">
+	<div :class="[$style.wrapper, 'adaptiveWrap']">
 		 <verticalSelect :items="vertical_data" :itemTranslation="[1,0,2]" :activeitem="this.type" v-on:triggered="changeType"></verticalSelect>
 		 <div class="whitebox">
 			<div class="whitebox_header">{{ $t('type.my') }} {{ $tc('type.'+this.type,2) }}</div>
-			<div v-on:click="this.bus.$emit('changeview', 'singlemensa', {_id: item._id, type: type})" v-for="item in subscribed[this.type]" class="whitebox_element">
+			<div v-ripple v-on:click="this.bus.$emit('changeview', 'singlemensa', {_id: item._id, type: type})" v-for="item in subscribed[this.type]" class="clickable whitebox_element mdc-ripple-surface">
 				<div class="whitebox_element_top">{{item.nameA}} {{item.nameB}}</div>
 				<div class="whitebox_element_bottom">
 					<loadGlow v-if="item.location===undefined" :extStyle="$style.loading" :dimension="{min:50, max:200, end: 'px'}"></loadGlow>
@@ -11,8 +11,8 @@
 				</div>
 			</div>
 		 </div>
-		 <searchBox :loading="this.loadingall" :searchword="searchword" :results="allMensas[this.type].length" :placeholder="this.$t('type.all')+' '+this.$tc('type.'+this.type,2)" v-on:inputChange="changeSearchword">
-			<div v-for="item in allMensas[this.type]" class="whitebox_element">
+		 <searchBox :loading="this.loadingall" :searchword="searchword" :results="searchres.length" :placeholder="this.$t('type.all')+' '+this.$tc('type.'+this.type,2)" v-on:inputChange="changeSearchword">
+			<div v-ripple v-on:click="this.bus.$emit('changeview', 'singlemensa', {_id: item._id, type: type})" v-for="item in searchres" class="clickable whitebox_element mdc-ripple-surface">
 				<div class="whitebox_element_top">{{item.nameA}} {{item.nameB}}</div>
 				<div class="whitebox_element_bottom">{{ item.location.adress }}</div>
 			</div>
@@ -25,6 +25,7 @@ import verticalSelect from './../components/vertical_select.vue';
 import searchBox from './../components/search_box.vue';
 import loadGlow from './../components/loadGlow.vue';
 import openingTimes from './../components/opening_times.vue';
+import {MDCRipple, MDCRippleFoundation, util} from '@material/ripple';
 
 export default {
 	data () {
@@ -55,6 +56,18 @@ export default {
 
 		this.upgradeSubs();
 
+	},
+	computed: {
+		searchres: function () {
+				var parent = this;
+				if (this.allMensas[this.type].length!=0) {
+					let filtered = this.allMensas[this.type].filter(function (s) {
+						return s.nameB.toLowerCase().includes(parent.searchword.toLowerCase());
+					})
+					return filtered;
+				}
+				else return [];
+		}
 	},
 	methods: {
 		changeType: function (nr) {
@@ -92,9 +105,20 @@ export default {
 		searchBox,
 		loadGlow,
 		openingTimes
+	},
+	directives: {
+		ripple: {
+			bind(el, binding, vnode) {
+				MDCRipple.attachTo(el);
+			}, update(el, binding, vnode) {
+				MDCRipple.attachTo(el);
+			}
+		}
 	}
 }
 </script>
+
+<style src="@material/ripple/dist/mdc.ripple.min.css"/>
 
 <style module>
 	.wrapper {

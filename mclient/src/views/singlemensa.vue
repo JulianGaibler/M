@@ -1,15 +1,22 @@
 <template>
-	<div>
+	<div class="adaptiveWrap">
 		<div :class="$style.headlineContainer">
 			<div :class="$style.headline">
-				<h1>{{localstorage.nameA}}</h1>
-				<h2>{{localstorage.nameB}}</h2>
+				<span v-if="basicdata">
+				<h1>{{basicdata.nameA}}</h1>
+				<h2>{{basicdata.nameB}}</h2>
+				</span>
+				<span v-if="basicdata===false">
+					<loadGlow :extStyle="[$style.loading, $style.loadh1]" :dimension="{min:40, max:50, end: '%'}"></loadGlow>
+					<loadGlow :extStyle="[$style.loading, $style.loadh2]" :dimension="{min:60, max:80, end: '%'}"></loadGlow>
+				</span>
+
 				<loadGlow v-if="!additionaldata" :extStyle="$style.loading" :dimension="{min:30, max:60, end: '%'}"></loadGlow>
 				<span v-else><openingTimes :times="additionaldata.location.times"></openingTimes></span>
 			</div>
 		</div>
-		<div :class="$style.foodList">
-			<div v-if="!menu" class="whitebox" v-for="index in 2">
+		<div>
+			<div v-if="menu===false" class="whitebox" v-for="index in 2">
 				<div class="whitebox_header">
 					{{ $t('state.loading')+'...' }}
 				</div>
@@ -25,7 +32,7 @@
 					</div>
 					<div :class="$style.elemmid">
 						<div class="whitebox_element_top">{{item.name}}</div>
-						<div class="whitebox_element_bottom">{{item.labels}}</div>
+						<div class="whitebox_element_bottom">{{pictogramString(item.labels)}} {{item.additives.length +' '+$t('labels.additives') }}</div>
 					</div>
 					<div :class="$style.elemright">
 						{{ parseFloat(item.prices[pricetype]).toFixed(2) }} €
@@ -43,18 +50,39 @@ import icon from './../components/icon.vue';
 
 export default {
 	data () {
-	return {
-		localstorage: this.$root.$data.storageC.getMensa(this.data._id, this.data.type),
-		theM: require('./../assets/theM.svg'),
-		additionaldata: false,
-		menu: false,
-		pricetype: this.$root.$data.storageC.settings.pricetype
-	}
+		return {
+			basicdata: undefined,
+			theM: require('./../assets/theM.svg'),
+			additionaldata: false,
+			menu: undefined,
+			pricetype: this.$root.$data.storageC.settings.pricetype,
+			back: require('./../assets/back.svg')
+		}
 	},
 	props: ['data'],
 	mounted: function() {
+
+		bus.$emit('setActions', [[
+			{
+			svg: this.back,
+			function: this.goBack
+		}],[]]);
+
+		this.additionaldata = false;
+		this.menu = false;
+
+		let res = this.$root.$data.storageC.getMensa(this.data._id, this.data.type);
+		this.basicdata = (res!==undefined) ? res : false;
+
+
 		this.$root.$data.dataC.getSingleMensa([{_id: this.data._id}]).then((result) => {
 			this.additionaldata = result[0];
+			if (!this.basicdata) {
+				this.basicdata = {
+					nameA: result[0].nameA,
+					nameB: result[0].nameB
+				};
+			}
 		},
 		(reason) => {
 
@@ -62,7 +90,6 @@ export default {
 
 		this.$root.$data.dataC.getMenu(this.data._id).then((result) => {
 			this.menu = result;
-			console.log(result);
 		},
 		(reason) => {
 
@@ -71,6 +98,19 @@ export default {
 	methods: {
 		getRandomInt: function (min, max) {
 			return Math.floor(Math.random() * (max - min + 1)) + min;
+		},
+		goBack: function () {
+			bus.$emit('changeview', 'viewmensas');
+		},
+		pictogramString: function (arr) {
+			let str = "";
+			let lngth = arr.length;
+			if (lngth<1) return "";
+			for (var i = 0; i < lngth; i++) {
+				str += this.$t('labels.'+arr[i]);
+				if (i<lngth-1) str += ", ";
+			}
+			return str+" | ";
 		},
 		getcolor: function (nr) {
 			switch (nr) {
@@ -97,12 +137,13 @@ export default {
 	.headlineContainer {
 		display: flex;
 		justify-content: center;
-		padding: 15px 0 20px 0;
+		padding: 15px 20px 20px 20px;
 	}
 	.headline {
 		color: #303030;
 		font-family: 'Roboto Condensed', sans-serif;
 		margin-right: 20px;
+		min-width: 50%;
 	}
 	.headline h1 {
 		font-size: 25px;
@@ -118,12 +159,15 @@ export default {
 		height: 14px;
 		margin-top: 2px;
 	}
+	.loadh1 {
+		height: 25px;
+	}
+	.loadh2 {
+		height: 35px;
+		margin: 0 0 15px 0;
+	}
 	.loadingbig {
 		height: 16px;
-	}
-
-	.foodList {
-		padding: 0 10px 10px 10px;
 	}
 
 	.elem {

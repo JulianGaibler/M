@@ -5,7 +5,7 @@ const webpack = require('webpack');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const htmlwebpack = new HtmlWebpackPlugin({
-	title: "test??",
+	title: "M Berlin",
 	template: 'src/index.ejs'
 });
 
@@ -19,9 +19,10 @@ module.exports = {
 		rules: [
 			{ test: /\.svg$/, loader: 'svg-inline-loader' },
 			{ test: /\.vue$/, loader: 'vue-loader', options: { loaders: {scss: 'style!css!sass'} } },
-			{ test: /\.s[a|c]ss$/, loader: 'style!css!sass' }
+			{ test: /\.s[a|c]ss$/, loader: 'style!css!sass' },
+			{ test: /\.(png|jpg|gif)$/, use: [ { loader: 'file-loader', options: {} } ] }
 		],
-		loaders: [ { test: /\.js$/, loader: 'babel-loader', exclude: [/node_modules/, /build/, /__test__/], query: { presets: ['es2015'] } } ]
+		loaders: [ { test: /\.js$/, loader: 'babel', exclude: [/node_modules/, /build/, /__test__/], query: { presets: ['es2015'] } } ]
 	},
 	plugins: [
 		htmlwebpack,

@@ -4,10 +4,9 @@
 		
 		<searchBox :loading="this.loading" :searchword="searchword" :results="availableItems_computed.length+subscribedItems_computed.length" :placeholder="this.$tc('action.search')" v-on:inputChange="changeSearchword">
 			<draggable :list="subscribedItems[this.type]" :options="{handle:'.handle'}">
-				<transition-group name="mvelistdown" :class="$style.scrollbox" tag="div">
-					<div :class="[$style.elem, $style.elem_draggable]" v-for="item in subscribedItems_computed" v-bind:key="item._id">
+					<div :class="[$style.elem, $style.elem_draggable]" v-for="item in subscribedItems_computed" :key="item._id">
 						<div :class="['handle',$style.action]">
-							<icon v-ripple :class="$style.dragsvg" :svg="drag_handle"></icon>
+							<icon :class="$style.dragsvg" :svg="drag_handle"></icon>
 						</div>
 						<div :class="$style.info">
 							<div :class="$style.name"><span>{{ item.nameA }}</span> {{ item.nameB }}</div>
@@ -19,10 +18,9 @@
 							<span v-on:click="toggleSub(item, true)"><icon v-ripple :class="['mdc-ripple-surface', $style.checksvg, $style.checksvg_rem]" :svg="remove_circle_outline"></icon></span>
 						</div>
 					</div>
-					</transition-group>
 				</draggable>
 
-				<transition-group name="mvelistup" :class="$style.scrollbox" tag="div">
+				<transition-group name="mvelistup" tag="div">
 				<div :class="$style.elem" v-for="item in availableItems_computed" v-if="item.visible || item.visible==undefined" v-bind:key="item._id">
 					<div :class="$style.info">
 						<div :class="$style.name"><span>{{ item.nameA }}</span> {{ item.nameB }}</div>
@@ -68,6 +66,15 @@ export default {
 	mounted: function() {
 		this.loading = 1;
 		this.$root.$data.dataC.getLightMensas().then((allMensas) => {
+			for (var a = this.subscribedItems.length - 1; a >= 0; a--) {
+				for (var b = this.subscribedItems[a].length - 1; b >= 0; b--) {
+					for (var x = allMensas.length - 1; x >= 0; x--) {
+						for (var y = allMensas[x].length - 1; y >= 0; y--) {
+							if (allMensas[x][y]._id === this.subscribedItems[a][b]._id) allMensas[x][y].visible = false;
+						}
+					}
+				}
+			}
 			this.availableItems = allMensas;
 			this.loading = false;
 		},

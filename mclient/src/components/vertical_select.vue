@@ -29,6 +29,7 @@ export default {
 	.types {
 		display: flex;
 		text-align: center;
+		margin: 10px 0 20px 0;
 	}
 	.types_option {
 		text-transform: uppercase;

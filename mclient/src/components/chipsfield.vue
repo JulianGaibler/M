@@ -60,6 +60,7 @@ name: 'mensaselector',
 		font-size: 14px;
 		overflow-y: scroll;
 		color: #000;
+		align-items: stretch;
 	}
 	.chipbox::-webkit-scrollbar {
 		width: 5px;

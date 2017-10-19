@@ -1,6 +1,6 @@
 <template>
 	<div v-bind:class="[specialScreen(currentView) ? $style.primebg : '', $style.mount]">
-		<div :class="$style.main">
+		<div :class="$style.main" ref="main">
 			<menuhead v-bind:specialScreen="specialScreen(currentView)"></menuhead>
 			<component :data="currentData" :class="$style.viewhook" :is="currentView"></component>
 		</div>
@@ -17,7 +17,7 @@ import menufooter from './footer.vue'
 import a from './../views/a.vue'
 import mensaoverview from './../views/mensaoverview.vue'
 import singlemensa from './../views/singlemensa.vue'
-import c from './../views/c.vue'
+import settings from './../views/settings.vue'
 import viewsetup from './../views/setup.vue'
 export default {
 	data () {
@@ -44,7 +44,7 @@ export default {
 		menufooter,
 		'viewhighlights':a,
 		'viewmensas':mensaoverview,
-		'viewsettings':c,
+		'viewsettings':settings,
 		'viewsetup':viewsetup,
 		'singlemensa':singlemensa
 	},
@@ -53,6 +53,8 @@ export default {
 	},
 	methods: {
 		'changeview': function (newView, data={}) {
+			this.$refs.main.scrollTop = 0;
+			bus.$emit('resetActions');
 			this.currentData = data;
 			if (!!newView) this.currentView = newView;
 			else this.currentView = 'viewmensas';
@@ -127,7 +129,7 @@ export default {
 		border-radius: 2px;
 		text-align: left;
 		align-items: center;
-		margin-top: 20px;
+		margin-bottom: 20px;
 		font-size: 14px;
 		color: black;
 		overflow: hidden;
@@ -142,6 +144,15 @@ export default {
 	}
 	.whitebox_element {
 		padding: 15px 20px;
+	}
+	.whitebox_element.clickable {
+		cursor: pointer;
+		-webkit-touch-callout: none;
+		-webkit-user-select: none;
+		-khtml-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
 	}
 	.whitebox_element_top {
 		font-size: 14px;
@@ -164,5 +175,27 @@ export default {
 	}
 	.loading_color {
 		background-color: #aa94ec;
+	}
+
+	h1 {
+		font-size: 25px;
+		font-weight: 400;
+		margin: 0;
+	}
+	h2 {
+		font-size: 35px;
+		font-weight: 700;
+		margin: 0 0 15px 0;
+	}
+
+
+	.adaptiveWrap {
+		padding: 0 10px 10px 10px;	
+	}
+	@media screen and (min-width: 600px) {
+		.adaptiveWrap {
+			width: 500px;
+			margin: 0 auto;
+		}
 	}
 </style>
