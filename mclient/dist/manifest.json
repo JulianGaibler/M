@@ -1,0 +1,57 @@
+{
+	"name": "M",
+	"short_name": "M",
+	"theme_color": "#651fff",
+	"background_color": "#f4f5f6",
+	"display": "standalone",
+	"orientation": "portrait",
+	"Scope": "/",
+	"start_url": "/",
+	"icons": [
+		{
+			"src": "/icons/android/android36.png",
+			"sizes": "36x36",
+			"type": "image/png"
+		},
+		{
+			"src": "/icons/android/android48.png",
+			"sizes": "48x48",
+			"type": "image/png"
+		},
+		{
+			"src": "/icons/android/android72.png",
+			"sizes": "72x72",
+			"type": "image/png"
+		},
+		{
+			"src": "/icons/android/android96.png",
+			"sizes": "96x96",
+			"type": "image/png"
+		},
+		{
+			"src": "/icons/android/android144.png",
+			"sizes": "144x144",
+			"type": "image/png"
+		},
+		{
+			"src": "/icons/android/android192.png",
+			"sizes": "192x192",
+			"type": "image/png"
+		},
+		{
+			"src": "/icons/android/android256.png",
+			"sizes": "256x256",
+			"type": "image/png"
+		},
+		{
+			"src": "/icons/android/android384.png",
+			"sizes": "384x384",
+			"type": "image/png"
+		},
+		{
+			"src": "/icons/android/android512.png",
+			"sizes": "512x512",
+			"type": "image/png"
+		}
+	]
+}

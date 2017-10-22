@@ -110,7 +110,7 @@ export default {
 			drag_handle: require('./../assets/drag_handle.svg'),
 			intro_img: require('./../assets/intro.svg'),
 			word: "M sortiert die Menüs aller Mensen aus Berlin und stellt sie so dar wie du möchtest! Du hast mehr überblick in einem Bruchteil der Zeit.",
-			exampleHighlights: [this.$t('food.pizza'),this.$t('food.cake'),this.$t('food.spaetzle'),this.$t('food.risotto'),this.$t('food.brownie')]
+			exampleHighlights: []
 		}
 	},
 	components: {
@@ -123,6 +123,7 @@ export default {
 		proceedLang: function (lang) {
 			this.$i18n.locale = lang;
 			this.$root.$data.storageC.settings.language = lang;
+			this.exampleHighlights = [this.$t('food.pizza'),this.$t('food.cake'),this.$t('food.spaetzle'),this.$t('food.risotto'),this.$t('food.brownie')];
 			this.page++;
 		},
 		gonext: function () {

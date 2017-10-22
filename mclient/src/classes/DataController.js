@@ -7,11 +7,11 @@ export default class DataController {
 	 *
 	 * @return nothing
 	 */
-	constructor(storageC) {
-		console.log("CONSTRUCTED");
+	constructor(storageC, i18n) {
 		this.mensas_light = [];
 		this.mensas_full = [];
 		this.storageC = storageC;
+		this.i18nhook = i18n;
 	}
 
 	/**
@@ -41,12 +41,13 @@ export default class DataController {
 	 */
 	getMenu(mensa_id) {
 		return new Promise((resolve, reject) => {
-				this.fetchAPI("api/menu/"+mensa_id+"?lang="+this.storageC.settings.language).then((result) => {
-					resolve(result);
-				},
-				(reason) => {
-					reject(reason);
-				});
+			let url = "api/menu/"+mensa_id+"?lang="+this.storageC.settings.language;
+			this.fetchAPI(url).then((result) => {
+				resolve(result);
+			},
+			(reason) => {
+				reject(reason);
+			});
 		});
 	}
 
@@ -101,21 +102,38 @@ export default class DataController {
 		return bucket;
 	}
 
+	newUserID() {
+		return new Promise((resolve, reject) => {
+			let url = "api/user/create";
+			this.fetchAPI(url).then((result) => {
+				resolve(result._id);
+			},
+			(reason) => {
+				reject(reason);
+			});
+		});
+	}
 
 	fetchAPI(APIpath) {
 		return new Promise((resolve, reject) => {
-			let newurl = "//jwels:8000/"+APIpath;
+			let newurl = API_URL+APIpath;
 
-			let that = this;
-			$.ajax({
-			  method: "GET",
-			  url: newurl,
-			}).done(function( msg ) {
-				resolve(msg);
-	  		}).fail(function( jqXHR, textStatus, errorThrown ) {
-	  			reject(false);
-	  		});
-  		})
+			let request = new XMLHttpRequest();
+			request.open('GET', newurl, true);
+
+			request.onload = function() {
+			  if (request.status >= 200 && request.status < 400) {
+			    resolve(JSON.parse(request.responseText));
+			  } else {
+			    reject(false);
+			  }
+			};
+			request.onerror = function() {
+				reject(false);
+			};
+			request.send();
+
+  		});
 	}
 
 }

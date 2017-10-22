@@ -1,14 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 	<head>
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="apple-mobile-web-app-capable" content="yes">
-		<link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
-		<link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />
-		<title>M Berlin</title>
+		<meta name="apple-mobile-web-app-status-bar-style" content="white">
+		<meta name="theme-color" content="#fcfcfc">
+		<link rel="manifest" href="/manifest.json">
+		<meta name="apple-mobile-web-app-title" content="M">
+
+		<link rel='shortcut icon' type='image/x-icon' href='/favicon.ico' />
+		<link rel="mask-icon" href="/icons/safari_icon.svg" color="#651fff">
+		<link rel="apple-touch-icon" sizes="180x180" href="/icons/ios/ios180.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon16.png">
+
+		<style>
+			@keyframes splashRaise {
+				0% {opacity: 0;transform: scale(0.7)}
+				50% {opacity: 0;transform: scale(0.7)}
+				100% {opacity: 1;transform: scale(1)}
+			}
+			.initSplash {display: flex;position: absolute;animation: splashRaise 1s ;left: 0;right: 0;top: 0;bottom: 0;will-change: transform;justify-content: center;align-items: center;flex-direction: column;text-align: center;padding: 20px}
+		</style>
+
+		<title>M</title>
 	</head>
 	<body>
-	<div id="mount"></div>
+	<div id="mount">
+		<div class="initSplash">
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="192" height="192" viewBox="0 0 192 192"><defs><linearGradient id="a" x1="81.027" y1="80.842" x2="158.876" y2="158.691" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#642ae2"/><stop offset="1" stop-color="#642ae2" stop-opacity="0"/></linearGradient><symbol id="b" viewBox="0 0 192 192"><rect width="192" height="192" style="fill:none"/></symbol></defs><title>android</title><path d="M159.1,32.182H96V159.818h63.1A12.919,12.919,0,0,0,172,146.955V45.045A12.919,12.919,0,0,0,159.1,32.182Z" style="fill:#642ae2"/><path d="M69.525,168.086l.748-.768A1.025,1.025,0,0,0,69.525,168.086Z" style="fill:none"/><path d="M32.9,32.182A12.919,12.919,0,0,0,20,45.045V146.955a12.919,12.919,0,0,0,12.9,12.863H96V32.182Z" style="fill:#8449ff"/><path d="M42.377,21.086C35.636,20.192,30,26.389,30,34.876V157.124c0,8.487,5.636,14.683,12.377,13.79L96,163.807V28.193Z" style="fill:#7442fc"/><path d="M149.623,170.914c6.741.893,12.377-5.3,12.377-13.79V34.876c0-8.487-5.636-14.683-12.377-13.79L96,28.193V163.807Z" style="fill:#522ed8"/><path d="M43.6,21.086c-6.588-.893-12.1,5.3-12.1,13.79V157.124c0,8.487,5.508,14.683,12.1,13.79L96,163.807V28.193Z" style="fill:#5b2cdd"/><path d="M148.4,170.914c6.588.893,12.1-5.3,12.1-13.79V34.876c0-8.487-5.508-14.683-12.1-13.79L96,28.193V163.807Z" style="fill:#7435fd"/><g style="opacity:0.5"><path d="M160.375,92.385,96,28.193V163.807l52.4,7.107c6.588.893,12.1-5.3,12.1-13.79v-64.8Z" style="fill:url(#a)"/></g><path d="M110.275,99.069l-9.718,13.061-7.711,1.053L81.225,99.069V129.4H62V62.1H75.2L96.859,89.378,116.718,62.1H129.5V129.4H110.275Z" style="fill:#fff"/><use width="192" height="192" xlink:href="#b"/></svg>
+			<noscript>
+				<p>Du brauchst JavaScript um M benutzen zu können</p>
+				<p>You need to enable JavaScript in your browser to use M</p>
+			</noscript>
+		</div>
+	</div>
 	<script type="text/javascript" src="bundle.js"></script></body>
 </html>

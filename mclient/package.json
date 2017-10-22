@@ -4,14 +4,15 @@
   "description": "Simplifies Mensa",
   "main": "src/app.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
-    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+    "dev": "webpack-dev-server --open --hot --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js"
   },
   "author": "JulianWels",
   "license": "UNLICENSED",
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-loader": "^7.1.1",
+    "babel-minify-webpack-plugin": "^0.2.0",
     "babel-preset-env": "^1.6.0",
     "css-loader": "^0.28.4",
     "extract-text-webpack-plugin": "^3.0.0",
@@ -25,7 +26,8 @@
     "vue-template-compiler": "^2.4.2",
     "webpack": "^3.3.0",
     "webpack-bundle-analyzer": "^2.9.0",
-    "webpack-dev-server": "^2.5.1"
+    "webpack-dev-server": "^2.5.1",
+    "webpack-merge": "^4.1.0"
   },
   "dependencies": {
     "@material/button": "^0.3.10",
@@ -33,7 +35,6 @@
     "@material/ripple": "^0.8.0",
     "cross-env": "^5.0.3",
     "debounce": "^1.0.2",
-    "jquery": "^3.2.1",
     "moment": "^2.19.1",
     "taffy": "^2.6.2",
     "taffydb": "^2.7.3",

@@ -1,6 +1,6 @@
 <template>
 	<div v-bind:class="[specialScreen(currentView) ? $style.primebg : '', $style.mount]">
-		<div :class="$style.main" ref="main">
+		<div :class="[$style.main, 'subtleScrollbar']" ref="main">
 			<menuhead v-bind:specialScreen="specialScreen(currentView)"></menuhead>
 			<component :data="currentData" :class="$style.viewhook" :is="currentView"></component>
 		</div>
@@ -99,17 +99,6 @@ export default {
 		align-items: stretch;
 		height: 100%;
 	}
-	.main::-webkit-scrollbar {
-	  width: 5px;
-	}
-	 
-	.main::-webkit-scrollbar-track {
-	  background: none;
-	}
-	 
-	.main::-webkit-scrollbar-thumb {
-	  background: rgba(0, 0, 0, 0.2); 
-	}
 	.viewhook {
 		flex: 1;
 	}
@@ -188,6 +177,17 @@ export default {
 		margin: 0 0 15px 0;
 	}
 
+	.subtleScrollbar::-webkit-scrollbar {
+	  width: 5px;
+	}
+	 
+	.subtleScrollbar::-webkit-scrollbar-track {
+	  background: none;
+	}
+	 
+	.subtleScrollbar::-webkit-scrollbar-thumb {
+	  background: rgba(0, 0, 0, 0.2); 
+	}
 
 	.adaptiveWrap {
 		padding: 0 10px 10px 10px;	

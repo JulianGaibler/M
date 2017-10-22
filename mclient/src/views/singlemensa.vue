@@ -61,7 +61,6 @@ export default {
 	},
 	props: ['data'],
 	mounted: function() {
-
 		bus.$emit('setActions', [[
 			{
 			svg: this.back,
@@ -74,6 +73,14 @@ export default {
 		let res = this.$root.$data.storageC.getMensa(this.data._id, this.data.type);
 		this.basicdata = (res!==undefined) ? res : false;
 
+		if (this.data.hasMenu) {
+			this.$root.$data.dataC.getMenu(this.data._id).then((result) => {
+				this.menu = result;
+			},
+			(reason) => {
+
+			});
+		} else this.menu = [];
 
 		this.$root.$data.dataC.getSingleMensa([{_id: this.data._id}]).then((result) => {
 			this.additionaldata = result[0];
@@ -83,13 +90,6 @@ export default {
 					nameB: result[0].nameB
 				};
 			}
-		},
-		(reason) => {
-
-		});
-
-		this.$root.$data.dataC.getMenu(this.data._id).then((result) => {
-			this.menu = result;
 		},
 		(reason) => {
 
@@ -137,7 +137,7 @@ export default {
 	.headlineContainer {
 		display: flex;
 		justify-content: center;
-		padding: 15px 20px 20px 20px;
+		padding: 15px 20px 40px 20px;
 	}
 	.headline {
 		color: #303030;

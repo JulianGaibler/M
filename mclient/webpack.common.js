@@ -2,10 +2,9 @@ const path = require("path");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const htmlwebpack = new HtmlWebpackPlugin({
-	title: "M Berlin",
+	title: "M",
 	template: 'src/index.ejs'
 });
 
@@ -26,16 +25,10 @@ module.exports = {
 	},
 	plugins: [
 		htmlwebpack,
-		new BundleAnalyzerPlugin(),
 		new webpack.ContextReplacementPlugin(
 			/moment[\/\\]locale$/,
 			/en-gb|de/
-		),
-		new webpack.ProvidePlugin({
-			$: "jquery",
-			jQuery: "jquery",
-			"window.jQuery": "jquery"
-		})
+		)
 	],
 	stats: {
 		colors: true
@@ -45,16 +38,9 @@ module.exports = {
 		  'vue$': 'vue/dist/vue.esm.js'
 		}
 	},
-	devServer: {
-		historyApiFallback: true,
-		noInfo: true,
-		host: "0.0.0.0",
-		disableHostCheck: true
-	},
 	performance: {
 		hints: false
-	},
-	devtool: 'source-map'
+	}
 };
 
 if (process.env.NODE_ENV === 'production') {

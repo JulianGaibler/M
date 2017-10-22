@@ -1,9 +1,9 @@
 <template>
 	<div :class="[$style.wrapper, 'adaptiveWrap']">
 		 <verticalSelect :items="vertical_data" :itemTranslation="[1,0,2]" :activeitem="this.type" v-on:triggered="changeType"></verticalSelect>
-		 <div class="whitebox">
+		 <div v-if="subscribed[this.type].length > 0" class="whitebox">
 			<div class="whitebox_header">{{ $t('type.my') }} {{ $tc('type.'+this.type,2) }}</div>
-			<div v-ripple v-on:click="this.bus.$emit('changeview', 'singlemensa', {_id: item._id, type: type})" v-for="item in subscribed[this.type]" class="clickable whitebox_element mdc-ripple-surface">
+			<div v-ripple v-on:click="this.bus.$emit('changeview', 'singlemensa', {_id: item._id, type: type, hasMenu: item.hasMenu})" v-for="item in subscribed[this.type]" class="clickable whitebox_element mdc-ripple-surface">
 				<div class="whitebox_element_top">{{item.nameA}} {{item.nameB}}</div>
 				<div class="whitebox_element_bottom">
 					<loadGlow v-if="item.location===undefined" :extStyle="$style.loading" :dimension="{min:50, max:200, end: 'px'}"></loadGlow>
@@ -12,7 +12,7 @@
 			</div>
 		 </div>
 		 <searchBox :loading="this.loadingall" :searchword="searchword" :results="searchres.length" :placeholder="this.$t('type.all')+' '+this.$tc('type.'+this.type,2)" v-on:inputChange="changeSearchword">
-			<div v-ripple v-on:click="this.bus.$emit('changeview', 'singlemensa', {_id: item._id, type: type})" v-for="item in searchres" class="clickable whitebox_element mdc-ripple-surface">
+			<div v-ripple v-on:click="this.bus.$emit('changeview', 'singlemensa', {_id: item._id, type: type, hasMenu: item.hasMenu})" v-for="item in searchres" class="clickable whitebox_element mdc-ripple-surface">
 				<div class="whitebox_element_top">{{item.nameA}} {{item.nameB}}</div>
 				<div class="whitebox_element_bottom">{{ item.location.adress }}</div>
 			</div>

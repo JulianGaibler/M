@@ -3,6 +3,7 @@
 		<verticalSelect :items="vertical_data" :itemTranslation="[1,0,2]" :activeitem="this.type" v-on:triggered="changeType"></verticalSelect>
 		
 		<searchBox :loading="this.loading" :searchword="searchword" :results="availableItems_computed.length+subscribedItems_computed.length" :placeholder="this.$tc('action.search')" v-on:inputChange="changeSearchword">
+			<div :class="whiteboxstyle">
 			<draggable :list="subscribedItems[this.type]" :options="{handle:'.handle'}">
 					<div :class="[$style.elem, $style.elem_draggable]" v-for="item in subscribedItems_computed" :key="item._id">
 						<div :class="['handle',$style.action]">
@@ -20,7 +21,6 @@
 					</div>
 				</draggable>
 
-				<transition-group name="mvelistup" tag="div">
 				<div :class="$style.elem" v-for="item in availableItems_computed" v-if="item.visible || item.visible==undefined" v-bind:key="item._id">
 					<div :class="$style.info">
 						<div :class="$style.name"><span>{{ item.nameA }}</span> {{ item.nameB }}</div>
@@ -30,7 +30,7 @@
 						<icon v-ripple :class="['mdc-ripple-surface', $style.checksvg, $style.checksvg_add]" :svg="add_circle_outline"></icon>
 					</div>
 				</div>
-			</transition-group>
+				</div>
 		</searchBox>
 	</div>
 </template>
@@ -89,6 +89,7 @@ export default {
 		verticalSelect,
 		searchBox
 	},
+	props: ['whiteboxstyle'],
 	computed: {
 		subscribedItems_computed() {
 			return this.searchres(this.subscribedItems[this.type], 1)
@@ -136,7 +137,7 @@ export default {
 		},
 		toggleSub: function (item, unsub=false) {
 			if (unsub) {
-				this.$root.$data.storageC.setMensas(item._id, item.nameA, item.nameB, this.type, true);
+				this.$root.$data.storageC.setMensas(item._id, null, null, this.type, null, true);
 				for (var i = this.availableItems[this.type].length - 1; i >= 0; i--) {
 					if (this.availableItems[this.type][i]._id === item._id) {
 						this.availableItems[this.type][i].visible = true;
@@ -145,7 +146,7 @@ export default {
 			} else {
 				if (this.$root.$data.storageC.getPrimaryMensa()===undefined)
 					this.$root.$data.storageC.settings.primarytype = this.type;
-				this.$root.$data.storageC.setMensas(item._id, item.nameA, item.nameB, item.type, false);
+				this.$root.$data.storageC.setMensas(item._id, item.nameA, item.nameB, item.type, item.hasMenu, false);
 				item.visible = false;
 			}
 		}

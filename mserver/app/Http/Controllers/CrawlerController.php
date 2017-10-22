@@ -17,6 +17,7 @@ class CrawlerController extends Controller
 	 */
 	public function getMenu(Request $request, $id) {
 		$lang = $request->query('lang', 'de');
+		$date = $request->query('date', null);
 
 		$mensa = Mensas::where('_id', strval($id))->first();
 		if (is_null($mensa)) return [];
@@ -27,8 +28,8 @@ class CrawlerController extends Controller
 		$link = "https://www.stw.berlin/xhr/speiseplan-und-standortdaten.html";
 
 		$param = ['resources_id' => $mensaID];
-		if (null !== ($request->input('date'))) {
-			$param['date'] = $request->input('date');
+		if (null != $date) {
+			$param['date'] = $date;
 		}
 
 
@@ -42,89 +43,92 @@ class CrawlerController extends Controller
 		$crawler
 			->filter('.splGroupWrapper')
 			->reduce(function (Crawler $onode, $j) use (&$mensas) {
-				$category = [];
-				$onode->filter('.splMeal')
-				->reduce(function (Crawler $node, $k) use (&$category) {
+				
+				if ($onode->filter('.splMeal')->count()>0) {
 
-					$additives = explode(',', $node->attr('lang'));
-					if (strlen($additives[0]) < 1) $additives = [];
+					$category = [];
+					$onode->filter('.splMeal')
+					->reduce(function (Crawler $node, $k) use (&$category) {
 
-					$name = $this->convertCrawlerString($node->filter('span.bold')->first()->text());
+						$additives = explode(',', $node->attr('lang'));
+						if (strlen($additives[0]) < 1) $additives = [];
 
-					$prices = explode('/', substr($this->convertCrawlerString($node->filter('.col-xs-6.col-md-3.text-right')->first()->text()),2));
+						$name = $this->convertCrawlerString($node->filter('span.bold')->first()->text());
 
-					if (strlen($prices[0]) < 1) {
-						$prices[0] = 0.0;
-					}
-					if (count($prices) < 2) {
-						$prices[1] = $prices[0];
-						$prices[2] = $prices[0];
-					}
-					foreach ($prices as $p => $price) {
-						$prices[$p] = floatval(str_replace(',', '.', str_replace('.', '', $price)));
-					}
+						$prices = explode('/', substr($this->convertCrawlerString($node->filter('.col-xs-6.col-md-3.text-right')->first()->text()),2));
 
-					$ampel = -1;
-					$labels = [];
-
-					$node->filter('.col-xs-12.col-md-3 > .splIcon')
-					->reduce(function (Crawler $node2, $i) use (&$ampel, &$labels) {
-
-						$curr = explode('/', rtrim($node2->attr('src'), '/'));
-						$curr = preg_replace('/\\.[^.\\s]{2,4}$/', '', end($curr));
-
-
-						$pos = strpos($curr, 'ampel_');
-						if ($pos !== false) {
-							switch ($curr[$pos+7]) {
-								case "r": //green
-									$ampel = 0;
-									break;
-								case "e": //yellow
-									$ampel = 1;
-									break;
-								case "o": //red
-									$ampel = 2;
-									break;
-							}
-						} else {
-							switch ($curr) {
-								case "1":
-									$labels[] = "vegetarian";
-									break;
-								case "15":
-									$labels[] = "vegan";
-									break;
-								case "43":
-									$labels[] = "eco";
-									break;
-								case "18":
-									$labels[] = "bio";
-									break;
-								case "38":
-									$labels[] = "msc";
-									break;
-							}
+						if (strlen($prices[0]) < 1) {
+							$prices[0] = 0.0;
 						}
-						
+						if (count($prices) < 2) {
+							$prices[1] = $prices[0];
+							$prices[2] = $prices[0];
+						}
+						foreach ($prices as $p => $price) {
+							$prices[$p] = floatval(str_replace(',', '.', str_replace('.', '', $price)));
+						}
+
+						$ampel = -1;
+						$labels = [];
+
+						$node->filter('.col-xs-12.col-md-3 > .splIcon')
+						->reduce(function (Crawler $node2, $i) use (&$ampel, &$labels) {
+
+							$curr = explode('/', rtrim($node2->attr('src'), '/'));
+							$curr = preg_replace('/\\.[^.\\s]{2,4}$/', '', end($curr));
+
+
+							$pos = strpos($curr, 'ampel_');
+							if ($pos !== false) {
+								switch ($curr[$pos+7]) {
+									case "r": //green
+										$ampel = 0;
+										break;
+									case "e": //yellow
+										$ampel = 1;
+										break;
+									case "o": //red
+										$ampel = 2;
+										break;
+								}
+							} else {
+								switch ($curr) {
+									case "1":
+										$labels[] = "vegetarian";
+										break;
+									case "15":
+										$labels[] = "vegan";
+										break;
+									case "43":
+										$labels[] = "eco";
+										break;
+									case "18":
+										$labels[] = "bio";
+										break;
+									case "38":
+										$labels[] = "msc";
+										break;
+								}
+							}
+							
+						});
+
+
+						$val = [
+							'name' => $name,
+							'ampel' => $ampel,
+							'prices' => $prices,
+							'labels' => $labels,
+							'additives' => $additives];
+						$category[] = $val;
 					});
-
-
-					$val = [
-						'name' => $name,
-						'ampel' => $ampel,
-						'prices' => $prices,
-						'labels' => $labels,
-						'additives' => $additives];
-					$category[] = $val;
+					$category_name = $this->convertCrawlerString($onode->filter('.splGroup')->first()->text());
+					$mensas[$category_name] = $category;
+					}
 				});
-				$category_name = $this->convertCrawlerString($onode->filter('.splGroup')->first()->text());
-				$mensas[$category_name] = $category;
-			});
 		return (new Response(json_encode($mensas), 200))
 						->header('Content-Type', "json")
-						->header('charset', "utf-8")
-						->header('Access-Control-Allow-Origin', '*');
+						->header('charset', "utf-8");
 	}
 
 	/**

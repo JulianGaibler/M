@@ -38,7 +38,7 @@ export default {
 	computed: {
 		openingInfo: function () {
 			let mmt = this.now;
-			let weekday = mmt.day()-1;
+			let weekday = ((((mmt.day()-1) % 7) + 7) % 7);
 			let mmtMidnight = mmt.clone().startOf('day');
 			let diffMinutes = mmt.diff(mmtMidnight, 'minutes');
 
@@ -46,6 +46,7 @@ export default {
 			for (var i = 0; i < this.times.length; i++) {
 				let mmtclone = mmtMidnight.clone();
 				let wd = weekday;
+
 				while (true) {
 					if (this.times[i].hours[wd]!==undefined) {
 						if (wd===weekday) {
@@ -74,7 +75,7 @@ export default {
 				let ongoing = (this.times[i].type==0) ? this.$t('times.closes') : this.$t('times.ends');
 				let ended = (this.times[i].type==0) ? this.$t('times.closed') : this.$t('times.ended');
 
-				if ((diffMinutes < hours.open && wd===weekday) || (diffMinutes-55 >= hours.close && wd!==weekday)) {
+				if ((diffMinutes < hours.open && wd===weekday) || (wd!==weekday)) {
 					//TO BE OPENED
 					let t = mmtclone.add(hours.open, 'm');
 					if (hours.open-10 < diffMinutes && wd===weekday) {

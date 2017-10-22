@@ -9,17 +9,24 @@ export default class LocalStorageController {
 		const res = this.storageAvailable('localStorage');
 		this.settings = {};
 		this.i18nhook = i18n;
+		this.dataC = null;
 		if (res) {
 			if(!localStorage.getItem('settings')) {
 				this.initSettings();
 			} else {
 				this.settings = JSON.parse(localStorage.getItem('settings'));
+				this.upgrade();
+				if (this.settings.profileID===null) this.requestProfileID();
 				this.i18nhook.locale = this.settings.language;
 			}
 		}
 		else {
 			throw res;
 		}
+	}
+
+	setDataC(reference) {
+		this.dataC = reference;
 	}
 
 
@@ -30,8 +37,8 @@ export default class LocalStorageController {
 	 */
 	initSettings() {
 		this.settings = {
-			"version": 1,
-			"profileID":"gfdagf",
+			"version": 2,
+			"profileID": null,
 			"language": "de",
 			"pricetype": 0,
 			"primarytype": 0,
@@ -43,6 +50,15 @@ export default class LocalStorageController {
 		this.updateStorage();
 	}
 
+
+	/**
+	 * foo
+	 *
+	 * @return foo
+	 */
+	upgrade() {
+		//Nothing.
+	}
 
 	/**
 	 * foo
@@ -66,7 +82,7 @@ export default class LocalStorageController {
 	 * 
 	 * @return foo
 	 */
-	setMensas(_id, nameA, nameB, type, remove=false) {
+	setMensas(_id, nameA, nameB, type, hasMenu, remove=false) {
 		for (var m of this.settings.mensas[type]) {
 			if (m._id === _id) {
 				if (remove) {
@@ -74,13 +90,13 @@ export default class LocalStorageController {
 					this.arrayRemove(this.settings.mensas[type], m);
 				} else {
 					//updates the element
-					m = {_id, nameA, nameB};
+					m = {_id, nameA, nameB, hasMenu};
 				}
 				this.updateStorage();
 				return;
 			}
 		}
-		this.settings.mensas[type].push({_id, nameA, nameB});
+		this.settings.mensas[type].push({_id, nameA, nameB, hasMenu});
 		this.updateStorage();
 	}
 
@@ -117,7 +133,6 @@ export default class LocalStorageController {
 	setPrimaryMensa(_id, type) {
 			this.settings.primarytype = type;
 			for (var i = this.settings.mensas[type].length - 1; i >= 0; i--) {
-				console.log(this.settings.mensas[type][i]._id+" === "+_id);
 				if (this.settings.mensas[type][i]._id===_id) {
 					let saved = this.settings.mensas[type][i];
 					this.settings.mensas[type].splice(i, 1);
@@ -159,6 +174,21 @@ export default class LocalStorageController {
 		if (index !== -1) {
 			array.splice(index, 1);
 		}
+	}
+
+	/**
+	 * Gets Primary Mensa
+	 * 
+	 * @return Mensa-Object or undefined
+	 */
+	requestProfileID() {
+		this.dataC.newUserID().then((_id) => {
+			this.settings.profileID = _id;
+			this.updateStorage();
+		},
+		(reason) => {
+			//Nothing
+		});
 	}
 
 
