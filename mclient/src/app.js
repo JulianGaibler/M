@@ -14,9 +14,9 @@ new Vue({
 	data () {
 		var dataC;
 		var storageC;
-		try { storageC = new LocalStorageController(i18n) } catch(e) { storageC = e };
-		try { dataC = new DataController(storageC, i18n) } catch(e) { dataC = e }
-		storageC.setDataC(dataC);
+		try { dataC = new DataController(i18n) } catch(e) { dataC = e }
+		try { storageC = new LocalStorageController(dataC, i18n) } catch(e) { storageC = e };
+		dataC.setStorageC(storageC);
 
 		return {
 			storageC,

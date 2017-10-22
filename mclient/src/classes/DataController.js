@@ -7,10 +7,10 @@ export default class DataController {
 	 *
 	 * @return nothing
 	 */
-	constructor(storageC, i18n) {
+	constructor(i18n) {
 		this.mensas_light = [];
 		this.mensas_full = [];
-		this.storageC = storageC;
+		this.storageC;
 		this.i18nhook = i18n;
 	}
 
@@ -112,6 +112,10 @@ export default class DataController {
 				reject(reason);
 			});
 		});
+	}
+
+	setStorageC(reference) {
+		this.storageC = reference;
 	}
 
 	fetchAPI(APIpath) {

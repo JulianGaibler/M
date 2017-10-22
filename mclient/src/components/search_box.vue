@@ -3,6 +3,7 @@
 		<div :class="$style.search">
 			<icon :class="$style.svg" :svg="iconsearch"></icon>
 			<input :disabled="loading==1" @input="debounceInput" v-model="word" :placeholder="placeholder">
+			<span v-on:click="deleteInput()" v-if="word.length>0" :class="$style.btn"><icon v-ripple class="mdc-ripple-surface" :svg="iconclose"></icon></span>
 		</div>
 		<div v-if="loading==1">
 			<div :class="[$style.loading, 'loading']" v-for="index in 15" :style="{ animationDelay: getRandomArbitrary(0.2,1)+'s' }">
@@ -24,6 +25,7 @@
 
 <script>  
 import icon from './../components/icon.vue';
+import {MDCRipple, MDCRippleFoundation, util} from '@material/ripple';
 import debounce from 'debounce';
 
 export default {  
@@ -31,6 +33,7 @@ export default {
 	data () {
 		return {
 			iconsearch: require('./../assets/search.svg'),
+			iconclose: require('./../assets/close.svg'),
 			word: ""
 		}
 	},
@@ -47,27 +50,33 @@ export default {
 		},
 		getRandomInt: function (min, max) {
 			return Math.floor(Math.random() * (max - min + 1)) + min;
+		},
+		deleteInput: function () {
+			this.word = "";
+			this.$emit('inputChange', "");
+		}
+	},
+	directives: {
+		ripple: {
+			bind(el, binding, vnode) {
+				MDCRipple.attachTo(el);
+			}, update(el, binding, vnode) {
+				MDCRipple.attachTo(el);
+			}
 		}
 	}
 };
 </script>
 
+<style src="@material/ripple/dist/mdc.ripple.min.css"/>
+
 <style module>
 	.search {
 		fill: #a3a3a3;
 		display: flex;
-		padding: 20px;
+		padding: 15px 15px;
 		padding-bottom: 10px;
 		align-items: center;
-	}
-	.search .svg {
-		flex-shrink: 0;
-		width: 25px;
-		height: 25px;
-	}
-	.search .svg svg {
-		width: 100%;
-		height: 100%;
 	}
 	.search input {
 		flex: 1;
@@ -109,5 +118,32 @@ export default {
 	.noresults > p {
 		margin: 0;
 		font-size: 16px;
+	}
+
+	.search .svg {
+		flex-shrink: 0;
+		height: 38px;
+		width: 38px;
+	}
+	.search .svg svg {
+		height: 26px;
+		width: 26px;
+		margin: 6px;
+	}
+
+	.btn {
+		border-radius: 50%;
+		display: inline-block;
+		cursor: pointer;
+		height: 38px;
+		width: 38px;
+		display: inline-block;
+		overflow-y: hidden;
+	}
+
+	.btn svg {
+		height: 26px;
+		width: 26px;
+		margin: 6px;
 	}
 </style>

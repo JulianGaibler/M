@@ -1,11 +1,11 @@
 <template>
-	<div>
+	<div class="noselect">
 		<verticalSelect :items="vertical_data" :itemTranslation="[1,0,2]" :activeitem="this.type" v-on:triggered="changeType"></verticalSelect>
 		
-		<searchBox :loading="this.loading" :searchword="searchword" :results="availableItems_computed.length+subscribedItems_computed.length" :placeholder="this.$tc('action.search')" v-on:inputChange="changeSearchword">
+		<searchBox :loading="this.loading" :searchword="searchword" :results="availableItems_computed.length+this.subscribedItems[this.type].length" :placeholder="this.$tc('action.search')" v-on:inputChange="changeSearchword">
 			<div :class="whiteboxstyle">
 			<draggable :list="subscribedItems[this.type]" :options="{handle:'.handle'}">
-					<div :class="[$style.elem, $style.elem_draggable]" v-for="item in subscribedItems_computed" :key="item._id">
+					<div v-for="item in this.subscribedItems[this.type]" :key="item._id" :class="[$style.elem, $style.elem_draggable]">
 						<div :class="['handle',$style.action]">
 							<icon :class="$style.dragsvg" :svg="drag_handle"></icon>
 						</div>
@@ -91,9 +91,6 @@ export default {
 	},
 	props: ['whiteboxstyle'],
 	computed: {
-		subscribedItems_computed() {
-			return this.searchres(this.subscribedItems[this.type], 1)
-		},
 		availableItems_computed() {
 			return this.searchres(this.availableItems[this.type], 0);
 		}
@@ -103,7 +100,8 @@ export default {
 				var parent = this;
 				if (elements!=undefined) {
 					let filtered = elements.filter(function (s) {
-						return s.nameB.toLowerCase().includes(parent.searchword.toLowerCase());
+						let str = s.nameA.toLowerCase()+' '+s.nameB.toLowerCase();
+						return str.includes(parent.searchword.toLowerCase());
 					})
 					return filtered;
 				}
@@ -247,30 +245,20 @@ export default {
 </style>
 
 <style>
-	.mvelistup-enter-active, .mvelistup-leave-active, .mvelistdown-enter-active, .mvelistdown-leave-active {
-		transition: all .4s;
-		max-height: 85px;
-		-webkit-transform: translateZ(0);
-		-moz-transform: translateZ(0);
-		-ms-transform: translateZ(0);
-		-o-transform: translateZ(0);
-		transform: translateZ(0);
-	}
 	.mvelistdown-move {
 		transition: transform .4s;
-	}
-	.mvelistup-enter, .mvelistup-leave-to {
-		opacity: 0;
-  		transform: rotateX(90deg);
-	}
-	.mvelistdown-enter, .mvelistdown-leave-to {
-		opacity: 0;
-  		transform: rotateX(90deg);
 	}
 
 
 	.handle {
 		cursor: move;
+	}
+
+	.noselect {
+		-webkit-user-select: none;  
+		-moz-user-select: none;    
+		-ms-user-select: none;      
+		user-select: none;
 	}
 
 </style>

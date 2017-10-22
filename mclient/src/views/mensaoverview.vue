@@ -62,7 +62,8 @@ export default {
 				var parent = this;
 				if (this.allMensas[this.type].length!=0) {
 					let filtered = this.allMensas[this.type].filter(function (s) {
-						return s.nameB.toLowerCase().includes(parent.searchword.toLowerCase());
+						let str = s.nameA.toLowerCase()+' '+s.nameB.toLowerCase();
+						return str.includes(parent.searchword.toLowerCase());
 					})
 					return filtered;
 				}

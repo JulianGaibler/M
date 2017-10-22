@@ -5,11 +5,11 @@ export default class LocalStorageController {
 	 *
 	 * @return nothing
 	 */
-	constructor(i18n) {
+	constructor(dataC, i18n) {
 		const res = this.storageAvailable('localStorage');
 		this.settings = {};
 		this.i18nhook = i18n;
-		this.dataC = null;
+		this.dataC = dataC;
 		if (res) {
 			if(!localStorage.getItem('settings')) {
 				this.initSettings();
@@ -23,10 +23,6 @@ export default class LocalStorageController {
 		else {
 			throw res;
 		}
-	}
-
-	setDataC(reference) {
-		this.dataC = reference;
 	}
 
 
