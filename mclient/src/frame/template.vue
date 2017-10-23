@@ -53,6 +53,7 @@ export default {
 	},
 	methods: {
 		'changeview': function (newView, data={}) {
+			window.location.hash = newView;
 			this.$refs.main.scrollTop = 0;
 			bus.$emit('resetActions');
 			this.currentData = data;
@@ -98,6 +99,7 @@ export default {
 		flex-direction: column;
 		align-items: stretch;
 		height: 100%;
+		will-change: scroll-position;
 	}
 	.viewhook {
 		flex: 1;

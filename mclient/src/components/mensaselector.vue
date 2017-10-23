@@ -153,6 +153,18 @@ export default {
 		ripple: {
 			bind(el, binding, vnode) {
 				MDCRipple.attachTo(el);
+				// MDCRippleFoundation({
+				// 	registerInteractionHandler: (evtType, handler) => {
+				// 		console.log("wow");
+				// 	  const target = evtType === 'mouseup' || evtType === 'pointerup' ? 'window' : this.element
+				// 	  this.listen(target, evtType, handler)
+				// 	},
+				// 	deregisterInteractionHandler: (evtType, handler) => {
+				// 		console.log("owo");
+				// 	  const target = evtType === 'mouseup' || evtType === 'pointerup' ? 'window' : this.element
+				// 	  this.unlisten(target, handler)
+				// 	}
+				// }).attachTo(el);
 			}, update(el, binding, vnode) {
 				MDCRipple.attachTo(el);
 			}
