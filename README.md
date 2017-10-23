@@ -1,5 +1,5 @@
 <div align="center">
-    <img width="50" vspace="" hspace="25" src="https://qvieo.com/githubimg/mlogo.svg">
+    <img width="75" vspace="" hspace="25" src="https://qvieo.com/githubimg/mlogo_md.svg">
   <p>Simplifies Mensa<p>
 </div>
 
@@ -10,6 +10,8 @@
 ```bash
 npm install
 ```
+
+Also check out `/mclient/webpack.dev.js` and API_URL so it fits for you!
 
 ### Running local Server:
 
