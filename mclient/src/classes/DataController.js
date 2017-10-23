@@ -10,6 +10,7 @@ export default class DataController {
 	constructor(i18n) {
 		this.mensas_light = [];
 		this.mensas_full = [];
+		this.additives = [];
 		this.storageC;
 		this.i18nhook = i18n;
 	}
@@ -25,6 +26,26 @@ export default class DataController {
 			else {
 				this.fetchAPI("api/mensas?nolocation").then((result) => {
 					this.mensas_light = result;
+					resolve(result);
+				},
+				(reason) => {
+					reject(reason);
+				});
+			}
+		});
+	}
+
+	/**
+	 * --
+	 *
+	 * @return --
+	 */
+	getAdditives() {
+		return new Promise((resolve, reject) => {
+			if (this.additives.length > 0) resolve(this.additives);
+			else {
+				this.fetchAPI("api/additives").then((result) => {
+					this.additives = result;
 					resolve(result);
 				},
 				(reason) => {
@@ -105,7 +126,7 @@ export default class DataController {
 	newUserID() {
 		return new Promise((resolve, reject) => {
 			let url = "api/user/create";
-			this.fetchAPI(url).then((result) => {
+			this.fetchAPI(url,'PUT').then((result) => {
 				resolve(result._id);
 			},
 			(reason) => {
@@ -118,7 +139,7 @@ export default class DataController {
 		this.storageC = reference;
 	}
 
-	fetchAPI(APIpath) {
+	fetchAPI(APIpath, type='GET') {
 		return new Promise((resolve, reject) => {
 			let newurl = API_URL+APIpath;
 

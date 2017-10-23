@@ -91,6 +91,12 @@ export default {
 		height: 100%;
 		background-color: #f4f5f6;
 		transition: background 0.5s;
+		-webkit-touch-callout: none;
+		-webkit-user-select: none;
+		-khtml-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
 	}
 	.main {
 		flex: 1;
@@ -123,7 +129,6 @@ export default {
 		margin-bottom: 20px;
 		font-size: 14px;
 		color: black;
-		overflow: hidden;
 		box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.15), 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
 	}
 	.whitebox_header {
@@ -138,12 +143,6 @@ export default {
 	}
 	.whitebox_element.clickable {
 		cursor: pointer;
-		-webkit-touch-callout: none;
-		-webkit-user-select: none;
-		-khtml-user-select: none;
-		-moz-user-select: none;
-		-ms-user-select: none;
-		user-select: none;
 	}
 	.whitebox_element_top {
 		font-size: 14px;

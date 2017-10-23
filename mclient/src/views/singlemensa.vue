@@ -10,7 +10,6 @@
 					<loadGlow :extStyle="[$style.loading, $style.loadh1]" :dimension="{min:40, max:50, end: '%'}"></loadGlow>
 					<loadGlow :extStyle="[$style.loading, $style.loadh2]" :dimension="{min:60, max:80, end: '%'}"></loadGlow>
 				</span>
-
 				<loadGlow v-if="!additionaldata" :extStyle="$style.loading" :dimension="{min:30, max:60, end: '%'}"></loadGlow>
 				<span v-else><openingTimes :times="additionaldata.location.times"></openingTimes></span>
 			</div>
@@ -26,18 +25,7 @@
 			</div>
 			<div v-if="menu" class="whitebox" v-for="(category, key) in menu">
 				<div class="whitebox_header">{{key}}</div>
-				<div :class="['whitebox_element', $style.elem]" v-for="item in category">
-					<div :class="$style.elemleft">
-						<icon :className="[$style.iconstyle, getcolor(item.ampel)]" :svg="theM"></icon>
-					</div>
-					<div :class="$style.elemmid">
-						<div class="whitebox_element_top">{{item.name}}</div>
-						<div class="whitebox_element_bottom">{{pictogramString(item.labels)}} {{item.additives.length +' '+$t('labels.additives') }}</div>
-					</div>
-					<div :class="$style.elemright">
-						{{ parseFloat(item.prices[pricetype]).toFixed(2) }} €
-					</div>
-				</div>
+				<FoodItem v-for="(item, index) in category" :key="index" :info="item"></FoodItem>
 			</div>
 		</div>
 	</div>
@@ -47,15 +35,14 @@
 import loadGlow from './../components/loadGlow.vue';
 import openingTimes from './../components/opening_times.vue';
 import icon from './../components/icon.vue';
+import FoodItem from './../components/food_item.vue';
 
 export default {
 	data () {
 		return {
 			basicdata: undefined,
-			theM: require('./../assets/theM.svg'),
 			additionaldata: false,
 			menu: undefined,
-			pricetype: this.$root.$data.storageC.settings.pricetype,
 			back: require('./../assets/back.svg')
 		}
 	},
@@ -101,33 +88,12 @@ export default {
 		},
 		goBack: function () {
 			bus.$emit('changeview', 'viewmensas');
-		},
-		pictogramString: function (arr) {
-			let str = "";
-			let lngth = arr.length;
-			if (lngth<1) return "";
-			for (var i = 0; i < lngth; i++) {
-				str += this.$t('labels.'+arr[i]);
-				if (i<lngth-1) str += ", ";
-			}
-			return str+" | ";
-		},
-		getcolor: function (nr) {
-			switch (nr) {
-				case 0:
-					return this.$style.green;
-					break;
-				case 1:
-					return this.$style.yellow;
-					break;
-				case 2:
-					return this.$style.red;
-			}
 		}
 	},
 	components: {
 		loadGlow,
 		icon,
+		FoodItem,
 		openingTimes
 	}
 }
@@ -173,23 +139,10 @@ export default {
 	.elem {
 		display: flex;
 	}
-	.elemleft {
-
-	}
 	.elemmid {
 		flex: 1;
 		display: flex;
 		flex-flow: column;
 		justify-content: center;
 	}
-	.elemright {
-
-	}
-	.iconstyle svg {
-		height: 30px;
-		margin: 5px 10px 5px 0;
-	}
-	.green {fill: #45c89c;}
-	.yellow {fill: #ffc31a;}
-	.red {fill: #ff543c;}
 </style>

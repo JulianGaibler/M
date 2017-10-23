@@ -48,6 +48,9 @@ class Handler extends ExceptionHandler
 		if ($e instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
 			return response('Sorry, wrong room',404);
 		}
+		if ($e instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException) {
+			return response('Sorry, right room, wrong table',404);
+		}
         return parent::render($request, $e);
     }
 }

@@ -43,6 +43,7 @@
 	},
 	"result": {
 		"noresults_headline": "keine Ergebnisse.",
+		"none": "none",
 		"noresults_quote": "The Magic Conch Shell has spoken!",
 		"loaderror_explain": "An error has occurred while loading",
 		"error_shoutouts": ["Oh my Glob!", "UNACCEPTABLE!", "Shmowzow!", "What the cabbage?!", "Oh Lumps.", "What the flip, man?"]
@@ -58,7 +59,7 @@
 		"opens": "opens",
 		"closes": "open until",
 		"closed": "closed",
-		"starts": "starts",
+		"starts": "begins",
 		"ends": "ends",
 		"ended": "ended"
 	},

@@ -20,6 +20,9 @@ coverage
 # nyc test coverage
 .nyc_output
 
+#Dist
+mclient/dist/
+
 # Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
 
@@ -78,4 +81,3 @@ Homestead.json
 # Rocketeer PHP task runner and deployment package. https://github.com/rocketeers/rocketeer
 .rocketeer/
 .DS_Store
-mclient/dist/

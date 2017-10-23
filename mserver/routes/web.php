@@ -20,7 +20,7 @@ use Illuminate\Http\Response;
 
 $app->group(['prefix' => 'api/', 'middleware' => ['cacheFetch', 'cachePut']], function () use ($app) {
 
-	$app->get('/user/create', function(Request $request) {
+	$app->put('/user/create', function(Request $request) {
 		$user = new mUser();
 		$user->save();
 		return (new Response(json_encode(['_id' => $user->_id]), 200))
