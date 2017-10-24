@@ -8,6 +8,10 @@ import DataController from './classes/DataController.js'
 
 window.bus = new Vue();
 
+Vue.config.keyCodes = {
+  nextchip: [32, 188, 13]
+}
+
 new Vue({
 	el: document.getElementById("mount"),
 	i18n,

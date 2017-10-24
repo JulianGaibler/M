@@ -5,7 +5,7 @@
 					<div v-bind:key="item" :class="$style.chip"><span>{{item}}</span><icon v-on:click.native="deleteChip(item)" :svg="iconclose"></icon></div>
 				</template>
 			<div :class="$style.expander" v-on:click="focusInput()"></div>
-			<input :class="$style.txtbox" v-model="searchword" v-on:keypress.188="addChip()" v-on:keypress.enter="addChip()" ref="chipInput" placeholder="Keywords">
+			<input :class="$style.txtbox" v-model="searchword" v-on:keypress.nextchip="addChip()" ref="chipInput" placeholder="Keywords">
 		</div>
 		<div :class="$style.expander" v-on:click="focusInput()"></div>
 	</div>
@@ -31,7 +31,7 @@ name: 'mensaselector',
 			if (this.searchword.charAt(this.searchword.length - 1) == ',') {
 			  this.searchword = this.searchword.substr(0, this.searchword.length - 1);
 			}
-			if (this.searchword.length>20 || this.searchword.length<4) return;
+			if (this.searchword.length>20 || this.searchword.length<2) return;
 			this.items.push(this.searchword);
 			this.searchword="";
 			this.$root.$data.storageC.updateStorage();

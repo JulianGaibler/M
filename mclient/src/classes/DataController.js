@@ -144,7 +144,7 @@ export default class DataController {
 			let newurl = API_URL+APIpath;
 
 			let request = new XMLHttpRequest();
-			request.open('GET', newurl, true);
+			request.open(type, newurl, true);
 
 			request.onload = function() {
 			  if (request.status >= 200 && request.status < 400) {

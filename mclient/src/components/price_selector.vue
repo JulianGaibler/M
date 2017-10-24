@@ -1,5 +1,5 @@
 <template>
-	<div class="whitebox">
+	<div :class="['whitebox', $style.selectwb]">
 		<div v-for="index in 3" :class="$style.selectcontainer">
 			<div class="mdc-radio">
 				<input v-model="pricetype" :checked="index==(pricetype+1)" :value="index-1" class="mdc-radio__native-control" type="radio" :id="'radio-'+index" name="radios" checked>
@@ -35,10 +35,13 @@ export default {
 
 <style src="@material/radio/dist/mdc.radio.min.css"/>
 <style module>
+	.selectwb {
+		padding: 10px 0;
+	}
 	.selectcontainer {
 		display: flex;
 		align-items: center;
-		margin: 20px 10px;
+		padding: 10px;
 	}
 	.label {
 		padding-left: 10px;

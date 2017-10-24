@@ -10,7 +10,7 @@
 		<chipsfield :items="this.$root.$data.storageC.settings.highlights" :class="[$style.chipsfield, 'whitebox']"></chipsfield>
 
 		<div :class="$style.section">{{ $t('settings.mensa_selector') }}</div>
-		<mensaselector :whiteboxstyle="style"></mensaselector>
+		<mensaselector></mensaselector>
 	</div>
 </template>
 
@@ -22,7 +22,7 @@ import mensaselector from './../components/mensaselector.vue';
 export default {
 	data () {
 	return {
-		style: [this.$style.mensawb, 'subtleScrollbar']
+
 	}
 	},
 	components: {
@@ -50,9 +50,5 @@ export default {
 		padding-top: 30px;
 		padding-bottom: 10px;
 		text-align: center;
-	}
-	.mensawb {
-		max-height: 500px;
-		overflow-y: scroll;
 	}
 </style>

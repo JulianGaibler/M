@@ -36,7 +36,8 @@ export default {
 		return {
 			currentView: startView,
 			showfooter: true,
-			currentData: {}
+			currentData: {},
+			oldState: {view: startView, scroll: 0, data: {}}
 		}
 	},
 	components: {
@@ -48,20 +49,43 @@ export default {
 		'viewsetup':viewsetup,
 		'singlemensa':singlemensa
 	},
+	mounted() {
+		this.$nextTick(function() {
+			window.addEventListener('popstate', this.popstate);
+		})
+	},
+	beforeDestroy() {
+		window.removeEventListener('resize', this.popstate);
+	},
 	created: function () {
 		bus.$on('changeview', this.changeview);
 	},
 	methods: {
 		'changeview': function (newView, data={}) {
 			window.location.hash = newView;
+
+			this.oldState.view = this.currentView
+			this.oldState.scroll = this.$refs.main.scrollTop;
+			this.oldState.data = this.currentData;
+
 			this.$refs.main.scrollTop = 0;
 			bus.$emit('resetActions');
 			this.currentData = data;
 			if (!!newView) this.currentView = newView;
 			else this.currentView = 'viewmensas';
-		}, 'specialScreen': function (view) {
+		},
+		'specialScreen': function (view) {
 			if (view=='viewsetup') return true;
 			else return false;
+		},
+		'goBack': function () {
+			this.currentView = this.oldState.view;
+			this.$refs.main.scrollTop = this.oldState.scroll;
+			//TODO
+
+		},
+		'popstate': function (event) {
+			// Went back or forward :S
 		}
 	}
 }

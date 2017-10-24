@@ -2,7 +2,7 @@
 	<div class="noselect">
 		<verticalSelect :items="vertical_data" :itemTranslation="[1,0,2]" :activeitem="this.type" v-on:triggered="changeType"></verticalSelect>
 		
-		<searchBox :loading="this.loading" :searchword="searchword" :results="availableItems_computed.length+this.subscribedItems[this.type].length" :placeholder="this.$tc('action.search')" v-on:inputChange="changeSearchword">
+		<searchBox ref="search" :loading="this.loading" :searchword="searchword" :results="availableItems_computed.length+this.subscribedItems[this.type].length" :placeholder="this.$tc('action.search')" v-on:inputChange="changeSearchword">
 			<div :class="whiteboxstyle">
 			<draggable :list="subscribedItems[this.type]" :options="{handle:'.handle'}">
 					<div v-for="item in this.subscribedItems[this.type]" :key="item._id" :class="[$style.elem, $style.elem_draggable]">
@@ -111,7 +111,8 @@ export default {
 			this.searchword = string;
 		},
 		changeType: function (nr) {
-			this.searchword = "";
+			//this.searchword = "";
+			this.$refs.search.deleteInput();
 			this.type = nr;
 			switch(nr) {
 			    case 0:
@@ -152,9 +153,9 @@ export default {
 	directives: {
 		ripple: {
 			bind(el, binding, vnode) {
-				MDCRipple.attachTo(el);
+				//MDCRipple.attachTo(el);
 			}, update(el, binding, vnode) {
-				MDCRipple.attachTo(el);
+				//MDCRipple.attachTo(el);
 			}
 		}
 	}

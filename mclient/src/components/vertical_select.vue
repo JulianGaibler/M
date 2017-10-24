@@ -29,11 +29,12 @@ export default {
 	.types {
 		display: flex;
 		text-align: center;
-		margin: 10px 0 20px 0;
+		margin-bottom: 10px;
 	}
 	.types_option {
 		text-transform: uppercase;
 		flex: 1;
+		padding: 10px 0 10px 0;
 		flex-basis: 100%;
 		opacity: .6;
 		font-size: 16px;

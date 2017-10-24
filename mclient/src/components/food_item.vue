@@ -75,7 +75,6 @@ export default {
 			if (this.info.additives.length < 1) return [this.$t("result.none")];
 			if (this.additivesList.length < 1) {
 				this.additivesList = null;
-				console.log(this.info.name);
 				this.$root.$data.dataC.getAdditives().then((result) => {
 					this.additivesList = result;
 				},
@@ -88,12 +87,13 @@ export default {
 				for (var k = 0; k < this.info.additives.length; k++) {
 					for (var i = this.additivesList.length - 1; i >= 0; i--) {
 						if (this.additivesList[i].id === this.info.additives[k]) {
+							console.log(this.additivesList[i].id+" === "+this.info.additives[k]);
 							switch (userlang) {
 								case 'de':
-									bucket.push(this.additivesList[k].name_de);
+									bucket.push(this.additivesList[i].name_de);
 									break;
 								case 'en':
-									bucket.push(this.additivesList[k].name_en);
+									bucket.push(this.additivesList[i].name_en);
 							}
 							break;
 						}
@@ -128,6 +128,7 @@ export default {
 	.outelem {
 		transition: all .3s;
 		background-color: white;
+		will-change: height;
 		margin: 0;
 	}
 	.elemOpen {
