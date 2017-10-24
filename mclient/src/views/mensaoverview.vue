@@ -54,6 +54,11 @@ export default {
 			this.loadingall = 2;
 		});
 
+		console.log(this.data);
+		if (this.data!==undefined) {
+			if (this.data.type!==undefined) this.type = this.data.type;
+		}
+
 		this.upgradeSubs();
 
 	},
@@ -70,10 +75,10 @@ export default {
 				else return [];
 		}
 	},
+	props: ['data'],
 	methods: {
 		changeType: function (nr) {
 			this.searchword = "";
-			this.type = nr;
 			switch(nr) {
 				case 0:
 					this.type = 1;
@@ -84,6 +89,7 @@ export default {
 				case 2:
 					this.type = 2;
 			}
+			this.data.type = this.type;
 			this.upgradeSubs();
 		},
 		upgradeSubs: function () {

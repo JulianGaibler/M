@@ -2,8 +2,7 @@
 	<!-- SETUP: Language -->
 	<div :class="['adaptiveWrap', $style.setup, $style.setupfirst]" v-if="page==0">
 		<icon :class="$style.introimg" :svg="intro_img"></icon>
-		<div :class="[$style.middle, $style.paragraphcolor]">
-		</div>
+		<div :class="[$style.middle, $style.paragraphcolor]"><span>ALPHA TEST</span></div>
 		<div :class="$style.bottom">
 			<button v-bind:key="page" v-on:click="proceedLang('de')" class="mdc-button">German</button>
 			<button v-bind:key="page" v-on:click="proceedLang('en')" class="mdc-button">English</button>
@@ -81,11 +80,11 @@
 	<!-- SETUP: So much more -->
 	<div :class="['adaptiveWrap', $style.setup]" v-else-if="page==5">
 		<div :class="$style.top">
-			<p>Hooray!</p>
+			
 		</div>
 
 		<div :class="$style.middle">
-			<h1>Hooray!</h1>
+			<h1>{{ $t('action.done') }}</h1>
 		</div>
 		<div :class="$style.bottom">
 			<button v-bind:key="page" v-on:click="gonext()" class="mdc-button">{{ $t('action.got_it') }}</button>
@@ -224,14 +223,23 @@ export default {
 		flex: 1;
 		display: flex;
 		flex-direction: column;
-  	justify-content: center;
-  	align-items: center;
+  		justify-content: center;
+  		align-items: center;
 	}
 	.paragraphcolor p {
 		font-size: 14px;
 		padding: 10px;
 		max-width: 450px;
 		padding: 0 10%;
+	}
+
+	.paragraphcolor span {
+		font-family: 'Roboto Condensed', sans-serif;
+		background-color: white;
+		color: #651fff;
+		padding: 5px 10px;
+		font-size: 20px;
+		opacity: .9;
 	}
 
 
