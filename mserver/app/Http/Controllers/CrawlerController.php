@@ -10,26 +10,50 @@ use App\Mensas;
 
 class CrawlerController extends Controller
 {
+
 	/**
 	 * Fetches the menu from a mensa from the STW Website and returnes them in JSON
 	 *
 	 * @return void
 	 */
 	public function getMenu(Request $request, $id) {
+		
 		$lang = $request->query('lang', 'de');
 		$date = $request->query('date', null);
+		if ($date!=null) $date = date_create($date);
 
 		$mensa = Mensas::where('_id', strval($id))->first();
-		if (is_null($mensa)) return [];
+		if (!is_null($mensa)) {
+			$result = $mensa->origin;
 
-		$mensaID = $mensa->mensa_id;
+			switch ($result["handle"]) {
+				case "stwberlin":
+					$res = $this->getStwBerlinMenu($result["mensa_id"], $lang, $date);
+					return response()->json($res);
+					break;
+				case "personalkantinetuberlin":
+					$res = $this->getPersonalkantinetuberlinMenu($result["nr"], $lang, $date);
+					return response()->json($res);
+					break;
+			}
+		}
+		return (new Response("Does exist but does not have a handler", 404));
+
+	}
+
+	/**
+	 * Fetches the menu from a mensa from the STW Website and returnes them in JSON
+	 *
+	 * @return void
+	 */
+	public function getStwBerlinMenu($mensaID, $lang, $date) {
 
 		$guzzleClient = new GuzzleClient();
 		$link = "https://www.stw.berlin/xhr/speiseplan-und-standortdaten.html";
 
 		$param = ['resources_id' => $mensaID];
 		if (null != $date) {
-			$param['date'] = $date;
+			$param['date'] = date_format($date, "Y-m-d");
 		}
 
 
@@ -53,9 +77,9 @@ class CrawlerController extends Controller
 						$additives = explode(',', $node->attr('lang'));
 						if (strlen($additives[0]) < 1) $additives = [];
 
-						$name = $this->convertCrawlerString($node->filter('span.bold')->first()->text());
+						$name = $this->convertCrawlerString($node->filter('span.bold')->first()->text(), true);
 
-						$prices = explode('/', substr($this->convertCrawlerString($node->filter('.col-xs-6.col-md-3.text-right')->first()->text()),2));
+						$prices = explode('/', substr($this->convertCrawlerString($node->filter('.col-xs-6.col-md-3.text-right')->first()->text(), true),2));
 
 						if (strlen($prices[0]) < 1) {
 							$prices[0] = 0.0;
@@ -122,13 +146,89 @@ class CrawlerController extends Controller
 							'additives' => $additives];
 						$category[] = $val;
 					});
-					$category_name = $this->convertCrawlerString($onode->filter('.splGroup')->first()->text());
+					$category_name = $this->convertCrawlerString($onode->filter('.splGroup')->first()->text(), true);
 					$mensas[$category_name] = $category;
 					}
 				});
-		return (new Response(json_encode($mensas), 200))
-						->header('Content-Type', "json")
-						->header('charset', "utf-8");
+		return $mensas;
+	}
+
+	/**
+	 * Fetches the menu from a mensa from the Personalkantinen Website and returnes them in JSON
+	 *
+	 * @return void
+	 */
+	public function getPersonalkantinetuberlinMenu($id, $lang, $date) {
+
+		$guzzleClient = new GuzzleClient();
+		$link = "http://personalkantine.personalabteilung.tu-berlin.de/";
+
+		if (null == $date) return (new Response("personalkantine TU needs date", 400));
+
+		$dateString = date_format($date, "d.m.Y");
+
+		$crawler = $guzzleClient->request('GET', $link);
+
+
+		$crawler = new Crawler((string) $crawler->getBody(true));
+		$crawler = $crawler->filter('.Menu__accordion')->eq($id);
+		$mensas = [];
+
+		$crawler
+			->filter('.Menu__accordion > li')
+			->reduce(function (Crawler $onode, $j) use (&$dateString, &$lang, &$mensas) {
+			
+			if (strpos($this->convertCrawlerString($onode->filter('h2')->first()->text()), $dateString) !== false) {
+				$food = [];
+				$onode->filter('ul > li')
+					->reduce(function (Crawler $node, $k) use (&$category, &$food, &$mensas) {
+
+						$prices[0] = preg_replace("[^0-9,]", "", $this->convertCrawlerString($node->filter('.price')->first()->text()));
+						$prices[0] = floatval(str_replace(',', '.', $prices[0]));
+						$prices[1] = $prices[0];
+						$prices[2] = $prices[0];
+
+						foreach ($node as $inNode) {
+							$inNode->parentNode->removeChild($inNode);
+						}
+
+						$labels = [];
+						$additives = [];
+						$additivesArr = array("M"=>"30", "1"=>"21", "2"=>"6", "3"=>"7", "4"=>"8", "5"=>"3", "6"=>"21", "7"=>"22", "8"=>"26", "9"=>"27", "10"=>"28", "11"=>"29", "12"=>"32", "13"=>"36", "14"=>"23", "Sch"=>"2", "R"=>"2a", "G"=>"2b", "F"=>"2c", "L"=>"2d", "W"=>"2e");
+						$labelsArr = array("Vs" => "lightfood", "S" => "lightfood", "V" => "vegetarian", "P" => "corned");
+
+						$subtext = explode(" (", $this->convertCrawlerString($node->text()));
+						$name = $subtext[0];
+
+						if (sizeof($subtext)>1) {
+							$foreignAdditives = preg_split("/(\W)+/", $subtext[1]);
+							foreach ($foreignAdditives as $fa) {
+								if ($fa=="") continue;
+								if (array_key_exists($fa, $additivesArr)) {
+									$additives[] = $additivesArr[$fa];
+									continue;
+								} else if (array_key_exists($fa, $labelsArr)) {
+									$labels[] = $labelsArr[$fa];
+									continue;
+								}
+							}
+						}
+
+						$val = [
+							'name' => $name,
+							'ampel' => null,
+							'prices' => $prices,
+							'labels' => $labels,
+							'additives' => $additives];
+						$food[] = $val;
+				});
+				$translate = "Tageskarte";
+				if ($lang=="en") $translate = "Menu";
+				$mensas[$translate] = $food;
+				return;
+			}
+			});
+		return $mensas;
 	}
 
 	/**
@@ -136,8 +236,8 @@ class CrawlerController extends Controller
 	 *
 	 * @return String
 	 */
-	private function convertCrawlerString($string) {
-			$string = trim(utf8_decode($string));
+	private function convertCrawlerString($string, $decode=false) {
+			if ($decode) $string = trim(utf8_decode($string));
 			$string = preg_replace("/\n/", '', $string);
 			$string = preg_replace("/\"|'/", '"', $string);
 			$string = preg_replace('!\s+!', ' ', $string);

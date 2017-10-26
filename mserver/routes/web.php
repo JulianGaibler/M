@@ -33,9 +33,9 @@ $app->group(['prefix' => 'api/', 'middleware' => ['cacheFetch', 'cachePut']], fu
 		$nolocation = $request->query('nolocation', true);
 		$q; $r = [];
 		for ($i=0; $i < 3; $i++) {
-			if (!$nolocation) $q = Mensas::project(["location.adress"=>1, "type"=>1, "nameA"=>1, "nameB"=>1, "mensa_id"=>1, "hasMenu"=>1,  "_id"=>1])->orderBy('nameA', 'desc');
+			if (!$nolocation) $q = Mensas::project(["location.adress"=>1, "type"=>1, "nameA"=>1, "nameB"=>1, "mensa_id"=>1, "hasMenu"=>1,  "_id"=>1]);
 			else $q = Mensas::project([]);
-			$r[] = $q->where('type', $i)->get();
+			$r[] = $q->where('type', $i)->orderBy('nameA', 'asc')->get();
 		}
 		return $r;
 	});
