@@ -1,4 +1,8 @@
 <template>
+<div>
+<!-- 	<div :class="$style.upperextend">
+		<div :class="$style.dateel" v-for="index in 5">Mo</div>
+	</div> -->
 	<div class="adaptiveWrap">
 		<div :class="$style.headlineContainer">
 			<div :class="$style.headline">
@@ -29,6 +33,7 @@
 			</div>
 		</div>
 	</div>
+</div>
 </template>
 
 <script>
@@ -43,7 +48,9 @@ export default {
 			basicdata: undefined,
 			additionaldata: false,
 			menu: undefined,
-			back: require('./../assets/back.svg')
+			back: require('./../assets/back.svg'),
+			daterange: require('./../assets/date_range.svg'),
+			sort: require('./../assets/sort.svg')
 		}
 	},
 	props: ['data'],
@@ -52,7 +59,15 @@ export default {
 			{
 			svg: this.back,
 			function: this.goBack
-		}],[]]);
+		}],[
+		{
+			svg: this.daterange,
+			function: ()=>{}
+		},
+		{
+			svg: this.sort,
+			function: ()=>{}
+		}]]);
 
 		this.additionaldata = false;
 		this.menu = false;
@@ -87,7 +102,7 @@ export default {
 			return Math.floor(Math.random() * (max - min + 1)) + min;
 		},
 		goBack: function () {
-			bus.$emit('changeview', 'viewmensas');
+			window.history.back();
 		}
 	},
 	components: {
@@ -98,6 +113,8 @@ export default {
 	}
 }
 </script>
+
+<style src="@material/ripple/dist/mdc.ripple.min.css"/>
 
 <style module>
 	.headlineContainer {
@@ -144,5 +161,10 @@ export default {
 		display: flex;
 		flex-flow: column;
 		justify-content: center;
+	}
+
+	.upperextend {
+		background-color: #ebebeb;
+		display: flex;
 	}
 </style>

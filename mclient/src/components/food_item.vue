@@ -1,6 +1,6 @@
 <template> 
-	<div :class="['whitebox_element', $style.outelem, moreInfo ? $style.elemOpen : '']">
-		<div v-on:click="toggle(false)" :class="$style.elem">
+	<div :class="[$style.outelem, moreInfo ? $style.elemOpen : '']">
+		<div v-on:click="toggle(false)" :class="[$style.elem, 'mdc-ripple-surface']">
 			<div :class="$style.elemleft">
 				<icon :className="[$style.iconstyle, getcolor(info.ampel)]" :svg="theM"></icon>
 			</div>
@@ -124,6 +124,7 @@ export default {
 	.elem {
 		display: flex;
 		cursor: pointer;
+		padding: 15px 20px;
 	}
 	.outelem {
 		transition: all .3s;
@@ -155,6 +156,7 @@ export default {
 	.elemOpen .elembottom {
 		overflow: hidden;
 		max-height: 300px;
+		padding: 0 20px 15px 20px;
 	}
 	.elemright {
 		padding-left: 10px;

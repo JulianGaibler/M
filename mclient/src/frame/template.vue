@@ -37,7 +37,8 @@ export default {
 			currentView: startView,
 			showfooter: true,
 			currentData: {},
-			oldState: {view: startView, scroll: 0, data: {}}
+			pagecount: 0,
+			oldState: [{view: startView, scroll: 0, data: {}}]
 		}
 	},
 	components: {
@@ -50,6 +51,7 @@ export default {
 		'singlemensa':singlemensa
 	},
 	mounted() {
+		window.location.hash = 0;
 		this.$nextTick(function() {
 			window.addEventListener('popstate', this.popstate);
 		})
@@ -59,14 +61,17 @@ export default {
 	},
 	created: function () {
 		bus.$on('changeview', this.changeview);
+		bus.$on('goBack', this.goBack);
 	},
 	methods: {
 		'changeview': function (newView, data={}) {
-			window.location.hash = newView;
+			window.location.hash = ++this.pagecount;
 
-			this.oldState.view = this.currentView
-			this.oldState.scroll = this.$refs.main.scrollTop;
-			this.oldState.data = this.currentData;
+			this.oldState.push({
+				view: this.currentView,
+				scroll: this.$refs.main.scrollTop,
+				data: this.currentData
+			});
 
 			this.$refs.main.scrollTop = 0;
 			bus.$emit('resetActions');
@@ -79,13 +84,18 @@ export default {
 			else return false;
 		},
 		'goBack': function () {
-			this.currentView = this.oldState.view;
-			this.$refs.main.scrollTop = this.oldState.scroll;
-			//TODO
+			let hashnr = parseInt(window.location.hash.substr(1));
+			if (hashnr == NaN || hashnr >= this.pagecount) return;
+			bus.$emit('resetActions');
+			let os = this.oldState.pop();
+			this.currentView = os.view;
+			this.$refs.main.scrollTop = os.scroll;
+			this.currentData = os.data;
 
 		},
 		'popstate': function (event) {
 			// Went back or forward :S
+			this.goBack();
 		}
 	}
 }
@@ -121,6 +131,7 @@ export default {
 		-moz-user-select: none;
 		-ms-user-select: none;
 		user-select: none;
+		-webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 	}
 	.main {
 		flex: 1;
