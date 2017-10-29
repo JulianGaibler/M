@@ -8,6 +8,7 @@ Release 1.0
 ✘	Word Tags
 ✘	Feedback
 ✘	Aria-Tags
+✘	Textfelder grau wenn deaktiviert
 ?	Bug beim verschieben in mobile
 
 Release 1.1
