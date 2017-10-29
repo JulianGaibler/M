@@ -44,7 +44,7 @@ export default {
 <style module>
 	.wrapper {
 		display: flex;
-		margin: 5px;
+		margin: 2px 5px 0 5px;
 		height: 60px;
 		align-items: center;
 		flex-shrink: 0;
@@ -53,7 +53,7 @@ export default {
 		height: 25px;
 	}
 	.wrapper .b {
-		flex: 1;
+		flex: 0;
 		text-align: center;
 	}
 	.wrapper .a {

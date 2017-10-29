@@ -19,6 +19,7 @@ import mensaoverview from './../views/mensaoverview.vue'
 import singlemensa from './../views/singlemensa.vue'
 import settings from './../views/settings.vue'
 import viewsetup from './../views/setup.vue'
+
 export default {
 	data () {
 		let startView = 'viewsetup';

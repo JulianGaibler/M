@@ -46,8 +46,8 @@
 	"result": {
 		"noresults_headline": "keine Ergebnisse.",
 		"none": "none",
-		"noresults_quote": "The Magic Conch Shell has spoken!",
 		"loaderror_explain": "An error has occurred while loading",
+		"noresults_explain": "Your search query returned no results",
 		"error_shoutouts": ["Oh my Glob!", "UNACCEPTABLE!", "Shmowzow!", "What the cabbage?!", "Oh Lumps.", "What the flip, man?"]
 	},
 	"food": {

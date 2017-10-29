@@ -1,8 +1,8 @@
 <template>
 <div>
-<!-- 	<div :class="$style.upperextend">
-		<div :class="$style.dateel" v-for="index in 5">Mo</div>
-	</div> -->
+	<div :class="[$style.upperextend, upperextend===1?$style.extendopen:'']">
+		<datePicker v-if="additionaldata" :loading="((this.menu===false) ? true : false)" :initialDate="this.showDate.mmt" :times="additionaldata.location.times"></datePicker>
+	</div>
 	<div class="adaptiveWrap">
 		<div :class="$style.headlineContainer">
 			<div :class="$style.headline">
@@ -14,6 +14,8 @@
 					<loadGlow :extStyle="[$style.loading, $style.loadh1]" :dimension="{min:40, max:50, end: '%'}"></loadGlow>
 					<loadGlow :extStyle="[$style.loading, $style.loadh2]" :dimension="{min:60, max:80, end: '%'}"></loadGlow>
 				</span>
+				<h3 v-if="showDate.name!==false">{{showDate.name}}</h3>
+				<loadGlow v-else :extStyle="[$style.loading, $style.loadh3]" :dimension="{min:20, max:40, end: '%'}"></loadGlow>
 				<loadGlow v-if="!additionaldata" :extStyle="$style.loading" :dimension="{min:30, max:60, end: '%'}"></loadGlow>
 				<span v-else><openingTimes :times="additionaldata.location.times"></openingTimes></span>
 			</div>
@@ -37,8 +39,10 @@
 </template>
 
 <script>
+import moment from "moment";
 import loadGlow from './../components/loadGlow.vue';
 import openingTimes from './../components/opening_times.vue';
+import datePicker from './../components/date_picker.vue';
 import icon from './../components/icon.vue';
 import FoodItem from './../components/food_item.vue';
 
@@ -48,12 +52,17 @@ export default {
 			basicdata: undefined,
 			additionaldata: false,
 			menu: undefined,
+			showDate: {name: false, mmt: moment(this.data.whenOpen)},
 			back: require('./../assets/back.svg'),
 			daterange: require('./../assets/date_range.svg'),
-			sort: require('./../assets/sort.svg')
+			sort: require('./../assets/sort.svg'),
+			upperextend: 0
 		}
 	},
 	props: ['data'],
+	created: function () {
+		bus.$on('changeDate', this.changeDate);
+	},
 	mounted: function() {
 		bus.$emit('setActions', [[
 			{
@@ -62,7 +71,9 @@ export default {
 		}],[
 		{
 			svg: this.daterange,
-			function: ()=>{}
+			function: ()=>{
+				this.upperextend = (this.upperextend==1)?0:1;
+			}
 		},
 		{
 			svg: this.sort,
@@ -70,19 +81,10 @@ export default {
 		}]]);
 
 		this.additionaldata = false;
-		this.menu = false;
+		this.getMenu();
 
 		let res = this.$root.$data.storageC.getMensa(this.data._id, this.data.type);
 		this.basicdata = (res!==undefined) ? res : false;
-
-		if (this.data.hasMenu) {
-			this.$root.$data.dataC.getMenu(this.data._id).then((result) => {
-				this.menu = result;
-			},
-			(reason) => {
-
-			});
-		} else this.menu = [];
 
 		this.$root.$data.dataC.getSingleMensa([{_id: this.data._id}]).then((result) => {
 			this.additionaldata = result[0];
@@ -103,13 +105,31 @@ export default {
 		},
 		goBack: function () {
 			window.history.back();
+		},
+		changeDate: function (newDate) {
+			this.showDate = newDate;
+			this.getMenu();
+		},
+		getMenu: function() {
+			if (this.menu===false) return;
+			this.menu = false;
+			if (this.data.hasMenu) {
+				this.$root.$data.dataC.getMenu(this.data._id, this.showDate.mmt).then((result) => {
+					this.menu = result;
+				},
+				(reason) => {
+
+				});
+			} else this.menu = [];
 		}
 	},
 	components: {
 		loadGlow,
 		icon,
 		FoodItem,
-		openingTimes
+		openingTimes,
+		datePicker,
+		moment
 	}
 }
 </script>
@@ -136,7 +156,15 @@ export default {
 	.headline h2 {
 		font-size: 35px;
 		font-weight: 700;
-		margin: 0 0 15px 0;
+		margin: 0;
+	}
+	.headline h3 {
+		font-size: 14px;
+		font-weight: 700;
+		margin: 0px 0px 10px 0;
+		color: #a2a2a2;
+		text-align: right;
+		text-transform: uppercase;
 	}
 	.loading {
 		height: 14px;
@@ -147,7 +175,11 @@ export default {
 	}
 	.loadh2 {
 		height: 35px;
-		margin: 0 0 15px 0;
+	}
+	.loadh3 {
+		height: 16px;
+		margin: 2px 0 15px auto;
+		text-align: right;
 	}
 	.loadingbig {
 		height: 16px;
@@ -166,5 +198,15 @@ export default {
 	.upperextend {
 		background-color: #ebebeb;
 		display: flex;
+		margin-bottom: 25px;
+		max-height: 0;
+		overflow: hidden;
+		transition: max-height .3s;
+	}
+	.extendopen {
+		max-height: 100px;
+	}
+	.dateel {
+		padding: 20px;
 	}
 </style>

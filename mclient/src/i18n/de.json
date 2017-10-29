@@ -46,8 +46,8 @@
 	"result": {
 		"noresults_headline": "no results.",
 		"none": "keine",
-		"noresults_quote": "Die Magische Miesmuschel hat gesprochen!",
 		"loaderror_explain": "Es ist ein fehler beim Laden aufgetreten",
+		"noresults_explain": "Die Suche hat keine Treffer ergeben",
 		"error_shoutouts": ["Oh my Glob!", "UNACCEPTABLE!", "Shmowzow!", "What the cabbage?!", "Oh Lumps.", "What the flip, man?"]
 	},
 	"food": {

@@ -1,4 +1,4 @@
-//import taffy from 'taffy'
+import moment from "moment";
 
 export default class DataController {
 
@@ -60,9 +60,11 @@ export default class DataController {
 	 *
 	 * @return --
 	 */
-	getMenu(mensa_id) {
+	getMenu(mensa_id, mmtDate) {
 		return new Promise((resolve, reject) => {
 			let url = "api/menu/"+mensa_id+"?lang="+this.storageC.settings.language;
+
+			url += "&date="+mmtDate.format("YYYY-MM-DD");
 			this.fetchAPI(url).then((result) => {
 				resolve(result);
 			},

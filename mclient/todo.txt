@@ -1,0 +1,31 @@
+Release 1.0
+✓	Zeit
+✘	Mehr Infos wenn man will oder wenn kein Menü
+✘	Ladeanimation für zusatzstoffe
+✘	Fehlermeldung für alles in SingleMensa
+✘	Fehlermeldung für leeres response Array
+✘	Sortieren
+✘	Word Tags
+✘	Feedback
+✘	Aria-Tags
+?	Bug beim verschieben in mobile
+
+Release 1.1
+✓	Zurück button braucht mehr infos über alten zustand (eg. type / scrollpos?)
+✘	Grammatik
+✘	Settings: Language
+✓	Zurück Taste
+✘	Export Settings
+✘	Ripple
+✘	Location helper
+✘	Service Worker
+✘	Releasemeldungen
+
+Release 1.2
+✘	Hinweise
+✘	Highlights
+✘	Starte auf Highlights
+✘	"Starte auf"-Einstellung
+
+Release ~
+✘	Münster

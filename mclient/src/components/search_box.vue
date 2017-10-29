@@ -12,12 +12,12 @@
 			</div>
 		</div>
 		<div v-else-if="loading==2" :class="$style.noresults">
-			<h1>{{ $t('result.error_shoutouts['+getRandomInt(0,5)+']') }}</h1>
+			<h1>{{ $t('result.error_shoutouts['+error_shoutouts_random+']') }}</h1>
 			<p>{{ $t('result.loaderror_explain') }}</p>
 		</div>
 		<div v-else-if="results<1" :class="$style.noresults">
-			<h1>{{ $t('result.noresults_headline') }}</h1>
-			<p>{{ $t('result.noresults_quote') }}</p>
+			<h1>{{ $t('result.error_shoutouts['+error_shoutouts_random+']') }}</h1>
+			<p>{{ $t('result.noresults_explain') }}</p>
 		</div>
 		<slot v-else>Nothing to hide.</slot>
 	</div>
@@ -34,6 +34,7 @@ export default {
 		return {
 			iconsearch: require('./../assets/search.svg'),
 			iconclose: require('./../assets/close.svg'),
+			error_shoutouts_random: this.getRandomInt(0,5),
 			word: ""
 		}
 	},

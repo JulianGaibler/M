@@ -14,7 +14,7 @@
 		</div>
 		<div :class="$style.elembottom">
 			<h3>{{$t('labels.additives')}}</h3>
-			<div v-if="moreInfoThere">
+			<div :class="$style.addlabels" v-if="moreInfoThere">
 				<p v-for="elem in additiveTranslation">{{elem}}</p>
 			</div>
 		</div>
@@ -87,7 +87,6 @@ export default {
 				for (var k = 0; k < this.info.additives.length; k++) {
 					for (var i = this.additivesList.length - 1; i >= 0; i--) {
 						if (this.additivesList[i].id === this.info.additives[k]) {
-							console.log(this.additivesList[i].id+" === "+this.info.additives[k]);
 							switch (userlang) {
 								case 'de':
 									bucket.push(this.additivesList[i].name_de);
@@ -152,11 +151,14 @@ export default {
 		overflow: hidden;
 		max-height: 0;
 		transition: max-height .3s;
+		padding: 0 20px 0 20px;
 	}
 	.elemOpen .elembottom {
 		overflow: hidden;
 		max-height: 300px;
-		padding: 0 20px 15px 20px;
+	}
+	.addlabels {
+		padding-bottom: 15px;
 	}
 	.elemright {
 		padding-left: 10px;

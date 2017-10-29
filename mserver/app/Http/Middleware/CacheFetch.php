@@ -20,7 +20,7 @@ class CacheFetch
         // Perform action
         $key = $this->makeCacheKey($request->fullUrl());
         if (Cache::has($key)) {
-        	return response(Cache::get($key))->header('Content-Type', 'application/json');
+        	return response()->json(Cache::get($key));
         }
 
         return $next($request);
