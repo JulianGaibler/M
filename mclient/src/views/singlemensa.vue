@@ -14,8 +14,6 @@
 					<loadGlow :extStyle="[$style.loading, $style.loadh1]" :dimension="{min:40, max:50, end: '%'}"></loadGlow>
 					<loadGlow :extStyle="[$style.loading, $style.loadh2]" :dimension="{min:60, max:80, end: '%'}"></loadGlow>
 				</span>
-				<h3 v-if="showDate.name!==false">{{showDate.name}}</h3>
-				<loadGlow v-else :extStyle="[$style.loading, $style.loadh3]" :dimension="{min:20, max:40, end: '%'}"></loadGlow>
 				<loadGlow v-if="!additionaldata" :extStyle="$style.loading" :dimension="{min:30, max:60, end: '%'}"></loadGlow>
 				<span v-else><openingTimes :times="additionaldata.location.times"></openingTimes></span>
 			</div>
@@ -29,9 +27,9 @@
 					<loadGlow :extStyle="$style.loading" :dimension="{min:30, max:60, end: '%'}"></loadGlow>
 				</div>
 			</div>
-			<div v-if="menu" class="whitebox" v-for="(category, key) in menu">
-				<div class="whitebox_header">{{key}}</div>
-				<FoodItem v-for="(item, index) in category" :key="index" :info="item"></FoodItem>
+			<div v-if="menu" class="whitebox" v-for="category in menu">
+				<div class="whitebox_header">{{category.displayName}}</div>
+				<FoodItem v-for="(item, index) in category.items" :key="index" :info="item"></FoodItem>
 			</div>
 		</div>
 	</div>
@@ -106,21 +104,51 @@ export default {
 		goBack: function () {
 			window.history.back();
 		},
-		changeDate: function (newDate) {
+		changeDate: function (newDate, update=true) {
 			this.showDate = newDate;
-			this.getMenu();
+
+			bus.$emit('updateAction', 1, 0, {
+				text: this.showDate.name,
+				function: ()=>{
+					this.upperextend = (this.upperextend==1)?0:1;
+				}
+			});
+
+			if (update) this.getMenu();
 		},
 		getMenu: function() {
 			if (this.menu===false) return;
 			this.menu = false;
 			if (this.data.hasMenu) {
 				this.$root.$data.dataC.getMenu(this.data._id, this.showDate.mmt).then((result) => {
-					this.menu = result;
+					this.menu = this.evalMenu(result);
 				},
 				(reason) => {
 
 				});
 			} else this.menu = [];
+		},
+		evalMenu: function(menu) {
+
+			for (var i = 0; i < menu.length; i++) {
+				if (this.$te('menuSection.'+menu[i].name))
+					menu[i].displayName = this.$t('menuSection.'+menu[i].name);
+				else
+					menu[i].displayName = menu[i].name;
+					menu[i].highlightCount = 0;
+			}
+			let hls = this.$root.$data.storageC.settings.highlights;
+			for (var h = hls.length - 1; h >= 0; h--) { // hls[h]
+				for (var m = menu.length - 1; m >= 0; m--) { // menu[m]
+					for (var i = menu[m].items.length - 1; i >= 0; i--) { // menu[m].items[i]
+						if (menu[m].items[i].name.toLowerCase().includes(hls[h])) {
+							menu[m].items[i].highlight = true;
+							menu[m].highlightCount++;
+						}
+					}
+				}
+			}
+			return menu;
 		}
 	},
 	components: {
@@ -156,15 +184,7 @@ export default {
 	.headline h2 {
 		font-size: 35px;
 		font-weight: 700;
-		margin: 0;
-	}
-	.headline h3 {
-		font-size: 14px;
-		font-weight: 700;
 		margin: 0px 0px 10px 0;
-		color: #a2a2a2;
-		text-align: right;
-		text-transform: uppercase;
 	}
 	.loading {
 		height: 14px;
@@ -178,8 +198,7 @@ export default {
 	}
 	.loadh3 {
 		height: 16px;
-		margin: 2px 0 15px auto;
-		text-align: right;
+		margin: 2px 0 15px 0;
 	}
 	.loadingbig {
 		height: 16px;

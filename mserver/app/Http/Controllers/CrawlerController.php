@@ -14,10 +14,9 @@ class CrawlerController extends Controller
 	/**
 	 * Fetches the menu from a mensa from the STW Website and returnes them in JSON
 	 *
-	 * @return void
+	 * @return array of menu or empty array
 	 */
 	public function getMenu(Request $request, $id) {
-		
 		$lang = $request->query('lang', 'de');
 		$date = $request->query('date', null);
 		if ($date!=null) $date = date_create($date);
@@ -146,8 +145,11 @@ class CrawlerController extends Controller
 							'additives' => $additives];
 						$category[] = $val;
 					});
-					$category_name = $this->convertCrawlerString($onode->filter('.splGroup')->first()->text(), true);
-					$mensas[$category_name] = $category;
+					$qword = $this->convertCrawlerString($onode->filter('.splGroup')->first()->text(), true);
+					$qres = DB::collection('menu_sections')->where('translations', ['$in' => [$qword]])->project(["tag"=>1])->get();
+					if (count($qres)>0) $qword = $qres[0]["tag"];
+					$mensas[$j]['name'] = $qword;
+					$mensas[$j]['items'] = $category; 
 					}
 				});
 		return $mensas;
@@ -156,7 +158,7 @@ class CrawlerController extends Controller
 	/**
 	 * Fetches the menu from a mensa from the Personalkantinen Website and returnes them in JSON
 	 *
-	 * @return void
+	 * @return array of menu or empty array
 	 */
 	public function getPersonalkantinetuberlinMenu($id, $lang, $date) {
 
@@ -165,7 +167,7 @@ class CrawlerController extends Controller
 
 		if (null == $date) return (new Response("personalkantine TU needs date", 400));
 
-		$dateString = date_format($date, "d.m.Y");
+		$dateString = date_format($date, "j.n.Y");
 
 		$crawler = $guzzleClient->request('GET', $link);
 
@@ -177,7 +179,6 @@ class CrawlerController extends Controller
 		$crawler
 			->filter('.Menu__accordion > li')
 			->reduce(function (Crawler $onode, $j) use (&$dateString, &$lang, &$mensas) {
-			
 			if (strpos($this->convertCrawlerString($onode->filter('h2')->first()->text()), $dateString) !== false) {
 				$food = [];
 				$onode->filter('ul > li')
@@ -222,9 +223,8 @@ class CrawlerController extends Controller
 							'additives' => $additives];
 						$food[] = $val;
 				});
-				$translate = "Tageskarte";
-				if ($lang=="en") $translate = "Menu";
-				$mensas[$translate] = $food;
+				$mensas[$j]['name'] = 'maindishes';
+				$mensas[$j]['items'] = $food; 
 				return;
 			}
 			});

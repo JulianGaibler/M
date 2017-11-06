@@ -4,7 +4,7 @@
 		
 		<searchBox ref="search" :loading="this.loading" :searchword="searchword" :results="availableItems_computed.length+this.subscribedItems[this.type].length" :placeholder="this.$tc('action.search')" v-on:inputChange="changeSearchword">
 			<div :class="whiteboxstyle">
-			<draggable :list="subscribedItems[this.type]" :options="{handle:'.handle'}">
+			<draggable :list="subscribedItems[this.type]" @change="dragMoved" :options="{handle:'.handle'}">
 					<div v-for="item in this.subscribedItems[this.type]" :key="item._id" :class="[$style.elem, $style.elem_draggable]">
 						<div :class="['handle',$style.action]">
 							<icon :class="$style.dragsvg" :svg="drag_handle"></icon>
@@ -124,6 +124,9 @@ export default {
 			    case 2:
 			        this.type = 2;
 			}
+		},
+		dragMoved: function (a,b,c) {
+			this.$root.$data.storageC.updateStorage();
 		},
 		isprimary: function (item) {
 			let primary = this.$root.$data.storageC.getPrimaryMensa();

@@ -12,6 +12,15 @@
 		"all": "All",
 		"my": "My"
 	},
+	"menuSection": {
+		"appetizers": "Appetizers / Starters",
+		"salads": "Salads",
+		"soups": "Soups",
+		"promotions": "Promotions",
+		"maindishes": "Main dishes",
+		"sidedishes": "Side dishes",
+		"desserts": "Desserts"
+	},
 	"labels": {
 		"vegetarian": "vegetarian",
 		"vegan": "vegan",

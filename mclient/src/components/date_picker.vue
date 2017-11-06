@@ -57,7 +57,7 @@ export default {
 				if (this.times[0].hours.length > ((((mmt.day()-1) % 7) + 7) % 7)) break;
 			} while(true);
 		}
-		bus.$emit('changeDate', this.dates[0]);
+		bus.$emit('changeDate', this.dates[0], false);
 	},
 	components: {
 		icon

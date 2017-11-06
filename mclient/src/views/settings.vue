@@ -7,7 +7,7 @@
 		<priceSelector></priceSelector>
 
 		<div :class="$style.section">{{ $t('settings.search_and_hightlight') }}</div>
-		<chipsfield :items="this.$root.$data.storageC.settings.highlights" :class="[$style.chipsfield, 'whitebox']"></chipsfield>
+		<chipsfield :stringCase="false" :items="this.$root.$data.storageC.settings.highlights" :class="[$style.chipsfield, 'whitebox']"></chipsfield>
 
 		<div :class="$style.section">{{ $t('settings.mensa_selector') }}</div>
 		<mensaselector></mensaselector>

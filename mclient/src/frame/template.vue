@@ -137,6 +137,7 @@ export default {
 	.main {
 		flex: 1;
 		overflow-y: scroll;
+		-webkit-overflow-scrolling: touch;
 		display: inline-flex;
 		flex-direction: column;
 		align-items: stretch;

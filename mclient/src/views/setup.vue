@@ -53,7 +53,7 @@
 					<div v-on:click="addToHighlights(item,index)" v-bind:key="item" :class="$style.exampleChip"><span>{{item}}</span></div>
 				</template>
 			</div>
-			<chipsfield :items="this.$root.$data.storageC.settings.highlights" :class="[$style.whitebox]"></chipsfield>
+			<chipsfield :stringCase="false" :items="this.$root.$data.storageC.settings.highlights" :class="[$style.whitebox]"></chipsfield>
 		</div>
 		<div :class="$style.bottom">
 			<button v-bind:key="page" v-on:click="goback()" class="mdc-button">{{ $t('action.back') }}</button>
@@ -193,6 +193,15 @@ export default {
 		color: white;
 		margin: 10px;
 	}
+	/*iPhone X*/
+	@media only screen 
+    and (device-width : 375px) 
+    and (device-height : 812px)
+    and (-webkit-device-pixel-ratio : 3) {
+    	.bottom {
+    		padding-bottom: 20px;
+    	}
+    }
 
 	.signature svg {
 		height: 50px;

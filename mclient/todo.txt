@@ -5,10 +5,12 @@ Release 1.0
 ✘	Fehlermeldung für alles in SingleMensa
 ✘	Fehlermeldung für leeres response Array
 ✘	Sortieren
-✘	Word Tags
+✓	Word Tags
 ✘	Feedback
 ✘	Aria-Tags
+✓	Momentum
 ✘	Textfelder grau wenn deaktiviert
+
 ?	Bug beim verschieben in mobile
 
 Release 1.1

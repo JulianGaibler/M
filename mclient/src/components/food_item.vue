@@ -1,12 +1,15 @@
 <template> 
-	<div :class="[$style.outelem, moreInfo ? $style.elemOpen : '']">
+	<div :class="[$style.outelem, getcolor(info.ampel), moreInfo ? $style.elemOpen : '', info.highlight!==undefined ? $style.highlighted : '']">
 		<div v-on:click="toggle(false)" :class="[$style.elem, 'mdc-ripple-surface']">
 			<div :class="$style.elemleft">
-				<icon :className="[$style.iconstyle, getcolor(info.ampel)]" :svg="theM"></icon>
+				<icon :className="[$style.iconstyle]" :svg="theM"></icon>
 			</div>
 			<div :class="$style.elemmid">
 				<div class="whitebox_element_top">{{info.name}}</div>
-				<div class="whitebox_element_bottom">{{pictogramString(info.labels)}} {{info.additives.length +' '+$t('labels.additives') }}</div>
+				<div class="whitebox_element_bottom">
+					<span v-if="info.highlight!==undefined" :class="[$style.tag, $style.themebg]"></span>
+					{{pictogramString(info.labels)}} {{info.additives.length +' '+$t('labels.additives') }}
+				</div>
 			</div>
 			<div :class="$style.elemright">
 				{{ parseFloat(info.prices[pricetype]).toFixed(2) }} €
@@ -56,6 +59,9 @@ export default {
 					break;
 				case 2:
 					return this.$style.red;
+					break;
+				default:
+					return this.$style.purple;
 			}
 		},
 		pictogramString: function (arr) {
@@ -182,7 +188,22 @@ export default {
 		background-color: #f4f5f6;
 	}
 
-	.green {fill: #45c89c;}
-	.yellow {fill: #ffc31a;}
-	.red {fill: #ff543c;}
+/*	.tag {
+		color: white;
+		border-radius: 50%;
+		padding: 4px;
+		margin: .5px;
+		display: inline-block;
+	}*/
+
+
+	.highlighted.purple .elem {background: rgba(101,31,255,.1);}
+	.highlighted.green .elem {background: rgba(69,200,156,.1);}
+	.highlighted.yellow .elem {background: rgba(255,195,26,.1);}
+	.highlighted.red .elem {background: rgba(255,84,60,.1);}
+
+	.purple  svg {fill: rgb(101,31,255);}
+	.green svg {fill: rgb(69,200,156);}
+	.yellow svg {fill: rgb(255,195,26);}
+	.red svg {fill: rgb(255,84,60);}
 </style>

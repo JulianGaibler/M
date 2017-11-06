@@ -24,6 +24,7 @@ export default {
   	created: function () {
 		bus.$on('resetActions', this.resetActions);
 		bus.$on('setActions', this.setActions);
+		bus.$on('updateAction', this.updateAction);
 	},
 	methods: {
 		'resetActions': function () {
@@ -31,6 +32,9 @@ export default {
 		},
 		'setActions': function (config) {
 			this.actions = config;
+		},
+		'updateAction': function (i,k,config) {
+			this.$set(this.actions[i], k, config)
 		}
 	},
 	components: {
@@ -59,11 +63,14 @@ export default {
 	.wrapper .a {
 		flex: 1;
 		fill: #651fff;
+		display: flex;
+		justify-content: flex-start;
 	}
 	.wrapper .c {
 		flex: 1;
 		fill: #651fff;
-		text-align: right;
+		display: flex;
+		justify-content: flex-end;
 	}
 
 

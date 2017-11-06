@@ -5,7 +5,8 @@ const webpack = require('webpack');
 
 const htmlwebpack = new HtmlWebpackPlugin({
 	title: "M",
-	template: 'src/index.ejs'
+	template: 'src/index.ejs',
+	hash: true
 });
 
 module.exports = {

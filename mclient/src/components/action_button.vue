@@ -1,6 +1,7 @@
 <template> 
 		<div v-on:click="info.function()" :class="$style.wrapper">
-			<icon v-ripple :class="['mdc-ripple-surface', $style.button]" :svg="info.svg"></icon>
+			<icon v-if="info.svg!=undefined" v-ripple :class="['mdc-ripple-surface', $style.button]" :svg="info.svg"></icon>
+			<span v-else v-ripple :class="['mdc-ripple-surface', $style.txtbutton]">{{info.text}}</span>
 		</div>
 </template>
 
@@ -50,10 +51,17 @@ export default {
 		height: 38px;
 		width: 38px;
 	}
-
 	.button svg {
 		height: 26px;
 		width: 26px;
 		margin: 6px;
+	}
+
+	.txtbutton {
+		display: inline-block;
+		cursor: pointer;
+		border-radius: 2px;
+		color: rgb(101, 31, 255);
+		padding: 10px;
 	}
 </style>

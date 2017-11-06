@@ -1,6 +1,6 @@
 <template> 
 	<div :class="$style.chipbox">
-		<div :class="$style.content">
+		<div :class="[$style.content, !stringCase ? $style.case : '']">
 				<template v-for="item in items">
 					<div v-bind:key="item" :class="$style.chip"><span>{{item}}</span><icon v-on:click.native="deleteChip(item)" :svg="iconclose"></icon></div>
 				</template>
@@ -22,7 +22,14 @@ name: 'mensaselector',
 			searchword: ""
 		}
 	},
-	props: ['items'],
+	props: {
+		items: Array,
+		stringCase: {
+			type: Boolean,
+			default: true
+		}
+
+	},
 	methods: {
 		focusInput: function() {
 			this.$refs.chipInput.focus();
@@ -32,6 +39,7 @@ name: 'mensaselector',
 			  this.searchword = this.searchword.substr(0, this.searchword.length - 1);
 			}
 			if (this.searchword.length>20 || this.searchword.length<2) return;
+			if (!this.stringCase) this.searchword = this.searchword.toLowerCase();
 			this.items.push(this.searchword);
 			this.searchword="";
 			this.$root.$data.storageC.updateStorage();
@@ -132,5 +140,11 @@ name: 'mensaselector',
 	.chip:hover > div {
 		background-color: #fff;
 		cursor: pointer;
+	}
+	.case, .case input {
+		text-transform: uppercase;
+		font-family: 'Roboto Condensed', sans-serif;
+		font-weight: 700;
+		color: #373737;
 	}
 </style>

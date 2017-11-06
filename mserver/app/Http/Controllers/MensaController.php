@@ -52,8 +52,7 @@ class MensaController extends Controller
 			$inDays = 0;
 			$hours = $entry['location']['times'][0]['hours'];
 			while ($inDays<10) {
-
-				if (sizeof($hours) < $nextdayopen) {
+				if (sizeof($hours) <= $nextdayopen) {
 					$nextdayopen = ((($nextdayopen+1) % 7) + 7) % 7;
 					$inDays++;
 				} else if ($inDays==0 && $hours[$nextdayopen]['close']-20 < $currentminutetime) {
