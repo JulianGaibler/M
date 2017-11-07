@@ -1,6 +1,6 @@
 <template>
 <div>
-	<div :class="[$style.upperextend, upperextend===1?$style.extendopen:'']">
+	<div v-if="data.hasMenu" :class="[$style.upperextend, upperextend===1?$style.extendopen:'']">
 		<datePicker v-if="additionaldata" :loading="((this.menu===false) ? true : false)" :initialDate="this.showDate.mmt" :times="additionaldata.location.times"></datePicker>
 	</div>
 	<div class="adaptiveWrap">
@@ -62,21 +62,29 @@ export default {
 		bus.$on('changeDate', this.changeDate);
 	},
 	mounted: function() {
-		bus.$emit('setActions', [[
+
+		let actionsConf = [[
 			{
 			svg: this.back,
 			function: this.goBack
-		}],[
-		{
-			svg: this.daterange,
-			function: ()=>{
-				this.upperextend = (this.upperextend==1)?0:1;
-			}
-		},
-		{
-			svg: this.sort,
-			function: ()=>{}
-		}]]);
+		}], []]
+
+		if (this.data.hasMenu) {
+			actionsConf[1] = actionsConf[1].concat([
+			{
+				svg: this.daterange,
+				function: ()=>{
+					this.upperextend = (this.upperextend==1)?0:1;
+				}
+			},
+			{
+				svg: this.sort,
+				function: ()=>{}
+			}]);
+		}
+
+		bus.$emit('setActions', actionsConf);
+
 
 		this.additionaldata = false;
 		this.getMenu();

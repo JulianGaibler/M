@@ -33,7 +33,7 @@ export default class LocalStorageController {
 	 */
 	initSettings() {
 		this.settings = {
-			"version": 2,
+			"version": 3,
 			"profileID": null,
 			"language": "de",
 			"pricetype": 0,
@@ -53,7 +53,13 @@ export default class LocalStorageController {
 	 * @return foo
 	 */
 	upgrade() {
-		//Nothing.
+		if (this.settings.version < 3) {
+			for (var i = this.settings.highlights.length - 1; i >= 0; i--) {
+				this.settings.highlights[i] = this.settings.highlights[i].toLowerCase();
+			}
+			this.settings.version = 3;
+			this.updateStorage();
+		}
 	}
 
 	/**

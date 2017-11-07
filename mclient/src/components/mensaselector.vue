@@ -1,5 +1,5 @@
 <template>
-	<div class="noselect">
+	<div :class="$style.wrapper">
 		<verticalSelect :items="vertical_data" :itemTranslation="[1,0,2]" :activeitem="this.type" v-on:triggered="changeType"></verticalSelect>
 		
 		<searchBox ref="search" :loading="this.loading" :searchword="searchword" :results="availableItems_computed.length+this.subscribedItems[this.type].length" :placeholder="this.$tc('action.search')" v-on:inputChange="changeSearchword">
@@ -168,7 +168,9 @@ export default {
 <style src="@material/ripple/dist/mdc.ripple.min.css"/>
 
 <style module>
-
+	.wrapper {
+		-webkit-transform: translate3d(0,0,0);
+	}
 	.elem {
 		padding: 15px 10px 15px 20px;
 		display: flex;
@@ -253,16 +255,8 @@ export default {
 		transition: transform .4s;
 	}
 
-
 	.handle {
 		cursor: move;
-	}
-
-	.noselect {
-		-webkit-user-select: none;  
-		-moz-user-select: none;    
-		-ms-user-select: none;      
-		user-select: none;
 	}
 
 </style>

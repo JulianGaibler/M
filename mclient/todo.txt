@@ -13,6 +13,7 @@ Release 1.0
 
 ?	Bug beim verschieben in mobile
 
+
 Release 1.1
 ✓	Zurück button braucht mehr infos über alten zustand (eg. type / scrollpos?)
 ✘	Grammatik
@@ -24,11 +25,13 @@ Release 1.1
 ✘	Service Worker
 ✘	Releasemeldungen
 
+
 Release 1.2
 ✘	Hinweise
 ✘	Highlights
 ✘	Starte auf Highlights
 ✘	"Starte auf"-Einstellung
+
 
 Release ~
 ✘	Münster
