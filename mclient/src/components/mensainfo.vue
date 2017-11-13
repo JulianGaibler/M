@@ -10,31 +10,34 @@
 		</span>
 		<loadGlow v-if="!additionaldata" :extStyle="$style.loading" :dimension="{min:30, max:60, end: '%'}"></loadGlow>
 		<span v-else><openingTimes :times="additionaldata.location.times"></openingTimes></span>
+
+		<div v-if="additionaldata">
+			<div :class="$style.elem">{{additionaldata.location.adress}}</div>
+			<div :class="$style.elem"><div v-for="item in additionaldata.location.transfer.split(' oder ')">{{item}}</div></div>
+			<div :class="$style.elem">{{additionaldata.location.phone}}</div>
+		</div>
+		<button v-bind:key="page" v-on:click="goback()" class="mdc-button mdc-button--dense">{{ $t('action.more') }}</button>
 	</div>
 </template>
 
 <script>
-import icon from './../components/icon.vue';
-import moment from "moment";
-import locale_de from "moment/locale/de";
-import locale_en from "moment/locale/en-gb";
+import loadGlow from './../components/loadGlow.vue';
+import openingTimes from './../components/opening_times.vue';
 
 export default {  
-	name: 'openingTimes',
+	name: 'mensaInfo',
 	data () {
 		return {
 
 		}
 	},
-	props: ['x'],
-	components: {
-		moment
-	},
+	props: ['basicdata', 'additionaldata'],
 	mounted: function() {
 
 	},
 	components: {
-		icon
+		loadGlow,
+		openingTimes
 	},
 	methods: {
 
@@ -42,6 +45,37 @@ export default {
 };
 </script>
 
-<style module>
+<style src="@material/button/dist/mdc.button.min.css"/>
 
+<style module>
+	.headline {
+		color: #303030;
+		font-family: 'Roboto Condensed', sans-serif;
+		margin-right: 20px;
+		min-width: 50%;
+	}
+	.headline h1 {
+		font-size: 25px;
+		font-weight: 400;
+		margin: 0;
+	}
+	.headline h2 {
+		font-size: 35px;
+		font-weight: 700;
+		margin: 0px 0px 10px 0;
+	}
+	.loadh1 {
+		height: 25px;
+	}
+	.loadh2 {
+		height: 35px;
+	}
+	.loadh3 {
+		height: 16px;
+		margin: 2px 0 15px 0;
+	}
+
+	.elem {
+		margin-top: 15px;
+	}
 </style>

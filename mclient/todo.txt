@@ -11,7 +11,8 @@ Release 1.0
 ✓	Momentum
 ✘	Textfelder grau wenn deaktiviert
 
-?	Bug beim verschieben in mobile
+✓	Bug beim verschieben in mobile
+✘	iPhone Render Bug
 
 
 Release 1.1

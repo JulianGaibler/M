@@ -5,18 +5,7 @@
 	</div>
 	<div class="adaptiveWrap">
 		<div :class="$style.headlineContainer">
-			<div :class="$style.headline">
-				<span v-if="basicdata">
-				<h1>{{basicdata.nameA}}</h1>
-				<h2>{{basicdata.nameB}}</h2>
-				</span>
-				<span v-if="basicdata===false">
-					<loadGlow :extStyle="[$style.loading, $style.loadh1]" :dimension="{min:40, max:50, end: '%'}"></loadGlow>
-					<loadGlow :extStyle="[$style.loading, $style.loadh2]" :dimension="{min:60, max:80, end: '%'}"></loadGlow>
-				</span>
-				<loadGlow v-if="!additionaldata" :extStyle="$style.loading" :dimension="{min:30, max:60, end: '%'}"></loadGlow>
-				<span v-else><openingTimes :times="additionaldata.location.times"></openingTimes></span>
-			</div>
+			<mensaInfo :basicdata="basicdata" :additionaldata="additionaldata"></mensaInfo>
 		</div>
 		<div>
 			<div v-if="menu===false" class="whitebox" v-for="index in 2">
@@ -39,10 +28,10 @@
 <script>
 import moment from "moment";
 import loadGlow from './../components/loadGlow.vue';
-import openingTimes from './../components/opening_times.vue';
 import datePicker from './../components/date_picker.vue';
 import icon from './../components/icon.vue';
 import FoodItem from './../components/food_item.vue';
+import mensaInfo from './../components/mensainfo.vue';
 
 export default {
 	data () {
@@ -163,8 +152,8 @@ export default {
 		loadGlow,
 		icon,
 		FoodItem,
-		openingTimes,
 		datePicker,
+		mensaInfo,
 		moment
 	}
 }
@@ -178,35 +167,9 @@ export default {
 		justify-content: center;
 		padding: 15px 20px 40px 20px;
 	}
-	.headline {
-		color: #303030;
-		font-family: 'Roboto Condensed', sans-serif;
-		margin-right: 20px;
-		min-width: 50%;
-	}
-	.headline h1 {
-		font-size: 25px;
-		font-weight: 400;
-		margin: 0;
-	}
-	.headline h2 {
-		font-size: 35px;
-		font-weight: 700;
-		margin: 0px 0px 10px 0;
-	}
 	.loading {
 		height: 14px;
 		margin-top: 2px;
-	}
-	.loadh1 {
-		height: 25px;
-	}
-	.loadh2 {
-		height: 35px;
-	}
-	.loadh3 {
-		height: 16px;
-		margin: 2px 0 15px 0;
 	}
 	.loadingbig {
 		height: 16px;
