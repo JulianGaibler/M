@@ -16,13 +16,13 @@
 			<div :class="$style.elem"><div v-for="item in additionaldata.location.transfer.split(' oder ')">{{item}}</div></div>
 			<div :class="$style.elem">{{additionaldata.location.phone}}</div>
 		</div>
-		<button v-bind:key="page" v-on:click="goback()" class="mdc-button mdc-button--dense">{{ $t('action.more') }}</button>
 	</div>
 </template>
 
 <script>
 import loadGlow from './../components/loadGlow.vue';
 import openingTimes from './../components/opening_times.vue';
+import ActionButton from './../components/action_button.vue';
 
 export default {  
 	name: 'mensaInfo',
@@ -37,7 +37,8 @@ export default {
 	},
 	components: {
 		loadGlow,
-		openingTimes
+		openingTimes,
+		ActionButton
 	},
 	methods: {
 
