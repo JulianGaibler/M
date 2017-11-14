@@ -149,7 +149,6 @@ export default {
 	}
 	.primebg {
 		background: #651fff;
-		background: linear-gradient(#21064d, #651fff);
 	}
 	hr {
 		border-color: #dadada;
@@ -229,6 +228,15 @@ export default {
 
 	.adaptiveWrap {
 		padding: 0 10px 10px 10px;	
+	}
+	.handle {
+		cursor: move;
+	}
+	.handle svg {
+		width: 25px;
+		height: 25px;
+		margin: 10px 15px 10px -5px;
+		fill: #a3a3a3;
 	}
 	@media screen and (min-width: 600px) {
 		.adaptiveWrap {

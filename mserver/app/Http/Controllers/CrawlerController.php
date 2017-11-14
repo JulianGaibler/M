@@ -223,8 +223,8 @@ class CrawlerController extends Controller
 							'additives' => $additives];
 						$food[] = $val;
 				});
-				$mensas[$j]['name'] = 'maindishes';
-				$mensas[$j]['items'] = $food; 
+				$mensas[0]['name'] = 'maindishes';
+				$mensas[0]['items'] = $food; 
 				return;
 			}
 			});

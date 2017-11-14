@@ -1,9 +1,13 @@
 {
-	"hello": "Hallo Wörld!",
 	"frame": {
 		"highlights": "Highlights",
 		"mensa": "Mensa",
 		"settings": "Einstellungen"
+	},
+	"language": {
+		"this": "Sprache",
+		"en": "Englisch",
+		"de": "Deutsch"
 	},
 	"type": {
 		"0": "Mensa | Mensen",
@@ -51,7 +55,8 @@
 	"state": {
 		"loading": "Laden",
 		"added": "Hinzugefügt",
-		"removed": "Entfernt"
+		"removed": "Entfernt",
+		"optional": "optional"
 	},
 	"result": {
 		"noresults_headline": "no results.",
@@ -77,7 +82,7 @@
 	},
 	"settings": {
 		"search_and_hightlight": "Suchen und Hervorheben",
-		"mensa_selector": "Mensen suchen, entfernen und verschieben"
+		"mensa_selector": "Mensen"
 	},
 	"setup": {
 		"intro_highlights": "M kann nach Essen hervorheben, wenn ein bestimmtes Wort im Namen vorkommt.",

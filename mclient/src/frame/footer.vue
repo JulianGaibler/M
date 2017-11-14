@@ -98,8 +98,13 @@ export default {
 	}
 
 	/*iPhone X*/
-    .wrapper {
-    	padding-bottom: constant(safe-area-inset-bottom);
-    }
+	@media only screen 
+	and (device-width : 375px) 
+	and (device-height : 812px)
+	and (-webkit-device-pixel-ratio : 3) {
+		.bottom {
+			padding-bottom: 20px;
+		}
+	}
 
 </style>

@@ -1,36 +1,38 @@
 Immediate
-✘	Mehr Infos wenn man will oder wenn kein Menü
 ✘	Sortieren
 ✘	Feedback/Bug Report
-✘	iPhone Render Bug
-✘	Setup
-✘	Language
+~	Setup
+~	Mehr Infos wenn man will oder wenn kein Menü (buggy)
 
 ✘	Ladeanimation für zusatzstoffe
 ✘	Fehlermeldung für alles in SingleMensa
 ✘	Fehlermeldung für leeres response Array
+✓	Language
+✓	iPhone Render Bug
+
+
 
 Release 1.0
-✓	Zeit
-✓	Word Tags
 ✘	Aria-Tags
-✓	Momentum
+✘	Navigation
 ✘	Textfelder grau wenn deaktiviert
 ✘	What is this (Google)?
 ✓	Bug beim verschieben in mobile
-
+✓	Word Tags
+✓	Zeit
+✓	Moment.js
 
 
 Release 1.1
-✓	Zurück button braucht mehr infos über alten zustand (eg. type / scrollpos?)
 ✘	Grammatik
 ✘	Settings: Language
-✓	Zurück Taste
 ✘	Export Settings
 ✘	Ripple
 ✘	Location helper
 ✘	Service Worker
 ✘	Releasemeldungen
+✓	Zurück Taste
+✓	Zurück button braucht mehr infos über alten zustand (eg. type / scrollpos?)
 
 
 Release 1.2

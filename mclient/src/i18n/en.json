@@ -1,9 +1,13 @@
 {
-	"hello": "Hello World",
 	"frame": {
 		"highlights": "Highlights",
 		"mensa": "Mensa",
 		"settings": "Settings"
+	},
+	"language": {
+		"this": "Language",
+		"en": "English",
+		"de": "German"
 	},
 	"type": {
 		"0": "Mensa | Mensas",
@@ -51,7 +55,8 @@
 	"state": {
 		"loading": "Loading",
 		"added": "Added",
-		"removed": "Removed"
+		"removed": "Removed",
+		"optional": "optional"
 	},
 	"result": {
 		"noresults_headline": "keine Ergebnisse.",
@@ -77,7 +82,7 @@
 	},
 	"settings": {
 		"search_and_hightlight": "Search and Highlight",
-		"mensa_selector": "Find, remove and move Mensas"
+		"mensa_selector": "Mensas"
 	},
 	"setup": {
 		"intro_highlights": "M can highlight food for you if a certain word occurs in it's name.",

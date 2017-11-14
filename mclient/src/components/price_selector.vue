@@ -1,57 +1,29 @@
 <template>
-	<div :class="['whitebox', $style.selectwb]">
-		<div v-for="index in 3" :class="$style.selectcontainer">
-			<div class="mdc-radio">
-				<input v-model="pricetype" :checked="index==(pricetype+1)" :value="index-1" class="mdc-radio__native-control" type="radio" :id="'radio-'+index" name="radios" checked>
-				<div class="mdc-radio__background">
-					<div class="mdc-radio__outer-circle"></div>
-					<div class="mdc-radio__inner-circle"></div>
-				</div>
-			</div>
-			<label :id="'radio-'+index+'-label'" :for="'radio-'+index" :class="$style.label">
-				<h1>{{ $t('prices.category') }} {{index}}</h1>
-				<p>{{ $t('prices.desc_'+index) }}</p>
-			</label>
-		</div>
-	</div>
+	<radioSelector :data="data" :selectedIndex="selectedIndex" :methd="change"></radioSelector>
 </template>
 
 <script>
+import radioSelector from './../components/radio_selector.vue';
 
 export default {  
 	name: 'priceSelector',
 	data () {
+		let data = [];
+		for (var i = 0; i < 3; i++) {
+			data[i] = {head: this.$t('prices.category')+" "+(i+1), desc: this.$t('prices.desc_'+(i+1))}
+		}
 		return {
-			pricetype: this.$root.$data.storageC.settings.pricetype
+			data: data,
+			selectedIndex: this.$root.$data.storageC.settings.pricetype
 		}
 	},
-	watch: {
-		pricetype: function (nr) {
+	methods: {
+		change: function (nr) {
 			this.$root.$data.storageC.setPricetype(nr);
 		}
+	},
+	components: {
+		radioSelector
 	}
 };
 </script>
-
-<style src="@material/radio/dist/mdc.radio.min.css"/>
-<style module>
-	.selectwb {
-		padding: 10px 0;
-	}
-	.selectcontainer {
-		display: flex;
-		align-items: center;
-		padding: 10px;
-	}
-	.label {
-		padding-left: 10px;
-	}
-	.label h1 {
-		font-size: 16px;
-		margin: 0 0 5px 0;
-
-	}
-	.label p {
-		margin: 0;
-	}
-</style>

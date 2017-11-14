@@ -3,6 +3,12 @@
 		<div :class="$style.headline">
 			<h1>{{ $t('frame.settings') }}</h1>
 		</div>
+
+		<orderSelector></orderSelector>
+
+		<div :class="$style.section">{{ $t('language.this') }}</div>
+		<languageSelector></languageSelector>
+
 		<div :class="$style.section">{{ $t('prices.category') }}</div>
 		<priceSelector></priceSelector>
 
@@ -16,6 +22,8 @@
 
 <script>
 import priceSelector from './../components/price_selector.vue';
+import languageSelector from './../components/language_selector.vue';
+import orderSelector from './../components/order_selector.vue';
 import chipsfield from './../components/chipsfield.vue';
 import mensaselector from './../components/mensaselector.vue';
 
@@ -27,8 +35,10 @@ export default {
 	},
 	components: {
 		priceSelector,
+		languageSelector,
 		chipsfield,
-		mensaselector
+		mensaselector,
+		orderSelector
 	}
 }
 </script>

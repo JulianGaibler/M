@@ -7,7 +7,7 @@
 			<draggable :list="subscribedItems[this.type]" @change="dragMoved" :options="{handle:'.handle'}">
 					<div v-for="item in this.subscribedItems[this.type]" :key="item._id" :class="[$style.elem, $style.elem_draggable]">
 						<div :class="['handle',$style.action]">
-							<icon :class="$style.dragsvg" :svg="drag_handle"></icon>
+							<icon :svg="drag_handle"></icon>
 						</div>
 						<div :class="$style.info">
 							<div :class="$style.name"><span>{{ item.nameA }}</span> {{ item.nameB }}</div>
@@ -168,9 +168,6 @@ export default {
 <style src="@material/ripple/dist/mdc.ripple.min.css"/>
 
 <style module>
-	.wrapper {
-		-webkit-transform: translate3d(0,0,0);
-	}
 	.elem {
 		padding: 15px 10px 15px 20px;
 		display: flex;
@@ -226,12 +223,6 @@ export default {
 		cursor: pointer;
 		fill: #a3a3a3;
 	}
-	.dragsvg {
-		width: 25px;
-		height: 25px;
-		margin: 10px 15px 10px -5px;
-		fill: #a3a3a3;
-	}
 
 
 
@@ -254,9 +245,4 @@ export default {
 	.mvelistdown-move {
 		transition: transform .4s;
 	}
-
-	.handle {
-		cursor: move;
-	}
-
 </style>

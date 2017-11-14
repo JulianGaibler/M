@@ -1,5 +1,5 @@
-<template>
-	<div class="whitebox">
+xc<template>
+	<div :class="['whitebox', $style.wrapper]">
 		<div :class="$style.search">
 			<icon :class="$style.svg" :svg="iconsearch"></icon>
 			<input :disabled="loading==1" @input="debounceInput" v-model="word" :placeholder="placeholder">
@@ -72,6 +72,9 @@ export default {
 <style src="@material/ripple/dist/mdc.ripple.min.css"/>
 
 <style module>
+	.wrapper {
+		-webkit-transform: translate3d(0,0,0);
+	}
 	.search {
 		fill: #a3a3a3;
 		display: flex;

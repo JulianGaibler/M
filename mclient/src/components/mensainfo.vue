@@ -61,13 +61,11 @@ export default {
 	},
 	watch: {
 		basicdata: function (newBasicdata) {
-			console.log(this.hasMenu);
 			if (newBasicdata!==undefined) {
 				this.basicdata = newBasicdata;
 				this.extended = !newBasicdata.hasMenu;
 				this.hasMenu = newBasicdata.hasMenu;
 			}
-			console.log("->"+this.hasMenu);
 		}
 	},
 };

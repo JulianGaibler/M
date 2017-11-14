@@ -41,9 +41,26 @@
 		</div>
 	</div>
 
-	<!-- SETUP: Select Highlights -->
+	<!-- SETUP: Prices -->
 	<div :class="['adaptiveWrap', $style.setup]" v-else-if="page==3">
 		<div :class="$style.top">
+			<p>{{ $t('setup.intro_prices') }}</p>
+		</div>
+
+		<div :class="$style.middle">
+			<priceSelector></priceSelector>
+			<p :class="$style.disclaim">{{ $t('prices.more') }}</p>
+		</div>
+		<div :class="$style.bottom">
+			<button v-bind:key="page" v-on:click="goback()" class="mdc-button">{{ $t('action.back') }}</button>
+			<button v-bind:key="page" v-on:click="gonext()" class="mdc-button">{{ $t('action.next') }}</button>
+		</div>
+	</div>
+
+	<!-- SETUP: Select Highlights -->
+	<div :class="['adaptiveWrap', $style.setup]" v-else-if="page==4">
+		<div :class="$style.top">
+			<p :class="$style.hint">{{ $t('state.optional') }}</p>
 			<p>{{ $t('setup.intro_highlights') }}</p>
 		</div>
 
@@ -54,22 +71,6 @@
 				</template>
 			</div>
 			<chipsfield :stringCase="false" :items="this.$root.$data.storageC.settings.highlights" :class="[$style.whitebox]"></chipsfield>
-		</div>
-		<div :class="$style.bottom">
-			<button v-bind:key="page" v-on:click="goback()" class="mdc-button">{{ $t('action.back') }}</button>
-			<button v-bind:key="page" v-on:click="gonext()" class="mdc-button">{{ $t('action.next') }}</button>
-		</div>
-	</div>
-
-	<!-- SETUP: Prices -->
-	<div :class="['adaptiveWrap', $style.setup]" v-else-if="page==4">
-		<div :class="$style.top">
-			<p>{{ $t('setup.intro_prices') }}</p>
-		</div>
-
-		<div :class="$style.middle">
-			<priceSelector></priceSelector>
-			<p :class="$style.disclaim">{{ $t('prices.more') }}</p>
 		</div>
 		<div :class="$style.bottom">
 			<button v-bind:key="page" v-on:click="goback()" class="mdc-button">{{ $t('action.back') }}</button>
@@ -167,6 +168,17 @@ export default {
 		position: relative;
 	}
 
+	.setup p.hint {
+		text-transform: uppercase;
+		font-size: 14px;
+		margin: 10px 0px 0px 0px;
+		background: white;
+		display: inline-block;
+		color: #651fff;
+		padding: 0 11px;
+		border-radius: 20px;
+	}
+
 	.setup h1 {
 		font-family: 'Roboto Condensed', sans-serif;
 		font-weight: 400;
@@ -194,9 +206,14 @@ export default {
 		margin: 10px;
 	}
 	/*iPhone X*/
-    .wrapper {
-    	padding-bottom: constant(safe-area-inset-bottom);
-    }
+	@media only screen 
+	and (device-width : 375px) 
+	and (device-height : 812px)
+	and (-webkit-device-pixel-ratio : 3) {
+		.bottom {
+			padding-bottom: 20px;
+		}
+	}
 
 	.signature svg {
 		height: 50px;
@@ -278,7 +295,7 @@ export default {
     	font-size: 14px;
 	}
 	.exampleChip {
-		background-color: #651fff;
+		background-color: rgba(255, 255, 255, 0.15);
 		color: #fff;
 		border-radius: 50px;
 		display: inline-flex;
