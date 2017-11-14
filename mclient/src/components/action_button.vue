@@ -1,6 +1,6 @@
 <template> 
 		<div v-on:click="info.function()" :class="$style.wrapper">
-			<icon v-if="info.svg!=undefined" v-ripple :class="['mdc-ripple-surface', $style.button]" :svg="info.svg"></icon>
+			<icon v-if="info.svg!=undefined" v-ripple :class="['mdc-ripple-surface', $style.button, info.large?$style.largebtn:'']" :svg="info.svg"></icon>
 			<span v-else v-ripple :class="['mdc-ripple-surface', $style.txtbutton]">{{info.text}}</span>
 		</div>
 </template>
@@ -13,9 +13,7 @@ export default {
 	name: 'ActionButton',
 	props: ['info'],
 	data () {
-		return {
-
-		}
+		return {}
 	},
 	methods: {
 		getRandomArbitrary: function (min, max) {
@@ -63,5 +61,15 @@ export default {
 		border-radius: 2px;
 		color: rgb(101, 31, 255);
 		padding: 10px;
+	}
+
+	.largebtn {
+		height: 51px;
+		width: 51px;
+	}
+	.largebtn svg {
+		height: 36px;
+		width: 36px;
+		margin: 8px;
 	}
 </style>

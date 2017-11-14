@@ -86,7 +86,8 @@ export default {
 			if (!this.basicdata) {
 				this.basicdata = {
 					nameA: result[0].nameA,
-					nameB: result[0].nameB
+					nameB: result[0].nameB,
+					hasMenu: result[0].hasMenu
 				};
 			}
 		},

@@ -1,19 +1,24 @@
-Release 1.0
-✓	Zeit
+Immediate
 ✘	Mehr Infos wenn man will oder wenn kein Menü
+✘	Sortieren
+✘	Feedback/Bug Report
+✘	iPhone Render Bug
+✘	Setup
+✘	Language
+
 ✘	Ladeanimation für zusatzstoffe
 ✘	Fehlermeldung für alles in SingleMensa
 ✘	Fehlermeldung für leeres response Array
-✘	Sortieren
+
+Release 1.0
+✓	Zeit
 ✓	Word Tags
-✘	Feedback
 ✘	Aria-Tags
 ✓	Momentum
 ✘	Textfelder grau wenn deaktiviert
 ✘	What is this (Google)?
-
 ✓	Bug beim verschieben in mobile
-✘	iPhone Render Bug
+
 
 
 Release 1.1
