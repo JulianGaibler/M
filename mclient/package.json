@@ -33,6 +33,7 @@
     "@material/button": "^0.3.11",
     "@material/radio": "^0.2.15",
     "@material/ripple": "^0.8.8",
+    "@material/switch": "^0.25.0",
     "cross-env": "^5.1.1",
     "debounce": "^1.1.0",
     "moment": "^2.19.2",
