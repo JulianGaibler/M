@@ -31,6 +31,7 @@
   },
   "dependencies": {
     "@material/button": "^0.3.11",
+    "@material/checkbox": "^0.25.0",
     "@material/radio": "^0.2.15",
     "@material/ripple": "^0.8.8",
     "@material/switch": "^0.25.0",

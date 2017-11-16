@@ -56,7 +56,9 @@
 		"loading": "Laden",
 		"added": "Hinzugefügt",
 		"removed": "Entfernt",
-		"optional": "optional"
+		"optional": "optional",
+		"open": "offen",
+		"closed": "geschlossen"
 	},
 	"result": {
 		"noresults_headline": "no results.",
@@ -82,7 +84,9 @@
 	},
 	"settings": {
 		"search_and_hightlight": "Suchen und Hervorheben",
-		"mensa_selector": "Mensen"
+		"mensa_selector": "Mensen suchen, entfernen und verschieben",
+		"custom_order": "Benutzerdefinierte Reihenfolge",
+		"customize": "Anpassen"
 	},
 	"setup": {
 		"intro_highlights": "M kann nach Essen hervorheben, wenn ein bestimmtes Wort im Namen vorkommt.",

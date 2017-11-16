@@ -56,7 +56,9 @@
 		"loading": "Loading",
 		"added": "Added",
 		"removed": "Removed",
-		"optional": "optional"
+		"optional": "optional",
+		"open": "open",
+		"closed": "closed"
 	},
 	"result": {
 		"noresults_headline": "keine Ergebnisse.",
@@ -82,7 +84,9 @@
 	},
 	"settings": {
 		"search_and_hightlight": "Search and Highlight",
-		"mensa_selector": "Mensas"
+		"mensa_selector": "Find, remove and move Mensas",
+		"custom_order": "Custom Order",
+		"customize": "Customize"
 	},
 	"setup": {
 		"intro_highlights": "M can highlight food for you if a certain word occurs in it's name.",

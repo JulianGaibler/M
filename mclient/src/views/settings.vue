@@ -4,6 +4,7 @@
 			<h1>{{ $t('frame.settings') }}</h1>
 		</div>
 
+		<div :class="$style.section">{{ $t('settings.customize') }}</div>
 		<orderSelector></orderSelector>
 
 		<div :class="$style.section">{{ $t('language.this') }}</div>
@@ -57,7 +58,7 @@ export default {
 	.section {
 		font-family: 'Roboto Condensed', sans-serif;
 		text-transform: uppercase;
-		padding-top: 30px;
+		padding-top: 10px;
 		padding-bottom: 10px;
 		text-align: center;
 	}
