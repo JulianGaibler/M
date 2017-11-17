@@ -19,7 +19,7 @@
 			<div v-if="menu" class="whitebox" v-for="category in menu">
 				<div :class="['whitebox_header', $style.menuheader]">
 					<div :class="$style.headline">{{category.displayName}}</div>
-					<div :class="$style.actions" v-on:click="flipExtended(category)"><ActionButton :class="[$style.directions, category.extended?'':$style.rotate180]" :info="acBtn_arrow"></ActionButton></div>
+					<div :class="$style.actions" v-on:click="flipExtended(category)"><ActionButton :class="[$style.extendarrow, category.extended?$style.rotate180:'']" :info="acBtn_arrow"></ActionButton></div>
 				</div>
 				<FoodItem v-if="category.extended" v-for="(item, index) in category.items" :key="index" :info="item"></FoodItem>
 			</div>
@@ -47,7 +47,6 @@ export default {
 			showDate: {name: false, mmt: moment(this.data.whenOpen)},
 			back: require('./../assets/back.svg'),
 			daterange: require('./../assets/date_range.svg'),
-			sort: require('./../assets/sort.svg'),
 			acBtn_arrow: { svg: expand_more, function: ()=>{} },
 			upperextend: 0
 		}
@@ -71,10 +70,6 @@ export default {
 				function: ()=>{
 					this.upperextend = (this.upperextend==1)?0:1;
 				}
-			},
-			{
-				svg: this.sort,
-				function: ()=>{}
 			}]);
 		}
 
@@ -136,6 +131,21 @@ export default {
 			} else this.menu = [];
 		},
 		evalMenu: function(menu) {
+			let sorting = this.$root.$data.storageC.settings.sorting;
+			if (sorting.length > 0) {
+				let bucket = [];
+				for (var s = 0; s < sorting.length; s++) {
+					for (var i = 0; i < menu.length; i++) {
+						if (menu[i].name === sorting[s].tag) {
+							menu[i].extended = sorting[s].show;
+							bucket.push(menu[i]);
+							menu.splice(i, 1);
+							break;
+						}
+					}
+				}
+				menu = bucket.concat(menu);
+			}
 
 			for (var i = 0; i < menu.length; i++) {
 				if (this.$te('menuSection.'+menu[i].name))
@@ -143,7 +153,8 @@ export default {
 				else
 					menu[i].displayName = menu[i].name;
 					menu[i].highlightCount = 0;
-					menu[i].extended = true;
+					if (menu[i].extended===undefined)
+						menu[i].extended = true;
 			}
 			let hls = this.$root.$data.storageC.settings.highlights;
 			for (var h = hls.length - 1; h >= 0; h--) { // hls[h]
@@ -227,6 +238,9 @@ export default {
     	transition: all .5s;
 	}
 
+	.extendarrow svg {
+		transition: transform .2s;
+	}
 	.rotate180 svg {
 		transform: rotate(180deg);
 	}

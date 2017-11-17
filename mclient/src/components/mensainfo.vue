@@ -128,7 +128,7 @@ export default {
 		fill: #757575;
 	}
 	.directions {
-		fill: rgb(101, 31, 255);
+		fill: #817575;
 		height: 38px;
     	width: 38px;
     	transition: all .5s;

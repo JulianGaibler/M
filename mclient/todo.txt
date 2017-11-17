@@ -1,22 +1,23 @@
 Immediate
-✘	Sortieren
 ✘	Feedback/Bug Report
 ~	Setup
-~	Mehr Infos wenn man will oder wenn kein Menü (buggy)
 
 ✘	Ladeanimation für zusatzstoffe
 ✘	Fehlermeldung für alles in SingleMensa
 ✘	Fehlermeldung für leeres response Array
+✓	Sortieren
 ✓	Language
 ✓	iPhone Render Bug
+~	Mehr Infos wenn man will oder wenn kein Menü (buggy)
 
 
 
 Release 1.0
 ✘	Aria-Tags
-✘	Navigation
+✘	Navigations-Button (gMaps)
 ✘	Textfelder grau wenn deaktiviert
 ✘	What is this (Google)?
+
 ✓	Bug beim verschieben in mobile
 ✓	Word Tags
 ✓	Zeit
@@ -25,7 +26,6 @@ Release 1.0
 
 Release 1.1
 ✘	Grammatik
-✘	Settings: Language
 ✘	Export Settings
 ✘	Ripple
 ✘	Location helper

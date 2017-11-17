@@ -11,10 +11,7 @@ xc<template>
 				<div :class="[$style.loading_2, 'loading_color']" :style="{ width: getRandomArbitrary(50,50)+'%' }"></div>
 			</div>
 		</div>
-		<div v-else-if="loading==2" :class="$style.noresults">
-			<h1>{{ $t('result.error_shoutouts['+error_shoutouts_random+']') }}</h1>
-			<p>{{ $t('result.loaderror_explain') }}</p>
-		</div>
+		<errorMsg v-else-if="loading==2"></errorMsg>
 		<div v-else-if="results<1" :class="$style.noresults">
 			<h1>{{ $t('result.error_shoutouts['+error_shoutouts_random+']') }}</h1>
 			<p>{{ $t('result.noresults_explain') }}</p>
@@ -27,6 +24,7 @@ xc<template>
 import icon from './../components/icon.vue';
 import {MDCRipple, MDCRippleFoundation, util} from '@material/ripple';
 import debounce from 'debounce';
+import errorMsg from './../components/errormsg.vue';
 
 export default {  
 	name: 'searchBox',
@@ -40,7 +38,8 @@ export default {
 	},
 	props: ['placeholder', 'loading', 'results'],
 	components: {
-		icon
+		icon,
+		errorMsg
 	},
 	methods: {
 		debounceInput: debounce(function (e) {
@@ -103,25 +102,6 @@ export default {
 	.loading_2 {
 		height: 14px;
 		width: 80%;
-	}
-	.noresults {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		flex-flow: column;
-		min-height: 30vh;
-		color: #651fff;
-		margin: 0 20px 50px 20px;
-		text-align: center;
-		font-family: 'Roboto Condensed', sans-serif;
-	}
-	.noresults > h1 {
-		margin: 10px;
-		font-size: 30px;
-	}
-	.noresults > p {
-		margin: 0;
-		font-size: 16px;
 	}
 
 	.search .svg {
