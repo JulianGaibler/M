@@ -4,36 +4,28 @@
 			<div :class="$style.text">{{$t('settings.custom_order')}}</div>
 			<div :class="$style.switch">
 				<div class="mdc-switch demo-switch--mtheme">
-					<input type="checkbox" id="basic-switch" class="mdc-switch__native-control" />
+					<input type="checkbox" id="basic-switch" class="mdc-switch__native-control" v-model="enabled" />
 					<div class="mdc-switch__background">
 						<div class="mdc-switch__knob"></div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<draggable :list="items" :options="{handle:'.handle'}">
+		<draggable :list="items" @change="dragMoved" :options="{handle:'.handle'}">
 			<div v-for="(item, index) in items" :key="index" :class="[$style.elem]">
 				<div :class="['handle',$style.action]">
 					<icon :class="$style.dragsvg" :svg="drag_handle"></icon>
 				</div>
-				<div :class="$style.text">{{item.name}}</div>
+				<div :class="$style.text">{{item.tag}}</div>
 				<div :class="$style.switch">
-					
 					<div class="mdc-checkbox demo-checkbox--mtheme">
-  <input type="checkbox" v-model="item.show" :checked="item.show"
-		 class="mdc-checkbox__native-control "/>
-  <div class="mdc-checkbox__background">
-	<svg class="mdc-checkbox__checkmark"
-		 viewBox="0 0 24 24">
-	  <path class="mdc-checkbox__checkmark__path"
-			fill="none"
-			stroke="white"
-			d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
-	</svg>
-	<div class="mdc-checkbox__mixedmark"></div>
-  </div>
-</div>
-
+						<input type="checkbox" v-model="item.show" :checked="item.show"
+							 class="mdc-checkbox__native-control "/>
+						<div class="mdc-checkbox__background">
+							<svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"> <path class="mdc-checkbox__checkmark__path" fill="none" stroke="white" d="M1.73,12.91 8.1,19.28 22.79,4.59"/> </svg>
+							<div class="mdc-checkbox__mixedmark"></div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</draggable>
@@ -48,12 +40,11 @@ export default {
 	name: 'orderSelector',
 	props: ['info'],
 	data () {
-		let todo = ['appetizers','salads','soups','promotions','maindishes','sidedishes','desserts'];//TODO
-		let arr = this.$root.$data.storageC.settings.sorting;
+		let l = this.$root.$data.storageC.settings.sorting.length;
 		return {
 			drag_handle: require('./../assets/drag_handle.svg'),
-			items: arr,
-			enabled: (arr.length > 0),
+			items: this.$root.$data.storageC.settings.sorting,
+			enabled: (l > 0),
 		}
 	},
 	methods: {
@@ -61,13 +52,42 @@ export default {
 			let res = []
 			for (var i = 0; i < arr.length; i++) {
 				res[i] = {
-					id: arr[i],
+					id: arr[i].tag,
 					show: true,
-					name: (this.$te('menuSection.'+arr[i])) ?
-						this.$t('menuSection.'+arr[i]) : arr[i]
+					tag: (this.$te('menuSection.'+arr[i].tag)) ?
+						this.$t('menuSection.'+arr[i].tag) : arr[i].tag
 				}
 			}
 			return res;
+		},
+		pushStorage: function() {
+			this.$root.$data.storageC.settings.sorting = this.items;
+			this.$root.$data.storageC.updateStorage();
+		},
+		dragMoved: function () {
+			this.pushStorage();
+		}
+	},
+	watch: {
+		enabled: function(val, oldVal) {
+			if (val) {
+				this.$root.$data.dataC.getMenuSections().then((result) => {
+					this.items = this.convertNames(result);
+					this.pushStorage();
+				},
+				(reason) => {
+
+				});
+			} else {
+				this.items = [];
+				this.pushStorage();
+			}
+		},
+		items: {
+			handler: function(val, oldVal) {
+				this.pushStorage();
+			},
+			deep: true
 		}
 	},
 	components: {

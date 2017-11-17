@@ -24,7 +24,7 @@ export default class DataController {
 		return new Promise((resolve, reject) => {
 			if (this.mensas_light.length > 0) resolve(this.mensas_light);
 			else {
-				this.fetchAPI("api/mensas?nolocation").then((result) => {
+				this.fetchAPI("/mensas?nolocation").then((result) => {
 					this.mensas_light = result;
 					resolve(result);
 				},
@@ -40,11 +40,27 @@ export default class DataController {
 	 *
 	 * @return --
 	 */
+	getMenuSections() {
+		return new Promise((resolve, reject) => {
+			this.fetchAPI("/sections").then((result) => {
+				resolve(result);
+			},
+			(reason) => {
+				reject(reason);
+			});
+		});
+	}
+
+	/**
+	 * --
+	 *
+	 * @return --
+	 */
 	getAdditives() {
 		return new Promise((resolve, reject) => {
 			if (this.additives.length > 0) resolve(this.additives);
 			else {
-				this.fetchAPI("api/additives").then((result) => {
+				this.fetchAPI("/additives").then((result) => {
 					this.additives = result;
 					resolve(result);
 				},
@@ -62,7 +78,7 @@ export default class DataController {
 	 */
 	getMenu(mensa_id, mmtDate) {
 		return new Promise((resolve, reject) => {
-			let url = "api/menu/"+mensa_id+"?lang="+this.storageC.settings.language;
+			let url = "/menu/"+mensa_id+"?lang="+this.storageC.settings.language;
 
 			url += "&date="+mmtDate.format("YYYY-MM-DD");
 			this.fetchAPI(url).then((result) => {
@@ -93,7 +109,7 @@ export default class DataController {
 				}
 			}
 			if (_ids_clone.length !== 0) {
-				let url = "api/mensas/";
+				let url = "/mensas/";
 				for (var i = _ids_clone.length - 1; i >= 0; i--) {
 					url += _ids_clone[i]._id+";";
 				}
@@ -127,7 +143,7 @@ export default class DataController {
 
 	newUserID() {
 		return new Promise((resolve, reject) => {
-			let url = "api/user/create";
+			let url = "/user/create";
 			this.fetchAPI(url,'PUT').then((result) => {
 				resolve(result._id);
 			},

@@ -17,8 +17,11 @@
 				</div>
 			</div>
 			<div v-if="menu" class="whitebox" v-for="category in menu">
-				<div class="whitebox_header">{{category.displayName}}</div>
-				<FoodItem v-for="(item, index) in category.items" :key="index" :info="item"></FoodItem>
+				<div :class="['whitebox_header', $style.menuheader]">
+					<div :class="$style.headline">{{category.displayName}}</div>
+					<div :class="$style.actions" v-on:click="flipExtended(category)"><ActionButton :class="[$style.directions, category.extended?'':$style.rotate180]" :info="acBtn_arrow"></ActionButton></div>
+				</div>
+				<FoodItem v-if="category.extended" v-for="(item, index) in category.items" :key="index" :info="item"></FoodItem>
 			</div>
 		</div>
 	</div>
@@ -32,9 +35,11 @@ import datePicker from './../components/date_picker.vue';
 import icon from './../components/icon.vue';
 import FoodItem from './../components/food_item.vue';
 import mensaInfo from './../components/mensainfo.vue';
+import ActionButton from './../components/action_button.vue';
 
 export default {
 	data () {
+		let expand_more = require('./../assets/expand_more.svg');
 		return {
 			basicdata: undefined,
 			additionaldata: false,
@@ -43,6 +48,7 @@ export default {
 			back: require('./../assets/back.svg'),
 			daterange: require('./../assets/date_range.svg'),
 			sort: require('./../assets/sort.svg'),
+			acBtn_arrow: { svg: expand_more, function: ()=>{} },
 			upperextend: 0
 		}
 	},
@@ -99,6 +105,9 @@ export default {
 		getRandomInt: function (min, max) {
 			return Math.floor(Math.random() * (max - min + 1)) + min;
 		},
+		flipExtended: function (obj) {
+			obj.extended = !obj.extended;
+		},
 		goBack: function () {
 			window.history.back();
 		},
@@ -134,6 +143,7 @@ export default {
 				else
 					menu[i].displayName = menu[i].name;
 					menu[i].highlightCount = 0;
+					menu[i].extended = true;
 			}
 			let hls = this.$root.$data.storageC.settings.highlights;
 			for (var h = hls.length - 1; h >= 0; h--) { // hls[h]
@@ -155,6 +165,7 @@ export default {
 		FoodItem,
 		datePicker,
 		mensaInfo,
+		ActionButton,
 		moment
 	}
 }
@@ -199,5 +210,24 @@ export default {
 	}
 	.dateel {
 		padding: 20px;
+	}
+
+	.menuheader {
+		display: flex;
+		align-items: center;
+		padding: 0;
+	}
+	.headline {
+		flex: 1;
+		display: inline-block;
+		padding: 0 20px;
+	}
+	.actions {
+		fill: #817575;
+    	transition: all .5s;
+	}
+
+	.rotate180 svg {
+		transform: rotate(180deg);
 	}
 </style>

@@ -40,4 +40,9 @@ $app->group(['prefix' => 'api/', 'middleware' => ['cacheFetch', 'cachePut']], fu
 		$v = DB::collection('additives')->project(['_id' => 0])->get();
 		return $v;
 	});
+
+	$app->get('/sections', function() {
+		$v = DB::collection('menu_sections')->project(['_id' => 0, 'translations' => 0])->get();
+		return $v;
+	});
 });
