@@ -9,8 +9,8 @@ export default {
 	name: 'languageSelector',
 	data () {
 		let data = [
-			{head: this.$t('language.de'), desc: this.$t('language.de', 'en')},
-			{head: this.$t('language.en'), desc: this.$t('language.en', 'en')}
+			{head: this.$t('language.de', 'de'), desc: this.$t('language.de')},
+			{head: this.$t('language.en', 'en'), desc: this.$t('language.en')}
 		];
 
 		let lang = this.$root.$data.storageC.settings.language;

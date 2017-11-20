@@ -33,13 +33,15 @@ export default class LocalStorageController {
 	 */
 	initSettings() {
 		this.settings = {
-			"version": 3,
+			"version": 4,
 			"profileID": null,
 			"language": "de",
 			"pricetype": 0,
 			"primarytype": 0,
 			"mensas": [[],[],[]],
 			"startpage": 0,
+			"diet": 0,
+			"additives": [],
 			"highlights": [],
 			"sorting": []
 		};
@@ -57,7 +59,12 @@ export default class LocalStorageController {
 			for (var i = this.settings.highlights.length - 1; i >= 0; i--) {
 				this.settings.highlights[i] = this.settings.highlights[i].toLowerCase();
 			}
-			this.settings.version = 3;
+		}
+		if (this.settings.version < 4) {
+			this.settings.diet = 0;
+			this.settings.additives = [];
+		
+			this.settings.version = 4;
 			this.updateStorage();
 		}
 	}
@@ -158,6 +165,16 @@ export default class LocalStorageController {
 		this.updateStorage();
 	}
 
+	/**
+	 * Sets the price type
+	 * 
+	 * @param nr - Number of price type
+	 * 
+	 */
+	setDiettype(nr) {
+		this.settings.diet = nr;
+		this.updateStorage();
+	}
 
 	/**
 	 * updates Storage

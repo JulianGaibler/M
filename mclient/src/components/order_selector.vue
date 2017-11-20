@@ -1,17 +1,6 @@
 <template> 
 	<div class="whitebox">
-		<div :class="[$style.elem, $style.head]">
-			<div :class="$style.text">{{$t('settings.custom_order')}}</div>
-			<div :class="$style.switch">
-				<div class="mdc-switch demo-switch--mtheme">
-					<input type="checkbox" id="basic-switch" class="mdc-switch__native-control" v-model="enabled" />
-					<div class="mdc-switch__background">
-						<div class="mdc-switch__knob"></div>
-					</div>
-				</div>
-			</div>
-		</div>
-
+		<textSwitch v-model="enabled" :text="$t('settings.custom_order')"></textSwitch>
 		<span v-if="enabled">
 			<errorMsg v-if="error"></errorMsg>
 			<div v-else-if="items.length<1">
@@ -49,6 +38,7 @@ import icon from './../components/icon.vue';
 import draggable from 'vuedraggable';
 import loadGlow from './../components/loadGlow.vue';
 import errorMsg from './../components/errormsg.vue';
+import textSwitch from './../components/text_switch.vue';
 
 export default {
 	name: 'orderSelector',
@@ -108,12 +98,11 @@ export default {
 		icon,
 		draggable,
 		loadGlow,
-		errorMsg
+		errorMsg,
+		textSwitch
 	}
 }
 </script>
-
-<style src="@material/switch/dist/mdc.switch.min.css"/>
 <style src="@material/checkbox/dist/mdc.checkbox.min.css"/>
 
 <style module>
@@ -122,9 +111,6 @@ export default {
 		align-items: center;
 		font-size: 14px;
 		padding: 5px 5px 5px 20px;
-	}
-	.head {
-		padding: 20px 20px 20px 20px;
 	}
 	.text {
 		flex: 1;
@@ -143,15 +129,6 @@ export default {
 	}
 </style>
 <style>
-	.demo-switch--mtheme .mdc-switch__native-control:enabled:checked ~ .mdc-switch__background::before {
-		background-color: #651fff;
-	}
-	.demo-switch--mtheme .mdc-switch__native-control:enabled:checked ~ .mdc-switch__background .mdc-switch__knob {
-		background-color: #651fff;
-	}
-	.demo-switch--mtheme .mdc-switch__native-control:enabled:checked ~ .mdc-switch__background .mdc-switch__knob::before {
-		background-color: #651fff;
-	}
 	.mdc-checkbox.demo-checkbox--mtheme .mdc-checkbox__native-control:enabled:checked ~ .mdc-checkbox__background, .mdc-checkbox.demo-checkbox--mtheme .mdc-checkbox__native-control:enabled:indeterminate ~ .mdc-checkbox__background {
 		border-color: #651fff;
 		background-color: #651fff;

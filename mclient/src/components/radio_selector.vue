@@ -1,6 +1,6 @@
 <template>
-	<div :class="['whitebox', $style.selectwb]">
-		<div v-for="(item, index) in data" :key="index" :class="$style.selectcontainer">
+	<div :class="$style.selectwb">
+		<div v-for="(item, index) in data" :key="index" :class="[$style.selectcontainer, item.desc?$style.containerMargin:'']">
 			<div class="mdc-radio">
 				<input v-model="selectedIndexLocal" :checked="index==selectedIndexLocal" :value="index" class="mdc-radio__native-control" type="radio" :id="randID+'-radio-'+index" :name="randID" checked>
 				<div class="mdc-radio__background">
@@ -44,6 +44,9 @@ export default {
 	.selectcontainer {
 		display: flex;
 		align-items: center;
+		padding: 0 10px;
+	}
+	.containerMargin {	
 		padding: 10px;
 	}
 	.label {
@@ -51,10 +54,9 @@ export default {
 	}
 	.label h1 {
 		font-size: 16px;
-		margin: 0 0 5px 0;
 
 	}
 	.label p {
-		margin: 0;
+		margin: 5px 0 0 0;
 	}
 </style>
