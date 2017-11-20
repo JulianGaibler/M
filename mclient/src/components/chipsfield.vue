@@ -92,11 +92,11 @@ name: 'mensaselector',
 		flex-direction: column;
 		font-size: 14px;
 		color: #000;
+		padding: 5px;
 		align-items: stretch;
 	}
 	.content {
 		text-align: left;
-		padding: 5px;
 		display: flex;
 		flex-wrap: wrap;
 		position: relative;

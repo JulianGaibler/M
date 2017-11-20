@@ -7,7 +7,8 @@
 					   :methd="change"></radioSelector>
 		<hr>
 		<textSwitch v-model="enabled" :text="$t('settings.hideadditives')"></textSwitch>
-		<chipsfield v-if="enabled" :items="this.$root.$data.storageC.settings.additives" :suggestions="suggestions"></chipsfield>
+		<errorMsg v-if="error"></errorMsg>
+		<chipsfield v-else-if="enabled" :items="this.$root.$data.storageC.settings.additives" :suggestions="suggestions"></chipsfield>
 	</div>
 </template>
 
@@ -15,6 +16,7 @@
 import radioSelector from './../components/radio_selector.vue';
 import chipsfield from './../components/chipsfield.vue';
 import textSwitch from './../components/text_switch.vue';
+import errorMsg from './../components/errormsg.vue';
 
 export default {  
 	name: 'dietSelector',
@@ -68,7 +70,8 @@ export default {
 	components: {
 		radioSelector,
 		chipsfield,
-		textSwitch
+		textSwitch,
+		errorMsg
 	}
 };
 </script>
