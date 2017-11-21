@@ -1,7 +1,8 @@
 <template>  
 	<div :class="$style.noresults">
 		<h1>{{ $t('result.error_shoutouts['+error_shoutouts_random+']') }}</h1>
-		<p>{{ $t('result.loaderror_explain') }}</p>
+		<p v-if="type=0">{{ $t('result.loaderror_explain') }}</p>
+		<p v-else-if="type=1">{{ $t('result.noresults_explain') }}</p>
 	</div>
 </template>
 
@@ -11,6 +12,13 @@ export default {
 	data () {
 		return {
 			error_shoutouts_random: this.getRandomInt(0,5)
+		}
+	},
+	props: {
+		type: {
+			type: Number,
+			default: 0,
+			required: false
 		}
 	},
 	methods: {

@@ -37,7 +37,7 @@ $app->group(['prefix' => 'api/', 'middleware' => ['cacheFetch', 'cachePut']], fu
 	$app->get('/menu/{mensaID}', 'CrawlerController@getMenu');
 
 	$app->get('/additives', function() {
-		$v = DB::collection('additives')->project(['_id' => 0])->get();
+		$v = DB::collection('additives')->project(['_id' => 0,'supportedBy' => 0])->get();
 		return $v;
 	});
 

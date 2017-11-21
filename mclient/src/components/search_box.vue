@@ -12,10 +12,7 @@ xc<template>
 			</div>
 		</div>
 		<errorMsg v-else-if="loading==2"></errorMsg>
-		<div v-else-if="results<1" :class="$style.noresults">
-			<h1>{{ $t('result.error_shoutouts['+error_shoutouts_random+']') }}</h1>
-			<p>{{ $t('result.noresults_explain') }}</p>
-		</div>
+		<errorMsg v-else-if="results<1" :type="1"></errorMsg>
 		<slot v-else>Nothing to hide.</slot>
 	</div>
 </template>

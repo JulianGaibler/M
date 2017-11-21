@@ -25,12 +25,12 @@ class CrawlerController extends Controller
 		if (!is_null($mensa)) {
 			$result = $mensa->origin;
 
-			switch ($result["handle"]) {
-				case "stwberlin":
+			switch ($result["provider"]) {
+				case "5a1402220de85702c47c632d":
 					$res = $this->getStwBerlinMenu($result["mensa_id"], $lang, $date);
 					return response()->json($res);
 					break;
-				case "personalkantinetuberlin":
+				case "5a14027e0de85702c47c632e":
 					$res = $this->getPersonalkantinetuberlinMenu($result["nr"], $lang, $date);
 					return response()->json($res);
 					break;
@@ -195,7 +195,7 @@ class CrawlerController extends Controller
 
 						$labels = [];
 						$additives = [];
-						$additivesArr = array("M"=>"30", "1"=>"21", "2"=>"6", "3"=>"7", "4"=>"8", "5"=>"3", "6"=>"21", "7"=>"22", "8"=>"26", "9"=>"27", "10"=>"28", "11"=>"29", "12"=>"32", "13"=>"36", "14"=>"23", "Sch"=>"2", "R"=>"2a", "G"=>"2b", "F"=>"2c", "L"=>"2d", "W"=>"2e");
+						$additivesArr = array("M"=>"30", "1"=>"21", "2"=>"6", "3"=>"7", "4"=>"8", "5"=>"3", "6"=>"37", "7"=>"22", "8"=>"26", "9"=>"27", "10"=>"28", "11"=>"29", "12"=>"32", "13"=>"36", "14"=>"23", "Sch"=>"2", "R"=>"2a", "G"=>"2b", "F"=>"2c", "L"=>"2d", "W"=>"2e");
 						$labelsArr = array("Vs" => "lightfood", "S" => "lightfood", "V" => "vegetarian", "P" => "corned");
 
 						$subtext = explode(" (", $this->convertCrawlerString($node->text()));

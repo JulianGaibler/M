@@ -7,6 +7,7 @@
 		<div :class="$style.headlineContainer">
 			<mensaInfo :basicdata="basicdata" :additionaldata="additionaldata"></mensaInfo>
 		</div>
+		<message v-for="message in messages" :msg="message">{{message.text}}</message>
 		<div>
 			<div v-if="menu===false" class="whitebox" v-for="index in 2">
 				<div class="whitebox_header">
@@ -32,6 +33,7 @@
 import moment from "moment";
 import loadGlow from './../components/loadGlow.vue';
 import datePicker from './../components/date_picker.vue';
+import message from './../components/message.vue';
 import icon from './../components/icon.vue';
 import FoodItem from './../components/food_item.vue';
 import mensaInfo from './../components/mensainfo.vue';
@@ -44,6 +46,7 @@ export default {
 			basicdata: undefined,
 			additionaldata: false,
 			menu: undefined,
+			messages: [],
 			showDate: {name: false, mmt: moment(this.data.whenOpen)},
 			back: require('./../assets/back.svg'),
 			daterange: require('./../assets/date_range.svg'),
@@ -84,6 +87,26 @@ export default {
 
 		this.$root.$data.dataC.getSingleMensa([{_id: this.data._id}]).then((result) => {
 			this.additionaldata = result[0];
+
+			let additives = this.$root.$data.storageC.settings.additives;
+			let unsupportedAdditives = this.additionaldata.unsupportedAdditives;
+
+			if ((additives.length > 0) && (unsupportedAdditives.length > 0)) {
+				let bucket = [];
+				for (var i = 0; i < additives.length; i++) {
+					if (unsupportedAdditives.indexOf(additives[i]) >= 0)
+						bucket.push(additives[i]);
+				}
+				if (bucket.length > 0) {
+
+					
+					this.messages.push({
+						text: "HM:"+bucket
+					})
+				}
+
+			}
+
 			if (!this.basicdata) {
 				this.basicdata = {
 					nameA: result[0].nameA,
@@ -177,6 +200,7 @@ export default {
 		datePicker,
 		mensaInfo,
 		ActionButton,
+		message,
 		moment
 	}
 }

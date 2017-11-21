@@ -21,6 +21,7 @@ class MensaController extends Controller
 			if (!$nolocation) $q = Mensas::project(["location.adress"=>1 ,"location.times"=>1, "type"=>1, "nameA"=>1, "nameB"=>1, "mensa_id"=>1, "hasMenu"=>1,  "_id"=>1]);
 			else $q = Mensas::project([]);
 			$sub = $q->where('type', $i)->orderBy('nameA', 'asc')->get();
+			if(!$nolocation) $this->getMissingAdditives($sub);
 			$this->getWhenOpen($sub, $nolocation);
 			$r[] = $sub;
 		}
@@ -35,14 +36,15 @@ class MensaController extends Controller
 	public function getSome(Request $request, $multiple) {
 		$arr = explode(";", $multiple, Mensas::count());
 		$v = Mensas::find($arr);
+		$this->getMissingAdditives($v);
 		$this->getWhenOpen($v);
 		return $v;
 	}
 
 	/**
-	 * Converts DOMcrawler mumbo-jumbo into clean strings
+	 * ---
 	 *
-	 * @return String
+	 * @return ---
 	 */
 	private function getWhenOpen(&$sub, $nolocation=false) {
 		$currentweekday = (((((int)date('w')-1) % 7) + 7) % 7);
@@ -66,6 +68,19 @@ class MensaController extends Controller
 				$entry['location'] = $x;
 			}
 			$entry['whenOpen'] = date(DATE_ATOM, strtotime("+".$inDays." days midnight"));
+		}
+	}
+
+	/**
+	 * ---
+	 *
+	 * @return ---
+	 */
+	private function getMissingAdditives(&$sub) {
+		foreach($sub as $entry) {
+			$provider = $entry['origin']['provider'];
+			$res = DB::collection('additives')->where('supportedBy', ['$not' => ['$in' => [$provider]]])->project(["id"=>1, "_id"=>0])->get();
+			$entry['unsupportedAdditives'] = array_column($res->toArray(), 'id');
 		}
 	}
 }

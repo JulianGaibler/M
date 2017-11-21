@@ -247,4 +247,9 @@ export default {
 		border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 		margin: 0;
 	}
+
+	input::-ms-clear {
+		width : 0;
+		height: 0;
+	}
 </style>
