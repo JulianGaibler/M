@@ -7,7 +7,7 @@
 		<div :class="$style.headlineContainer">
 			<mensaInfo :basicdata="basicdata" :additionaldata="additionaldata"></mensaInfo>
 		</div>
-		<message v-for="message in messages" :msg="message">{{message.text}}</message>
+		<message v-for="(message, index) in messages" :key="index" :msg="message">{{message.text}}</message>
 		<div>
 			<div v-if="menu===false" class="whitebox" v-for="index in 2">
 				<div class="whitebox_header">
