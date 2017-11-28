@@ -170,6 +170,39 @@ export default {
 				menu = bucket.concat(menu);
 			}
 
+			let diet = this.$root.$data.storageC.settings.diet;
+			if (diet > 0) {
+				for (var k = menu.length - 1; k >= 0; k--) {
+					for (var i = menu[k].items.length - 1; i >= 0; i--) {
+						if (diet==1) {
+							if (!menu[k].items[i].labels.includes("vegetarian") &&
+								!menu[k].items[i].labels.includes("vegan")) {
+								menu[k].items.splice(i, 1);
+							}
+						} else {
+							if (!menu[k].items[i].labels.includes("vegan")) {
+								menu[k].items.splice(i, 1);
+							}
+						}
+					}
+					if (menu.length < 1) menu.splice(k, 1);
+				}
+			}
+			let localAdditives = this.$root.$data.storageC.settings.additives;
+			if (localAdditives.length > 0) {
+				for (var k = menu.length - 1; k >= 0; k--) {
+					for (var l = menu[k].items.length - 1; l >= 0; l--) {
+						for (var i = menu[k].items[l].additives.length - 1; i >= 0; i--) {
+							if (localAdditives.includes(menu[k].items[l].additives[i])) {
+								menu[k].items.splice(l, 1);
+								break;
+							}
+						}
+					}
+					if (menu[k].items.length < 1) menu.splice(k, 1);
+				}
+			}
+
 			for (var i = 0; i < menu.length; i++) {
 				if (this.$te('menuSection.'+menu[i].name))
 					menu[i].displayName = this.$t('menuSection.'+menu[i].name);
