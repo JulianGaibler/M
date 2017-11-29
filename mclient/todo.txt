@@ -1,7 +1,6 @@
 Immediate
 ✘	Feedback/Bug Report
 ~	Setup
-✘	Personalkantine braucht Vegan-Label
 
 ✘	Ladeanimation für zusatzstoffe
 ✘	Fehlermeldung für alles in SingleMensa

@@ -1,5 +1,10 @@
 <template>
-	<div :class="['whitebox', $style.yellowbox]" v-if="open"><slot></slot></div>
+	<div :class="['whitebox', $style.yellowbox]" v-if="open">
+		<div class="whitebox_element">
+			<h1>{{msg.headline}}</h1>
+			<slot></slot>
+		</div>
+	</div>
 </template>
 
 <script>

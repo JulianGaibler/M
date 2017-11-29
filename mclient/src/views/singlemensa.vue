@@ -101,7 +101,9 @@ export default {
 
 					
 					this.messages.push({
-						text: "HM:"+bucket
+						id: "additiveswarn"
+						headline: "Zusatzstoff Warnung",
+						text: "Diese Zusatzstoffe werden auf dem Menu nicht ausgeschrieben und können nicht gefiltert werden: "+bucket
 					})
 				}
 

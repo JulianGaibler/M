@@ -195,8 +195,11 @@ class CrawlerController extends Controller
 
 						$labels = [];
 						$additives = [];
-						$additivesArr = array("M"=>"30", "1"=>"21", "2"=>"6", "3"=>"7", "4"=>"8", "5"=>"3", "6"=>"37", "7"=>"22", "8"=>"26", "9"=>"27", "10"=>"28", "11"=>"29", "12"=>"32", "13"=>"36", "14"=>"23", "Sch"=>"2", "R"=>"2a", "G"=>"2b", "F"=>"2c", "L"=>"2d", "W"=>"2e");
-						$labelsArr = array("Vs" => "lightfood", "S" => "lightfood", "V" => "vegetarian", "P" => "corned");
+						$additivesArr = array("m"=>"30", "1"=>"21", "2"=>"6", "3"=>"7", "4"=>"8", "5"=>"3", "6"=>"37", "7"=>"22", "8"=>"26", "9"=>"27", "10"=>"28", "11"=>"29", "12"=>"32", "13"=>"36", "14"=>"23", "sch"=>"2", "r"=>"2a", "g"=>"2b", "f"=>"2c", "l"=>"2d", "w"=>"2e");
+						$labelsArr = array("vs" => "lightfood",
+										   "s" => "lightfood",
+										   "v" => "vegetarian",
+										   "p" => "corned");
 
 						$subtext = explode(" (", $this->convertCrawlerString($node->text()));
 						$name = $subtext[0];
@@ -204,6 +207,7 @@ class CrawlerController extends Controller
 						if (sizeof($subtext)>1) {
 							$foreignAdditives = preg_split("/(\W)+/", $subtext[1]);
 							foreach ($foreignAdditives as $fa) {
+								$fa = strtolower($fa);
 								if ($fa=="") continue;
 								if (array_key_exists($fa, $additivesArr)) {
 									$additives[] = $additivesArr[$fa];
