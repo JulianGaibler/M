@@ -39,6 +39,8 @@ import FoodItem from './../components/food_item.vue';
 import mensaInfo from './../components/mensainfo.vue';
 import ActionButton from './../components/action_button.vue';
 
+import Helpers from './../classes/Helpers.js'
+
 export default {
 	data () {
 		let expand_more = require('./../assets/expand_more.svg');
@@ -98,13 +100,27 @@ export default {
 						bucket.push(additives[i]);
 				}
 				if (bucket.length > 0) {
+						let msg = {
+							id: "additiveswarn",
+							headline: "Zusatzstoff Warnung",
+							text: "Diese Zusatzstoffe werden auf dem Menu nicht ausgeschrieben und können nicht gefiltert werden: "
+						}
 
-					
-					this.messages.push({
-						id: "additiveswarn"
-						headline: "Zusatzstoff Warnung",
-						text: "Diese Zusatzstoffe werden auf dem Menu nicht ausgeschrieben und können nicht gefiltert werden: "+bucket
-					})
+					this.$root.$data.dataC.getAdditives().then((result) => {
+						let language = this.$root.$data.storageC.settings.language;
+						let x = Helpers.translateAdditives(result, bucket, language);
+						console.log(x);
+						for (var i = 0; i < x.length; i++) {
+							msg.text += x[i].name+" ";
+						}
+						this.messages.push(msg);
+					},
+					(reason) => {
+						for (var i = 0; i < bucket.length; i++) {
+							msg.text += bucket[i]+" ";
+						}
+						this.messages.push(msg);
+					});
 				}
 
 			}

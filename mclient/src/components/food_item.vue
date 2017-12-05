@@ -18,7 +18,7 @@
 		<div :class="$style.elembottom">
 			<h3>{{$t('labels.additives')}}</h3>
 			<div :class="$style.addlabels" v-if="moreInfoThere">
-				<p v-for="elem in additiveTranslation">{{elem}}</p>
+				<p v-for="elem in additiveTranslation">{{elem.name}}</p>
 			</div>
 		</div>
 	</div>
@@ -27,6 +27,8 @@
 <script>
 import icon from './../components/icon.vue';
 import {MDCRipple, MDCRippleFoundation, util} from '@material/ripple';
+
+import Helpers from './../classes/Helpers.js'
 
 export default {
 	name: 'FoodItem',
@@ -88,23 +90,9 @@ export default {
 
 				});
 			} else {
-				let bucket = [];
-				let userlang = this.$root.$data.storageC.settings.language;
-				for (var k = 0; k < this.info.additives.length; k++) {
-					for (var i = this.additivesList.length - 1; i >= 0; i--) {
-						if (this.additivesList[i].id === this.info.additives[k]) {
-							switch (userlang) {
-								case 'de':
-									bucket.push(this.additivesList[i].name_de);
-									break;
-								case 'en':
-									bucket.push(this.additivesList[i].name_en);
-							}
-							break;
-						}
-					}
-				}
-				return bucket;
+				let language = this.$root.$data.storageC.settings.language;
+				let res = Helpers.translateAdditives(this.additivesList, this.info.additives, language);
+				return res;
 			}
 		}
 	},

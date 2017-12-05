@@ -18,6 +18,8 @@ import chipsfield from './../components/chipsfield.vue';
 import textSwitch from './../components/text_switch.vue';
 import errorMsg from './../components/errormsg.vue';
 
+import Helpers from './../classes/Helpers.js'
+
 export default {  
 	name: 'dietSelector',
 	data () {
@@ -40,7 +42,8 @@ export default {
 			this.error = false;
 			if (val && this.suggestions.length < 1) {
 				this.$root.$data.dataC.getAdditives().then((result) => {
-					this.suggestions = this.convertLanguage(result);
+					let lang = this.$root.$data.storageC.settings.language;
+					this.suggestions = Helpers.translateAdditives(result, null, lang);
 				},
 				(reason) => {
 					this.error = true;
@@ -49,17 +52,6 @@ export default {
 				this.$root.$data.storageC.settings.additives = [];
 				this.$root.$data.storageC.updateStorage();
 			}
-		},
-		convertLanguage: function (arr) {
-			let lang = this.$root.$data.storageC.settings.language;
-			let newArr = [];
-			for (var i = arr.length - 1; i >= 0; i--) {
-				newArr.push({
-					id: arr[i].id,
-					name: arr[i]['name_'+lang]
-				})
-			}
-			return newArr;
 		}
 	},
 	watch: {
