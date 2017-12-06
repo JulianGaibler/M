@@ -111,13 +111,15 @@ export default {
 						let x = Helpers.translateAdditives(result, bucket, language);
 						console.log(x);
 						for (var i = 0; i < x.length; i++) {
-							msg.text += x[i].name+" ";
+							msg.text += x[i].name;
+							if (i+i < x.length) msg.text += ", ";
 						}
 						this.messages.push(msg);
 					},
 					(reason) => {
 						for (var i = 0; i < bucket.length; i++) {
 							msg.text += bucket[i]+" ";
+							if (i+i < bucket.length) msg.text += ", ";
 						}
 						this.messages.push(msg);
 					});

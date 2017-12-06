@@ -9,7 +9,7 @@
 			<div v-for="(suggestion, index) in matches"
 				:class="[isActive(index)?$style.active:'', $style.chip]"
 				@click="suggestionClick(index)">
-				{{suggestion.name}} {{index}}
+				{{suggestion.name}}
 			</div>
 		</div>
 	</div>
@@ -110,18 +110,14 @@ name: 'autocomplete',
 	}
 
 	.chip {
-		border: 2px solid #dcdcdc;
-		border-radius: 50px;
-		display: block;
-		padding: 6px 10px;
-		margin: 5px 0px 5px 5px;
-		line-height: 1.2;
+		padding: 10px;
+		border-top: 1px solid #e3e3e3;
 	}
 	.chip:hover {
 		cursor: pointer;
+		background-color: #e3e3e3;
 	}
 	.active {
-		border: 2px solid #651fff;
-		background-color: rgba(101, 31, 255, 0.24);
+		background-color: #f6f6f6;
 	}
 </style>

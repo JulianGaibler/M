@@ -26,6 +26,10 @@ export default {
 
 <style module>
 	.yellowbox {
-		
+		background: #FFF9C4;
+	}
+	.yellowbox h1 {
+		font-size: 20px;
+		margin-bottom: 5px;
 	}
 </style>
