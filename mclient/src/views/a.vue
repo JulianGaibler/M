@@ -1,7 +1,7 @@
 <template>
 	<div class="adaptiveWrap">
 		<div :class="$style.stl" class="whitebox">
-			<img :class="$style.image" :src="gramps"> 
+			<img :class="$style.image" :src="gramps">
 			<p>Not ready yet. Sorry!</p>
 		</div>
 	</div>

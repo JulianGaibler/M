@@ -2,7 +2,8 @@
 	"frame": {
 		"highlights": "Highlights",
 		"mensa": "Mensa",
-		"settings": "Einstellungen"
+		"settings": "Einstellungen",
+		"favourite": "Favorit"
 	},
 	"language": {
 		"this": "Sprache",
@@ -51,7 +52,9 @@
 		"search": "Suchen",
 		"got_it": "Okay",
 		"more": "mehr",
-		"done": "Fertig"
+		"done": "Fertig",
+		"import": "importieren",
+		"export": "exportieren"
 	},
 	"state": {
 		"loading": "Laden",
@@ -59,7 +62,8 @@
 		"removed": "Entfernt",
 		"optional": "optional",
 		"open": "offen",
-		"closed": "geschlossen"
+		"closed": "geschlossen",
+		"successful": "erfolgreich"
 	},
 	"input": {
 		"keyword": "Stichwort"
@@ -69,7 +73,11 @@
 		"none": "keine",
 		"loaderror_explain": "Es ist ein Fehler beim Laden aufgetreten",
 		"noresults_explain": "Die Suche hat keine Treffer ergeben",
-		"error_shoutouts": ["Oh my Glob!", "UNACCEPTABLE!", "Shmowzow!", "What the cabbage?!", "Oh Lumps.", "What the flip, man?"]
+		"error_shoutouts": ["Oh my Glob!", "UNACCEPTABLE!", "Shmowzow!", "What the cabbage?!", "Oh Lumps.", "What the flip, man?"],
+		"additives_warn": "Zusatzstoff Warnung",
+		"additives_nosupport": "Diese Zusatzstoffe werden auf dem Menu nicht ausgeschrieben und können nicht gefiltert werden:",
+		"error_json_parse": "JSON parsing fehlgeschlagen",
+		"error_base64_decoding": "Base64-Decodierung fehlgeschlagen"
 	},
 	"food": {
 		"pizza": "Pizza",
@@ -92,7 +100,9 @@
 		"custom_order": "Benutzerdefinierte Reihenfolge",
 		"customize": "Anpassen",
 		"dietarypreferences": "Ernährungsvorlieben",
-		"hideadditives": "Zusatzstoffe ausblenden"
+		"hideadditives": "Zusatzstoffe ausblenden",
+		"transport": "Einstellungen exportieren/importieren",
+		"transport_info": "Zu importierenden code hier platzieren..."
 	},
 	"setup": {
 		"intro_highlights": "M kann nach Essen hervorheben, wenn ein bestimmtes Wort im Namen vorkommt.",
@@ -100,6 +110,7 @@
 		"only_minutes": "Wir brauchen nur zwei Minuten",
 		"howto_1": "Wähle Mensen, Cafeterien und Coffeebars aus die du häufig besuchst",
 		"howto_2": "Mach eine von ihnen zu deinem Favoriten",
-		"howto_3": "Ändere die Reihenfolge, wenn du magst"
+		"howto_3": "Ändere die Reihenfolge, wenn du magst",
+		"finished": "Vergiss nicht, M als Web-App zu deinem Home-Bildschirm hinzuzufügen und noch mehr Features in den Einstellungen auszuprobieren"
 	}
 }

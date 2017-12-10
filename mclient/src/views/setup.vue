@@ -1,8 +1,15 @@
 <template>
 	<!-- SETUP: Language -->
 	<div :class="['adaptiveWrap', $style.setup, $style.setupfirst]" v-if="page==0">
-		<icon :class="$style.introimg" :svg="intro_img"></icon>
-		<div :class="[$style.middle, $style.paragraphcolor]"><span>ALPHA TEST</span></div>
+	<div :class="$style.top">
+			<h1>Helping you through the labyrinth of mensa-menus</h1>
+		</div>
+		<div :class="[$style.middle]">
+			<icon :class="$style.introimg" :svg="intro_img"></icon>
+			<p :class="$style.hltxt">By letting you decide about the <span>menu-order</span>, <span>price-categories</span>, <span>allergies</span>, <span>dietary preferences</span>, <span>favorite mensas</span>, food to be <span>highlighted</span> and more</p>
+			<a href="//jwels.berlin"><icon :class="$style.signature" :svg="signature_white"></icon></a>
+		</div>
+
 		<div :class="$style.bottom">
 			<button v-bind:key="page" v-on:click="proceedLang('de')" class="mdc-button">German</button>
 			<button v-bind:key="page" v-on:click="proceedLang('en')" class="mdc-button">English</button>
@@ -48,7 +55,7 @@
 		</div>
 
 		<div :class="$style.middle">
-			<priceSelector></priceSelector>
+			<priceSelector class="whitebox"></priceSelector>
 			<p :class="$style.disclaim">{{ $t('prices.more') }}</p>
 		</div>
 		<div :class="$style.bottom">
@@ -81,11 +88,12 @@
 	<!-- SETUP: So much more -->
 	<div :class="['adaptiveWrap', $style.setup]" v-else-if="page==5">
 		<div :class="$style.top">
-			
+			<h1>You did it!</h1>
 		</div>
 
 		<div :class="$style.middle">
-			<h1>{{ $t('action.done') }}</h1>
+			<p>{{ $t('setup.finished') }}</p>
+			<icon :class="$style.webapptutorial" :svg="webapp_tutorial"></icon>
 		</div>
 		<div :class="$style.bottom">
 			<button v-bind:key="page" v-on:click="gonext()" class="mdc-button">{{ $t('action.got_it') }}</button>
@@ -106,10 +114,10 @@ export default {
 			page: 0,
 			signature_white: require('./../assets/signature_white.svg'),
 			add_circle_outline: require('./../assets/add_circle_outline.svg'),
+			webapp_tutorial: require('./../assets/webapp-tutorial.svg'),
 			star_border: require('./../assets/star_border.svg'),
 			drag_handle: require('./../assets/drag_handle.svg'),
 			intro_img: require('./../assets/intro.svg'),
-			word: "M sortiert die Menüs aller Mensen aus Berlin und stellt sie so dar wie du möchtest! Du hast mehr überblick in einem Bruchteil der Zeit.",
 			exampleHighlights: []
 		}
 	},
@@ -187,9 +195,6 @@ export default {
 	.top {
 		padding: 0 20px 20px 20px;
 	}
-	.setupfirst {
-		display: flex;
-	}
 	.middle {
 		flex: 1;
 		color: white;
@@ -220,17 +225,24 @@ export default {
 		margin: 5px;
 	}
 	.introimg {
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		overflow: hidden;
-		text-align: right;
+		display: inline-block;
+		padding: 0 50px;
+		margin: 0 auto;
+		max-width: 300px;
 	}
 	.introimg svg {
-		height: 100%;
+		width: 100%;
 	}
+
+	.webapptutorial {
+		padding: 0 10px;
+		margin: 0 auto;
+		max-width: 500px;
+	}
+	.webapptutorial svg {
+		width: 100%;
+	}
+
 	.setup .whitebox {
 		box-shadow: 0px 3px 2px -2px rgba(0, 0, 0, 0.2), 0px 2px 5px 0px rgba(0, 0, 0, 0.14), 0px 0px 12px 1px rgba(0, 0, 0, 0.12);
 		background-color: white;
@@ -332,5 +344,17 @@ export default {
 		height: 100%;
 		width: 100%;
 		fill: white;
+	}
+
+	.hltxt {
+		color: rgba(255, 255, 255, 0.75);
+		padding: 20px;
+		margin: 0;
+		font-weight: 300;
+		line-height: initial;
+	}
+
+	.hltxt span {
+		color: white;
 	}
 </style>

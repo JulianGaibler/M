@@ -102,8 +102,8 @@ export default {
 				if (bucket.length > 0) {
 						let msg = {
 							id: "additiveswarn",
-							headline: "Zusatzstoff Warnung",
-							text: "Diese Zusatzstoffe werden auf dem Menu nicht ausgeschrieben und können nicht gefiltert werden: "
+							headline: this.$t('result.additives_warn'),
+							text: this.$t('result.additives_nosupport')+" "
 						}
 
 					this.$root.$data.dataC.getAdditives().then((result) => {
@@ -112,14 +112,14 @@ export default {
 						console.log(x);
 						for (var i = 0; i < x.length; i++) {
 							msg.text += x[i].name;
-							if (i+i < x.length) msg.text += ", ";
+							if (i+1 < x.length) msg.text += ", ";
 						}
 						this.messages.push(msg);
 					},
 					(reason) => {
 						for (var i = 0; i < bucket.length; i++) {
 							msg.text += bucket[i]+" ";
-							if (i+i < bucket.length) msg.text += ", ";
+							if (i+1 < bucket.length) msg.text += ", ";
 						}
 						this.messages.push(msg);
 					});

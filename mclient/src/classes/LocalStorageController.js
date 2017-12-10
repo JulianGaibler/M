@@ -17,6 +17,7 @@ export default class LocalStorageController {
 				this.settings = JSON.parse(localStorage.getItem('settings'));
 				this.upgrade();
 				if (this.settings.profileID===null) this.requestProfileID();
+				else this.updateProfile();
 				this.i18nhook.locale = this.settings.language;
 			}
 		}
@@ -33,7 +34,7 @@ export default class LocalStorageController {
 	 */
 	initSettings() {
 		this.settings = {
-			"version": 4,
+			"version": 5,
 			"profileID": null,
 			"language": "de",
 			"pricetype": 0,
@@ -65,6 +66,12 @@ export default class LocalStorageController {
 			this.settings.additives = [];
 		
 			this.settings.version = 4;
+			this.updateStorage();
+		}
+		if (this.settings.version < 5) {
+			this.requestProfileID()
+			
+			this.settings.version = 5;
 			this.updateStorage();
 		}
 	}
@@ -196,9 +203,9 @@ export default class LocalStorageController {
 	}
 
 	/**
-	 * Gets Primary Mensa
+	 * requestProfileID
 	 * 
-	 * @return Mensa-Object or undefined
+	 * @return 
 	 */
 	requestProfileID() {
 		this.dataC.newUserID().then((_id) => {
@@ -208,6 +215,15 @@ export default class LocalStorageController {
 		(reason) => {
 			//Nothing
 		});
+	}
+
+	/**
+	 * updateProfile
+	 * 
+	 * @return 
+	 */
+	updateProfile() {
+		this.dataC.updateUser(this.settings.profileID);
 	}
 
 

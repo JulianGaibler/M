@@ -1,8 +1,14 @@
 <template>
 	<div :class="$style.wrapper">
 		<div :class="$style.constraint">
-			<div v-ripple :class="['mdc-ripple-surface', $style.elem]" tabindex="0" v-on:click="chviewname('viewhighlights')">
+<!-- 			<div v-ripple :class="['mdc-ripple-surface', $style.elem]" tabindex="0" v-on:click="chviewname('viewhighlights')">
 				<div v-bind:class="[currentView=='viewhighlights' ? $style.active : '']">
+					<icon :svg="iconthumbs"></icon>
+					<span>{{ $t('frame.highlights') }}</span>
+				</div>
+			</div> -->
+			<div :class="[$style.elem]">
+				<div v-bind:class="[$style.inactive, currentView=='viewhighlights' ? $style.active : '']">
 					<icon :svg="iconthumbs"></icon>
 					<span>{{ $t('frame.highlights') }}</span>
 				</div>
@@ -97,12 +103,16 @@ export default {
 		fill: #651fff;
 	}
 
+	.inactive {
+		opacity: .6;
+	}
+
 	/*iPhone X*/
 	@media only screen 
 	and (device-width : 375px) 
 	and (device-height : 812px)
 	and (-webkit-device-pixel-ratio : 3) {
-		.bottom {
+		.wrapper {
 			padding-bottom: 20px;
 		}
 	}

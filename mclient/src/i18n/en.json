@@ -2,7 +2,8 @@
 	"frame": {
 		"highlights": "Highlights",
 		"mensa": "Mensa",
-		"settings": "Settings"
+		"settings": "Settings",
+		"favourite": "Favourite"
 	},
 	"language": {
 		"this": "Language",
@@ -51,7 +52,9 @@
 		"search": "Search",
 		"got_it": "Got it!",
 		"more": "more",
-		"done": "Done"
+		"done": "Done",
+		"import": "import",
+		"export": "export"
 	},
 	"state": {
 		"loading": "Loading",
@@ -59,7 +62,8 @@
 		"removed": "Removed",
 		"optional": "optional",
 		"open": "open",
-		"closed": "closed"
+		"closed": "closed",
+		"successful": "successful"
 	},
 	"input": {
 		"keyword": "Keyword"
@@ -69,7 +73,11 @@
 		"none": "none",
 		"loaderror_explain": "An error has occurred while loading",
 		"noresults_explain": "Your search query returned no results",
-		"error_shoutouts": ["Oh my Glob!", "UNACCEPTABLE!", "Shmowzow!", "What the cabbage?!", "Oh Lumps.", "What the flip, man?"]
+		"error_shoutouts": ["Oh my Glob!", "UNACCEPTABLE!", "Shmowzow!", "What the cabbage?!", "Oh Lumps.", "What the flip, man?"],
+		"additives_warn": "Additive warning",
+		"additives_nosupport": "The following additives will not be listed on the menu and can not be filtered:",
+		"error_json_parse": "JSON parsing failed",
+		"error_base64_decoding": "Base64 decoding failed"
 	},
 	"food": {
 		"pizza": "Pizza",
@@ -92,7 +100,9 @@
 		"custom_order": "Custom Order",
 		"customize": "Customize",
 		"dietarypreferences": "Dietary Preferences",
-		"hideadditives": "hide additives"
+		"hideadditives": "hide additives",
+		"transport": "export/import settings",
+		"transport_info": "Place code to be imported here..."
 	},
 	"setup": {
 		"intro_highlights": "M can highlight food for you if a certain word occurs in it's name.",
@@ -100,6 +110,7 @@
 		"only_minutes": "Just two minutes",
 		"howto_1": "Select mensas, cafeterias and coffeebars which you want to reach quickly",
 		"howto_2": "Make one of them your favorite",
-		"howto_3": "if you want to change the order"
+		"howto_3": "if you want to change the order",
+		"finished": "Don't forget to add M as an Web-App to your home screen and to check out even more features in the Settings"
 	}
 }

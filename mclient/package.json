@@ -1,7 +1,6 @@
 {
   "name": "mensamap",
-  "version": "0.0.1",
-  "description": "Simplifies Mensa",
+  "description": "M dev and build dependencies",
   "main": "src/app.js",
   "scripts": {
     "dev": "webpack-dev-server --open --hot --config webpack.dev.js",

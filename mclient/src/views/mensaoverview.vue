@@ -54,7 +54,6 @@ export default {
 			this.loadingall = 2;
 		});
 
-		console.log(this.data);
 		if (this.data!==undefined) {
 			if (this.data.type!==undefined) this.type = this.data.type;
 		}

@@ -1,26 +1,28 @@
 <template>
-	<div class="adaptiveWrap">
-		<div :class="$style.headline">
-			<h1>{{ $t('frame.settings') }}</h1>
+	<div>
+		<div :class="$style.headline"><h1>{{ $t('frame.settings') }}</h1></div>
+		<div class="adaptiveWrap">
+			<div :class="$style.section">{{ $t('language.this') }}</div>
+			<languageSelector class="whitebox"></languageSelector>
+	
+			<div :class="$style.section">{{ $t('prices.category') }}</div>
+			<priceSelector class="whitebox"></priceSelector>
+	
+			<div :class="$style.section">{{ $t('settings.customize') }}</div>
+			<orderSelector></orderSelector>
+	
+			<div :class="$style.section">{{ $t('settings.dietarypreferences') }}</div>
+			<dietSelector class="whitebox"></dietSelector>
+	
+			<div :class="$style.section">{{ $t('settings.search_and_hightlight') }}</div>
+			<chipsfield :stringCase="false" :items="this.$root.$data.storageC.settings.highlights" :class="[$style.chipsfield, 'whitebox']"></chipsfield>
+	
+			<div :class="$style.section">{{ $t('settings.transport') }}</div>
+			<settingsTransport class="whitebox"></settingsTransport>
+	
+			<div :class="$style.section">{{ $t('settings.mensa_selector') }}</div>
+			<mensaselector></mensaselector>
 		</div>
-
-		<div :class="$style.section">{{ $t('language.this') }}</div>
-		<languageSelector class="whitebox"></languageSelector>
-
-		<div :class="$style.section">{{ $t('prices.category') }}</div>
-		<priceSelector class="whitebox"></priceSelector>
-
-		<div :class="$style.section">{{ $t('settings.customize') }}</div>
-		<orderSelector></orderSelector>
-
-		<div :class="$style.section">{{ $t('settings.dietarypreferences') }}</div>
-		<dietSelector class="whitebox"></dietSelector>
-
-		<div :class="$style.section">{{ $t('settings.search_and_hightlight') }}</div>
-		<chipsfield :stringCase="false" :items="this.$root.$data.storageC.settings.highlights" :class="[$style.chipsfield, 'whitebox']"></chipsfield>
-
-		<div :class="$style.section">{{ $t('settings.mensa_selector') }}</div>
-		<mensaselector></mensaselector>
 	</div>
 </template>
 
@@ -31,6 +33,7 @@ import orderSelector from './../components/order_selector.vue';
 import dietSelector from './../components/diet_selector.vue';
 import chipsfield from './../components/chipsfield.vue';
 import mensaselector from './../components/mensaselector.vue';
+import settingsTransport from './../components/settings_transport.vue';
 
 export default {
 	data () {
@@ -44,7 +47,8 @@ export default {
 		chipsfield,
 		mensaselector,
 		orderSelector,
-		dietSelector
+		dietSelector,
+		settingsTransport
 	}
 }
 </script>

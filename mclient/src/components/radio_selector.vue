@@ -22,7 +22,6 @@ export default {
 	name: 'radioSelector',
 	props: ['data', 'selectedIndex', 'methd'],
 	data () {
-		console.log(this.selectedIndex);
 		return {
 			randID: Math.random().toString(36).substring(7),
 			selectedIndexLocal: this.selectedIndex

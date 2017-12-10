@@ -153,11 +153,23 @@ export default class DataController {
 		});
 	}
 
+	updateUser(id) {
+		return new Promise((resolve, reject) => {
+			let url = "/user/update";
+			this.fetchAPI(url, 'POST', id).then((result) => {
+				
+			},
+			(reason) => {
+				
+			});
+		});
+	}
+
 	setStorageC(reference) {
 		this.storageC = reference;
 	}
 
-	fetchAPI(APIpath, type='GET') {
+	fetchAPI(APIpath, type='GET', bodymsg=undefined) {
 		return new Promise((resolve, reject) => {
 			let newurl = API_URL+APIpath;
 
@@ -174,7 +186,7 @@ export default class DataController {
 			request.onerror = function() {
 				reject(false);
 			};
-			request.send();
+			request.send(bodymsg);
 
   		});
 	}

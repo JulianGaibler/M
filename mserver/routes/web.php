@@ -18,7 +18,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 
-$app->group(['prefix' => 'api/', 'middleware' => ['cacheFetch', 'cachePut']], function () use ($app) {
+$app->group(['prefix' => 'api/'], function () use ($app) {
 
 	$app->get('/info/servertime', function(Request $request) {
 		return response()->json(['currentTime' => date(DATE_ATOM)], 200);
@@ -29,20 +29,27 @@ $app->group(['prefix' => 'api/', 'middleware' => ['cacheFetch', 'cachePut']], fu
 		$user->save();
 		return response()->json(['_id' => $user->_id], 200);
 	});
+	$app->post('/user/update', function(Request $request) {
+		$res = mUser::where('_id', $request->getContent())->first();
+		if ($res) {
+			$res->touch();
+			return response()->json('updated', 200);
+		} else return response()->json('not updated', 400);
+	});
 
-	$app->get('/mensas', 'MensaController@getAll');
+	$app->get('/mensas', ['middleware' => ['cacheFetch', 'cachePut'], 'uses' => 'MensaController@getAll']);
 
-	$app->get('/mensas/{multiple}', 'MensaController@getSome');
+	$app->get('/mensas/{multiple}', ['middleware' => ['cacheFetch', 'cachePut'], 'uses' => 'MensaController@getSome']);
 
-	$app->get('/menu/{mensaID}', 'CrawlerController@getMenu');
+	$app->get('/menu/{mensaID}', ['middleware' => ['cacheFetch', 'cachePut'], 'uses' => 'CrawlerController@getMenu']);
 
-	$app->get('/additives', function() {
+	$app->get('/additives', ['middleware' => ['cacheFetch', 'cachePut'], function() use ($app) {
 		$v = DB::collection('additives')->project(['_id' => 0,'supportedBy' => 0])->get();
 		return $v;
-	});
+	}]);
 
-	$app->get('/sections', function() {
+	$app->get('/sections', ['middleware' => ['cacheFetch', 'cachePut'], function() use ($app) {
 		$v = DB::collection('menu_sections')->project(['_id' => 0, 'translations' => 0])->get();
 		return $v;
-	});
+	}]);
 });
