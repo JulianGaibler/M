@@ -66,7 +66,7 @@
 		"successful": "successful"
 	},
 	"input": {
-		"keyword": "Keyword"
+		"keyword": "Enter keyword"
 	},
 	"result": {
 		"noresults_headline": "keine Ergebnisse.",
