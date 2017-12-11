@@ -23,6 +23,7 @@ import textSwitch from './../components/text_switch.vue';
 import errorMsg from './../components/errormsg.vue';
 
 import Helpers from './../classes/Helpers.js'
+import LZutf8 from 'lzutf8'
 
 export default {  
 	name: 'settingsTransport',
@@ -37,16 +38,13 @@ export default {
 			resultmsg: ""
 		}
 	},
-	mounted() {
-		if (this.enabled) this.toggleData(true);
-	},
 	methods: {
 		focusInput: function() {
 			this.$refs.txtArea.select();
 		},
 		codeimport: function (nr) {
 			let todecode;
-			try {todecode = window.atob(this.message);}
+			try {todecode = LZutf8.decompress(this.message, {outputEncoding: "BinaryString"});}
 			catch(err) {this.resultmsg = this.$t('result.error_json_parse'); return;}
 
 			try {todecode = JSON.parse(todecode);}
@@ -57,7 +55,7 @@ export default {
 			location.reload();
 		},
 		codeexport: function (nr) {
-			this.message = window.btoa(localStorage.getItem('settings'));
+			this.message = LZutf8.compress(localStorage.getItem('settings'), {outputEncoding: "BinaryString"});
 			this.resultmsg = this.$t('state.successful');
 		}
 	}

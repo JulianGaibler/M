@@ -17,8 +17,8 @@
 			<div :class="$style.section">{{ $t('settings.search_and_hightlight') }}</div>
 			<chipsfield :stringCase="false" :items="this.$root.$data.storageC.settings.highlights" :class="[$style.chipsfield, 'whitebox']"></chipsfield>
 	
-			<div :class="$style.section">{{ $t('settings.transport') }}</div>
-			<settingsTransport class="whitebox"></settingsTransport>
+<!-- 			<div :class="$style.section">{{ $t('settings.transport') }}</div>
+			<settingsTransport class="whitebox"></settingsTransport> -->
 	
 			<div :class="$style.section">{{ $t('settings.mensa_selector') }}</div>
 			<mensaselector></mensaselector>
@@ -33,7 +33,7 @@ import orderSelector from './../components/order_selector.vue';
 import dietSelector from './../components/diet_selector.vue';
 import chipsfield from './../components/chipsfield.vue';
 import mensaselector from './../components/mensaselector.vue';
-import settingsTransport from './../components/settings_transport.vue';
+// import settingsTransport from './../components/settings_transport.vue';
 
 export default {
 	data () {
@@ -47,8 +47,7 @@ export default {
 		chipsfield,
 		mensaselector,
 		orderSelector,
-		dietSelector,
-		settingsTransport
+		dietSelector
 	}
 }
 </script>

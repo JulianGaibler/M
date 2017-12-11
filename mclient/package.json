@@ -36,6 +36,7 @@
     "@material/switch": "^0.25.0",
     "cross-env": "^5.1.1",
     "debounce": "^1.1.0",
+    "lzutf8": "^0.4.7",
     "moment": "^2.19.2",
     "taffy": "^2.6.2",
     "taffydb": "^2.7.3",
