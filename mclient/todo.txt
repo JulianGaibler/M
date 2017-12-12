@@ -1,43 +1,44 @@
 Immediate
-✘	Feedback/Bug Report
-~	Setup
-
-✘	Ladeanimation für zusatzstoffe
-✘	Fehlermeldung für alles in SingleMensa
-✘	Fehlermeldung für leeres response Array
+✓	Setup
 ✓	Sortieren
 ✓	Language
 ✓	iPhone Render Bug
-~	Mehr Infos wenn man will oder wenn kein Menü (buggy)
-
-
-
-Release 1.0
-✘	Aria-Tags
-✘	Navigations-Button (gMaps)
-✘	Textfelder grau wenn deaktiviert
-✘	What is this (Google)?
-
 ✓	Bug beim verschieben in mobile
 ✓	Word Tags
 ✓	Zeit
 ✓	Moment.js
-
-
-Release 1.1
-✘	Grammatik
-✘	Export Settings
-✘	Ripple
-✘	Location helper
-✘	Service Worker
-✘	Releasemeldungen
 ✓	Zurück Taste
 ✓	Zurück button braucht mehr infos über alten zustand (eg. type / scrollpos?)
 
 
-Release 1.2
-✘	Hinweise
+
+Release 1.1
+~	Mehr Infos wenn man will oder wenn kein Menü (buggy)
+~	Export Settings
+
+✘	Feedback/Bug Report
+✘	Ladeanimation für zusatzstoffe
+✘	Fehlermeldung für alles in SingleMensa
+✘	Fehlermeldung für leeres response Array
+
+✘	Aria-Tags
+✘	Navigations-Button (gMaps)
+✘	Textfelder grau wenn deaktiviert
+✘	What is this (Google)?
 ✘	Highlights
+
+
+
+Release 1.2
+✘	Grammatik
+✘	Ripple
+✘	Location helper
+✘	Service Worker
+✘	Releasemeldungen
+
+
+Release 1.3
+✘	Hinweise
 ✘	Starte auf Highlights
 ✘	"Starte auf"-Einstellung
 
