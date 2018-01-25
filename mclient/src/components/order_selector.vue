@@ -18,7 +18,7 @@
 					</div>
 					<div :class="$style.text">{{($te('menuSection.'+item.tag)) ? $t('menuSection.'+item.tag) : item.tag}}</div>
 					<div :class="$style.switch">
-						<div class="mdc-checkbox demo-checkbox--mtheme">
+						<div class="mdc-checkbox">
 							<input type="checkbox" v-model="item.show" :checked="item.show"
 								 class="mdc-checkbox__native-control "/>
 							<div class="mdc-checkbox__background">
@@ -103,7 +103,7 @@ export default {
 	}
 }
 </script>
-<style src="@material/checkbox/dist/mdc.checkbox.min.css"/>
+
 
 <style module>
 	.elem {
@@ -126,18 +126,5 @@ export default {
 	}
 	.switch label {
 		padding-right: 10px;
-	}
-</style>
-<style>
-	.mdc-checkbox.demo-checkbox--mtheme .mdc-checkbox__native-control:enabled:checked ~ .mdc-checkbox__background, .mdc-checkbox.demo-checkbox--mtheme .mdc-checkbox__native-control:enabled:indeterminate ~ .mdc-checkbox__background {
-		border-color: #651fff;
-		background-color: #651fff;
-	}
-	.mdc-checkbox.demo-checkbox--mtheme::before, .mdc-checkbox.demo-checkbox--mtheme::after {
-		background-color: rgba(101, 31, 255, 0.14);
-		opacity: 0;
-	}
-	.mdc-checkbox.demo-checkbox--mtheme .mdc-checkbox__background:before {
-		background-color: #651fff;
 	}
 </style>

@@ -2,7 +2,7 @@
 	<div :class="$style.head">
 		<div :class="$style.text">{{text}}</div>
 		<div :class="$style.switch">
-			<div class="mdc-switch demo-switch--mtheme">
+			<div class="mdc-switch">
 				<input type="checkbox" id="basic-switch" class="mdc-switch__native-control" :checked="checked" v-bind:checked="checked" @change="updateValue"/>
 				<div class="mdc-switch__background">
 					<div class="mdc-switch__knob"></div>
@@ -30,7 +30,7 @@ export default {
 }
 </script>
 
-<style src="@material/switch/dist/mdc.switch.min.css"/>
+
 
 <style module>
 	.head {
@@ -50,16 +50,5 @@ export default {
 	.text {
 		flex: 1;
 		font-size: 16px;
-	}
-</style>
-<style>
-	.demo-switch--mtheme .mdc-switch__native-control:enabled:checked ~ .mdc-switch__background::before {
-		background-color: #651fff;
-	}
-	.demo-switch--mtheme .mdc-switch__native-control:enabled:checked ~ .mdc-switch__background .mdc-switch__knob {
-		background-color: #651fff;
-	}
-	.demo-switch--mtheme .mdc-switch__native-control:enabled:checked ~ .mdc-switch__background .mdc-switch__knob::before {
-		background-color: #651fff;
 	}
 </style>

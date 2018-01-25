@@ -156,9 +156,6 @@ export default {
 }
 </script>
 
-<style src="@material/button/dist/mdc.button.min.css"/>
-<style src="@material/radio/dist/mdc.radio.min.css"/>
-
 <style module>
 	.setup {
 			text-align: center;

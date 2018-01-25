@@ -1,5 +1,5 @@
 <template>
-<div>
+<div :class="$style.container">
 	<div :class="$style.headline">
 		<div :class="$style.flexdivide">
 			<div>
@@ -71,12 +71,14 @@ export default {
 };
 </script>
 
-<style src="@material/button/dist/mdc.button.min.css"/>
+
 
 <style module>
-	.headline {
+	.container {
 		color: #303030;
 		font-family: 'Roboto Condensed', sans-serif;
+	}
+	.headline {
 		min-width: 50%;
 	}
 	.headline h1 {

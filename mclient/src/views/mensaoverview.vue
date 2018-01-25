@@ -115,16 +115,14 @@ export default {
 	directives: {
 		ripple: {
 			bind(el, binding, vnode) {
-				// MDCRipple.attachTo(el);
+				MDCRipple.attachTo(el);
 			}, update(el, binding, vnode) {
-				//MDCRipple.attachTo(el);
+				MDCRipple.attachTo(el);
 			}
 		}
 	}
 }
 </script>
-
-<style src="@material/ripple/dist/mdc.ripple.min.css"/>
 
 <style module>
 	.wrapper {

@@ -35,7 +35,7 @@ export default {
 };
 </script>
 
-<style src="@material/radio/dist/mdc.radio.min.css"/>
+
 <style module>
 	.selectwb {
 		padding: 10px 0;

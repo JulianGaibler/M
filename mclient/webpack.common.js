@@ -1,4 +1,5 @@
 const path = require("path");
+const glob = require('glob');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
@@ -18,8 +19,8 @@ module.exports = {
 	module: {
 		rules: [
 			{ test: /\.svg$/, loader: 'svg-inline-loader' },
-			{ test: /\.vue$/, loader: 'vue-loader', options: { loaders: {scss: 'style!css!sass'} } },
-			{ test: /\.s[a|c]ss$/, loader: 'style!css!sass' },
+			{ test: /\.vue$/, loader: 'vue-loader', options: { loaders: {scss: [ 'style-loader', 'css-loader', { loader: 'sass-loader', options: { includePaths: [path.resolve(__dirname, 'node_modules')] } } ]} } },
+			{ test: /\.s[a|c]ss$/, use: [ 'style-loader', 'css-loader', { loader: 'sass-loader', options: { includePaths: [path.resolve(__dirname, 'node_modules')] } } ], },
 			{ test: /\.(png|jpg|gif)$/, use: [ { loader: 'file-loader', options: {} } ] }
 		],
 		loaders: [ { test: /\.js$/, loader: 'babel', exclude: [/node_modules/, /build/, /__test__/], query: { presets: ['es2015'] } } ]

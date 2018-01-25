@@ -103,6 +103,19 @@ export default {
 </script>
 
 <style src="./../assets/reset.css" />
+
+<style lang="scss">
+	$mdc-theme-primary: #651fff;
+	$mdc-theme-secondary: #651fff;
+	$mdc-theme-background: #fff;
+
+	@import "@material/ripple/mdc-ripple.scss";
+	@import "@material/button/mdc-button.scss";
+	@import "@material/checkbox/mdc-checkbox.scss";
+	@import "@material/radio/mdc-radio.scss";
+	@import "@material/switch/mdc-switch.scss";
+</style>
+
 <style>
 	@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700|Roboto:300,400');
 	body, html {

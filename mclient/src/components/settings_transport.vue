@@ -62,7 +62,7 @@ export default {
 };
 </script>
 
-<style src="@material/button/dist/mdc.button.min.css"/>
+
 
 <style module>
 	.areawrap {

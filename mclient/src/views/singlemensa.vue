@@ -259,8 +259,6 @@ export default {
 }
 </script>
 
-<style src="@material/ripple/dist/mdc.ripple.min.css"/>
-
 <style module>
 	.headlineContainer {
 		display: flex;

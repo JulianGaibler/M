@@ -79,8 +79,8 @@ export default {
 	},
 	computed: {
 		additiveTranslation: function () {
-			if (this.additivesList === null) return;
-			if (this.info.additives.length < 1) return [this.$t("result.none")];
+			if (this.additivesList === null) return [];
+			if (this.info.additives.length < 1) return [{name: this.$t("result.none")}];
 			if (this.additivesList.length < 1) {
 				this.additivesList = null;
 				this.$root.$data.dataC.getAdditives().then((result) => {
@@ -98,20 +98,11 @@ export default {
 	},
 	components: {
 		icon
-	},
-	directives: {
-		ripple: {
-			bind(el, binding, vnode) {
-				MDCRipple.attachTo(el);
-			}, update(el, binding, vnode) {
-				MDCRipple.attachTo(el);
-			}
-		}
 	}
 }
 </script>
 
-<style src="@material/ripple/dist/mdc.ripple.min.css"/>
+
 
 <style module>
 	.elem {
