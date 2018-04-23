@@ -1,5 +1,5 @@
 {
-  "name": "mensamap",
+  "name": "m-client",
   "description": "M dev and build dependencies",
   "main": "src/app.js",
   "scripts": {

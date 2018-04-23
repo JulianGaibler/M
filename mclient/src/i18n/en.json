@@ -34,7 +34,7 @@
 		"msc": "from sustainable fish stocks",
 		"lightfood": "light food",
 		"corned": "corned",
-		"additives": "additives",
+		"additives": "no additives | 1 additive | {count} additives",
 		"everything": "everything"
 	},
 	"prices": {
@@ -69,7 +69,7 @@
 		"keyword": "Enter keyword"
 	},
 	"result": {
-		"noresults_headline": "keine Ergebnisse.",
+		"noresults_headline": "no results.",
 		"none": "none",
 		"loaderror_explain": "An error has occurred while loading",
 		"noresults_explain": "Your search query returned no results",
@@ -77,7 +77,10 @@
 		"additives_warn": "Additive warning",
 		"additives_nosupport": "The following additives will not be listed on the menu and can not be filtered:",
 		"error_json_parse": "JSON parsing failed",
-		"error_base64_decoding": "Base64 decoding failed"
+		"error_base64_decoding": "Base64 decoding failed",
+		"error_nomatches": "No highlights found",
+		"error_nomenu": "This Place has no menu by default. If you don't want to see it here, change the order of your Coffeebars and Cafeterias in the Settings.",
+		"info_addhighlights": "You can set the keywords for Highlights in the settings"
 	},
 	"food": {
 		"pizza": "Pizza",
@@ -85,6 +88,9 @@
 		"spaetzle": "Spaetzle",
 		"risotto": "Risotto",
 		"brownie": "Brownie"
+	},
+	"highlights": {
+		"description": "All meals from your first four mensas and cafeterias that match your keywords will be displayed here."
 	},
 	"times": {
 		"opens": "opens",

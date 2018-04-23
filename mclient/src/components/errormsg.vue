@@ -1,12 +1,14 @@
 <template>  
 	<div :class="$style.noresults">
 		<h1>{{ $t('result.error_shoutouts['+error_shoutouts_random+']') }}</h1>
-		<p v-if="type=0">{{ $t('result.loaderror_explain') }}</p>
-		<p v-else-if="type=1">{{ $t('result.noresults_explain') }}</p>
+		<p v-if="type===0">{{ $t('result.loaderror_explain') }}</p>
+		<p v-else-if="type===1">{{ $t('result.noresults_explain') }}</p>
 	</div>
 </template>
 
-<script>  
+<script>
+import Helpers from './../classes/Helpers.js'
+
 export default {  
 	name: 'errorMsg',
 	data () {
@@ -22,9 +24,7 @@ export default {
 		}
 	},
 	methods: {
-		getRandomInt: function (min, max) {
-			return Math.floor(Math.random() * (max - min + 1)) + min;
-		}
+		getRandomInt: Helpers.getRandomInt
 	}
 };
 </script>

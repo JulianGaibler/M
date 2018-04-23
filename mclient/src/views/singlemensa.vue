@@ -13,9 +13,7 @@
 				<div class="whitebox_header">
 					{{ $t('state.loading')+'...' }}
 				</div>
-				<div class="whitebox_element" v-for="index in getRandomInt(2,8)">
-					<loadGlow :extStyle="$style.loading" :dimension="{min:30, max:60, end: '%'}"></loadGlow>
-				</div>
+				<foodItemLoad v-for="idx in getRandomInt(2,8)" :key="idx"></foodItemLoad>
 			</div>
 			<div v-if="menu" class="whitebox" v-for="category in menu">
 				<div :class="['whitebox_header', $style.menuheader]">
@@ -31,7 +29,7 @@
 
 <script>
 import moment from "moment";
-import loadGlow from './../components/loadGlow.vue';
+import foodItemLoad from './../components/foodItemLoad.vue';
 import datePicker from './../components/date_picker.vue';
 import message from './../components/message.vue';
 import icon from './../components/icon.vue';
@@ -140,9 +138,6 @@ export default {
 		});
 	},
 	methods: {
-		getRandomInt: function (min, max) {
-			return Math.floor(Math.random() * (max - min + 1)) + min;
-		},
 		flipExtended: function (obj) {
 			obj.extended = !obj.extended;
 		},
@@ -174,54 +169,17 @@ export default {
 			} else this.menu = [];
 		},
 		evalMenu: function(menu) {
+
+			menu = Helpers.cloneArray(menu);
+
 			let sorting = this.$root.$data.storageC.settings.sorting;
-			if (sorting.length > 0) {
-				let bucket = [];
-				for (var s = 0; s < sorting.length; s++) {
-					for (var i = 0; i < menu.length; i++) {
-						if (menu[i].name === sorting[s].tag) {
-							menu[i].extended = sorting[s].show;
-							bucket.push(menu[i]);
-							menu.splice(i, 1);
-							break;
-						}
-					}
-				}
-				menu = bucket.concat(menu);
-			}
+			Helpers.menuSort(menu, sorting);
 
 			let diet = this.$root.$data.storageC.settings.diet;
-			if (diet > 0) {
-				for (var k = menu.length - 1; k >= 0; k--) {
-					for (var i = menu[k].items.length - 1; i >= 0; i--) {
-						if (diet==1) {
-							if (!menu[k].items[i].labels.includes("vegetarian") &&
-								!menu[k].items[i].labels.includes("vegan")) {
-								menu[k].items.splice(i, 1);
-							}
-						} else {
-							if (!menu[k].items[i].labels.includes("vegan")) {
-								menu[k].items.splice(i, 1);
-							}
-						}
-					}
-					if (menu.length < 1) menu.splice(k, 1);
-				}
-			}
-			let localAdditives = this.$root.$data.storageC.settings.additives;
-			if (localAdditives.length > 0) {
-				for (var k = menu.length - 1; k >= 0; k--) {
-					for (var l = menu[k].items.length - 1; l >= 0; l--) {
-						for (var i = menu[k].items[l].additives.length - 1; i >= 0; i--) {
-							if (localAdditives.includes(menu[k].items[l].additives[i])) {
-								menu[k].items.splice(l, 1);
-								break;
-							}
-						}
-					}
-					if (menu[k].items.length < 1) menu.splice(k, 1);
-				}
-			}
+			Helpers.menuDiet(menu, diet);
+
+			let thisAdditives = this.$root.$data.storageC.settings.additives;
+			Helpers.menuAdditives(menu, thisAdditives);
 
 			for (var i = 0; i < menu.length; i++) {
 				if (this.$te('menuSection.'+menu[i].name))
@@ -244,10 +202,11 @@ export default {
 				}
 			}
 			return menu;
-		}
+		},
+		getRandomInt: Helpers.getRandomInt
 	},
 	components: {
-		loadGlow,
+		foodItemLoad,
 		icon,
 		FoodItem,
 		datePicker,

@@ -8,7 +8,7 @@
 				<div class="whitebox_element_top">{{info.name}}</div>
 				<div class="whitebox_element_bottom">
 					<span v-if="info.highlight!==undefined" :class="[$style.tag, $style.themebg]"></span>
-					{{pictogramString(info.labels)}} {{info.additives.length +' '+$t('labels.additives') }}
+					{{pictogramString(info.labels)}} {{$tc('labels.additives', info.additives.length, {count: info.additives.length}) }}
 				</div>
 			</div>
 			<div :class="$style.elemright">

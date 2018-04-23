@@ -11,8 +11,8 @@
 		</div>
 
 		<div :class="$style.bottom">
-			<button v-bind:key="page" v-on:click="proceedLang('de')" class="mdc-button">German</button>
-			<button v-bind:key="page" v-on:click="proceedLang('en')" class="mdc-button">English</button>
+			<button v-bind:key="page*2" v-on:click="proceedLang('de')" class="mdc-button">German</button>
+			<button v-bind:key="page*2+1" v-on:click="proceedLang('en')" class="mdc-button">English</button>
 		</div>
 	</div>
 
@@ -31,7 +31,7 @@
 			<p>{{ $t('setup.howto_3') }}</p>
 		</div>
 		<div :class="$style.bottom">
-			<button v-bind:key="page" v-on:click="gonext()" class="mdc-button">{{ $t('action.got_it') }}</button>
+			<button v-bind:key="page*2" v-on:click="gonext()" class="mdc-button">{{ $t('action.got_it') }}</button>
 		</div>
 	</div>
 
@@ -43,8 +43,8 @@
 			<mensaselector></mensaselector>
 		</div>
 		<div :class="$style.bottom">
-			<button v-bind:key="page" v-on:click="goback()" class="mdc-button">{{ $t('action.back') }}</button>
-			<button v-bind:key="page" v-on:click="(hasMensas() ? null : gonext())" :disabled="hasMensas()" class="mdc-button">{{ $t('action.done') }}</button>
+			<button v-bind:key="page*2" v-on:click="goback()" class="mdc-button">{{ $t('action.back') }}</button>
+			<button v-bind:key="page*2+1" v-on:click="(hasMensas() ? null : gonext())" :disabled="hasMensas()" class="mdc-button">{{ $t('action.done') }}</button>
 		</div>
 	</div>
 
@@ -59,8 +59,8 @@
 			<p :class="$style.disclaim">{{ $t('prices.more') }}</p>
 		</div>
 		<div :class="$style.bottom">
-			<button v-bind:key="page" v-on:click="goback()" class="mdc-button">{{ $t('action.back') }}</button>
-			<button v-bind:key="page" v-on:click="gonext()" class="mdc-button">{{ $t('action.next') }}</button>
+			<button v-bind:key="page*2" v-on:click="goback()" class="mdc-button">{{ $t('action.back') }}</button>
+			<button v-bind:key="page*2+1" v-on:click="gonext()" class="mdc-button">{{ $t('action.next') }}</button>
 		</div>
 	</div>
 
@@ -80,8 +80,8 @@
 			<chipsfield :stringCase="false" :items="this.$root.$data.storageC.settings.highlights" :class="[$style.whitebox]"></chipsfield>
 		</div>
 		<div :class="$style.bottom">
-			<button v-bind:key="page" v-on:click="goback()" class="mdc-button">{{ $t('action.back') }}</button>
-			<button v-bind:key="page" v-on:click="gonext()" class="mdc-button">{{ $t('action.next') }}</button>
+			<button v-bind:key="page*2" v-on:click="goback()" class="mdc-button">{{ $t('action.back') }}</button>
+			<button v-bind:key="page*2+1" v-on:click="gonext()" class="mdc-button">{{ $t('action.next') }}</button>
 		</div>
 	</div>
 
@@ -96,7 +96,7 @@
 			<icon :class="$style.webapptutorial" :svg="webapp_tutorial"></icon>
 		</div>
 		<div :class="$style.bottom">
-			<button v-bind:key="page" v-on:click="gonext()" class="mdc-button">{{ $t('action.got_it') }}</button>
+			<button v-bind:key="page*2" v-on:click="gonext()" class="mdc-button">{{ $t('action.got_it') }}</button>
 		</div>
 	</div>
 </template>
@@ -171,6 +171,10 @@ export default {
 		margin: 10px 10px 20px 10px;
 		line-height: 1.8em;
 		position: relative;
+	}
+
+	.setup button[class=mdc-button] {
+		color: white;
 	}
 
 	.setup p.hint {

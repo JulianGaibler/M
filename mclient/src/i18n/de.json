@@ -34,7 +34,7 @@
 		"msc": "aus nachhaltigem Fischbestand",
 		"lightfood": "Schonkost",
 		"corned": "gepökelt",
-		"additives": "Zusatzstoffe",
+		"additives": "keine Zusatzstoffe | 1 Zusatzstoff | {count} Zusatzstoffe",
 		"everything": "alles"
 	},
 	"prices": {
@@ -77,7 +77,10 @@
 		"additives_warn": "Zusatzstoff Warnung",
 		"additives_nosupport": "Diese Zusatzstoffe werden auf dem Menu nicht ausgeschrieben und können nicht gefiltert werden:",
 		"error_json_parse": "JSON parsing fehlgeschlagen",
-		"error_base64_decoding": "Base64-Decodierung fehlgeschlagen"
+		"error_base64_decoding": "Base64-Decodierung fehlgeschlagen",
+		"error_nomatches": "Keine Highlights gefunden",
+		"error_nomenu": "Dieser Ort hat standardmäßig kein Menü. Wenn du ihn deshalb hier nicht sehen möchtest, ändere die Reihenfolge deiner Coffeebars und Cafeterien in den Einstellungen",
+		"info_addhighlights": "Du kannst die Stichwörter nach denen gesucht werden soll in den Einstellungen festlegen"
 	},
 	"food": {
 		"pizza": "Pizza",
@@ -85,6 +88,9 @@
 		"spaetzle": "Spätzle",
 		"risotto": "Risotto",
 		"brownie": "Brownie"
+	},
+	"highlights": {
+		"description": "Alle Gerichte der ersten vier Mensen und Cafeterien, die mit Deinen Stichwörtern übereinstimmen werden hier angezeigt."
 	},
 	"times": {
 		"opens": "öffnet",

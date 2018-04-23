@@ -17,6 +17,7 @@ Release 1.1
 ~	Export Settings
 
 ✘	Feedback/Bug Report
+✘	Convert modules to less
 ✘	Ladeanimation für zusatzstoffe
 ✘	Fehlermeldung für alles in SingleMensa
 ✘	Fehlermeldung für leeres response Array

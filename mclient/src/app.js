@@ -5,7 +5,7 @@ import App from './frame/template.vue'
 import LocalStorageController from './classes/LocalStorageController.js'
 import DataController from './classes/DataController.js'
 
-
+// The bus is used for sending and recieving events between components
 window.bus = new Vue();
 
 Vue.config.keyCodes = {

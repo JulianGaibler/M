@@ -1,14 +1,8 @@
 <template>
-	<div :class="$style.wrapper">
+	<footer :class="$style.wrapper">
 		<div :class="$style.constraint">
-<!-- 			<div v-ripple :class="['mdc-ripple-surface', $style.elem]" tabindex="0" v-on:click="chviewname('viewhighlights')">
+			<div v-ripple :class="['mdc-ripple-surface', $style.elem]" tabindex="0" v-on:click="chviewname('viewhighlights')">
 				<div v-bind:class="[currentView=='viewhighlights' ? $style.active : '']">
-					<icon :svg="iconthumbs"></icon>
-					<span>{{ $t('frame.highlights') }}</span>
-				</div>
-			</div> -->
-			<div :class="[$style.elem]">
-				<div v-bind:class="[$style.inactive, currentView=='viewhighlights' ? $style.active : '']">
 					<icon :svg="iconthumbs"></icon>
 					<span>{{ $t('frame.highlights') }}</span>
 				</div>
@@ -26,7 +20,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</footer>
 </template>
 
 <script>
