@@ -11,7 +11,8 @@
         "guzzlehttp/guzzle": "^6.3",
         "symfony/dom-crawler": "^3.3",
         "jenssegers/mongodb": "^3.2",
-        "nordsoftware/lumen-cors": "^2.2"
+        "nordsoftware/lumen-cors": "^2.2",
+        "symfony/css-selector": "^4.0"
 	    },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
