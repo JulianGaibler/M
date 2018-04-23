@@ -42,7 +42,7 @@ php -S 0.0.0.0:8000 -t public
 ## Merging into Production
 ```
 git merge master
-** Resolve any conflicts **
+"Resolve any conflicts"
 git checkout master
 git merge development
 ```
