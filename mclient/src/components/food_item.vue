@@ -16,7 +16,7 @@
 			</div>
 		</div>
 		<div :class="$style.elembottom">
-			<h3>{{$t('labels.additives')}}</h3>
+			<h3>{{$tc('labels.additives', 10, {count: ''})}}</h3>
 			<div :class="$style.addlabels" v-if="moreInfoThere">
 				<p v-for="elem in additiveTranslation">{{elem.name}}</p>
 			</div>
