@@ -42,42 +42,11 @@ export default {
 		}
 	},
   	mounted: async function() {
-		let typeA = this.$root.$data.storageC.settings.primarytype;
-		let typeB = (typeA===1)?0:1;
-		let subscribed = this.$root.$data.storageC.settings.mensas;
-
-		let slicenr = 4 - Math.min(2,subscribed[typeB].length);
-		this.places = subscribed[typeA].slice(0, slicenr)
-					.concat(subscribed[typeB].slice(0, 4-slicenr));
-
 		// [Info] We don't want to mutate storageC.settings.mensas
 		//        that's why we store some info in a different array
 		this.info = [];
+		this.setup();
 
-		for (var i = 0; i < this.places.length; i++) {
-			Vue.set(this.info, i, {status: 0, menu: []})
-		}
-		
-		// Def. info.status
-		//	 0: Loading
-		//	 1: Success
-		//	-1: Failed
-		//	-2: No menu
-
-		for (var i = 0; i < this.places.length; i++) {
-			let infoi = this.info[i];
-			if (this.places[i].hasMenu) {
-					let x = await this.$root.$data.dataC.getMenu(this.places[i]._id, moment(this.places[i].whenOpen))
-					.then((result) => {
-						infoi.menu = this.evalMenu(result);
-						infoi.status = 1;
-					},
-					(reason) => {
-						infoi.status = -1;
-					});
-				}
-				else infoi.status = -2;
-			}
 		
 	},
 	methods: {
@@ -102,6 +71,41 @@ export default {
 			menu = Helpers.menuAdditives(menu, thisAdditives);
 
 			return menu;
+		},
+		setup: async function() {
+			let typeA = this.$root.$data.storageC.settings.primarytype;
+			let typeB = (typeA===1)?0:1;
+			let subscribed = this.$root.$data.storageC.settings.mensas;
+	
+			let slicenr = 4 - Math.min(2,subscribed[typeB].length);
+			this.places = subscribed[typeA].slice(0, slicenr)
+						.concat(subscribed[typeB].slice(0, 4-slicenr));
+	
+	
+			for (var i = 0; i < this.places.length; i++) {
+				Vue.set(this.info, i, {status: 0, menu: []})
+			}
+			
+			// Def. info.status
+			//	 0: Loading
+			//	 1: Success
+			//	-1: Failed
+			//	-2: No menu
+	
+			for (var i = 0; i < this.places.length; i++) {
+				let infoi = this.info[i];
+				if (this.places[i].hasMenu) {
+					let x = await this.$root.$data.dataC.getMenu(this.places[i]._id, moment(this.places[i].whenOpen))
+					.then((result) => {
+						infoi.menu = this.evalMenu(result);
+						infoi.status = 1;
+					},
+					(reason) => {
+						infoi.status = -1;
+					});
+				}
+				else infoi.status = -2;
+			}
 		},
 		getRandomInt: Helpers.getRandomInt
 	},

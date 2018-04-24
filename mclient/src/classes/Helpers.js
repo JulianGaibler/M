@@ -48,6 +48,7 @@ export default class Helpers {
 			}
 			return bucket.concat(menu);
 		}
+		return menu;
 	}
 
 	static multiMenuDiet(multiMenu, diet) {
