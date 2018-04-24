@@ -46,52 +46,60 @@ export default class Helpers {
 					}
 				}
 			}
-			menu = bucket.concat(menu);
+			return bucket.concat(menu);
 		}
+	}
+
+	static multiMenuDiet(multiMenu, diet) {
+		if (diet > 0) {
+			for (var k = multiMenu.length - 1; k >= 0; k--) {
+				multiMenu[k].items = this.menuDiet(multiMenu[k].items, diet);
+				if (multiMenu.length < 1) multiMenu.splice(k, 1);
+			}
+		}
+		return multiMenu;
 	}
 
 	static menuDiet(menu, diet) {
 		if (diet > 0) {
-			for (var k = menu.length - 1; k >= 0; k--) {
-				for (var i = menu[k].items.length - 1; i >= 0; i--) {
-					if (diet==1) {
-						if (!menu[k].items[i].labels.includes("vegetarian") &&
-							!menu[k].items[i].labels.includes("vegan")) {
-							menu[k].items.splice(i, 1);
-						}
-					} else {
-						if (!menu[k].items[i].labels.includes("vegan")) {
-							menu[k].items.splice(i, 1);
-						}
+			for (var i = menu.length - 1; i >= 0; i--) {
+				if (diet==1) {
+					if (!menu[i].labels.includes("vegetarian") &&
+						!menu[i].labels.includes("vegan")) {
+						menu.splice(i, 1);
+					}
+				} else {
+					if (!menu[i].labels.includes("vegan")) {
+						menu.splice(i, 1);
 					}
 				}
-				if (menu.length < 1) menu.splice(k, 1);
 			}
 		}
+		return menu;
+	}
+
+	static multiMenuAdditives(multiMenu, thisAdditives) {
+		if (thisAdditives.length > 0) {
+			for (var k = multiMenu.length - 1; k >= 0; k--) {
+				multiMenu[k].items = this.menuAdditives(multiMenu[k].items, thisAdditives);
+				if (multiMenu[k].items.length < 1) multiMenu.splice(k, 1);
+			}
+		}
+		return multiMenu;
 	}
 
 	static menuAdditives(menu, thisAdditives) {
 		if (thisAdditives.length > 0) {
-			for (var k = menu.length - 1; k >= 0; k--) {
-				for (var l = menu[k].items.length - 1; l >= 0; l--) {
-					for (var i = menu[k].items[l].additives.length - 1; i >= 0; i--) {
-						if (thisAdditives.includes(menu[k].items[l].additives[i])) {
-							menu[k].items.splice(l, 1);
-							break;
-						}
+			for (var l = menu.length - 1; l >= 0; l--) {
+				for (var i = menu[l].additives.length - 1; i >= 0; i--) {
+					if (thisAdditives.includes(menu[l].additives[i])) {
+						menu.splice(l, 1);
+						break;
 					}
 				}
-				if (menu[k].items.length < 1) menu.splice(k, 1);
 			}
 		}
-	}
-
-	static menuSort(menu, sorting) {
-		
-	}
-
-	static menuSort(menu, sorting) {
-		
+		return menu;
 	}
 
 }

@@ -13,7 +13,7 @@
 
 			<foodItemLoad v-if="inf.status === 0" v-for="idx in getRandomInt(1,4)" :key="idx"></foodItemLoad>
 			<FoodItem v-if="inf.status === 1 && inf.menu.length>0" v-for="(item, index) in inf.menu" :key="index" :info="item"></FoodItem>
-			<div v-if="inf.status === 1" :class="['whitebox_element', $style.notice]">{{$t('result.error_nomatches')}}</div>
+			<div v-if="inf.status === 1 && inf.menu.length===0" :class="['whitebox_element', $style.notice]">{{$t('result.error_nomatches')}}</div>
 			<div v-else-if="inf.status === -1" :class="['whitebox_element', $style.notice]">{{$t('result.loaderror_explain')}}</div>
 			<div v-else-if="inf.status === -2" :class="['whitebox_element', $style.notice]">{{$t('result.error_nomenu')}}</div>
 		</div>
@@ -96,10 +96,10 @@ export default {
 			menu = bucket;
 
 			let diet = this.$root.$data.storageC.settings.diet;
-			Helpers.menuDiet(menu, diet);
+			menu = Helpers.menuDiet(menu, diet);
 
 			let thisAdditives = this.$root.$data.storageC.settings.additives;
-			Helpers.menuAdditives(menu, thisAdditives);
+			menu = Helpers.menuAdditives(menu, thisAdditives);
 
 			return menu;
 		},

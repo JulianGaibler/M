@@ -173,13 +173,13 @@ export default {
 			menu = Helpers.cloneArray(menu);
 
 			let sorting = this.$root.$data.storageC.settings.sorting;
-			Helpers.menuSort(menu, sorting);
+			menu = Helpers.menuSort(menu, sorting);
 
 			let diet = this.$root.$data.storageC.settings.diet;
-			Helpers.menuDiet(menu, diet);
+			menu = Helpers.multiMenuDiet(menu, diet);
 
 			let thisAdditives = this.$root.$data.storageC.settings.additives;
-			Helpers.menuAdditives(menu, thisAdditives);
+			menu = Helpers.multiMenuAdditives(menu, thisAdditives);
 
 			for (var i = 0; i < menu.length; i++) {
 				if (this.$te('menuSection.'+menu[i].name))

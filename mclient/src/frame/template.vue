@@ -176,9 +176,6 @@ export default {
 		color: black;
 		box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.15), 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
 	}
-	.whitebox_header:only-child {
-		padding-bottom: 20px;
-	}
 	.whitebox_header {
 		color: #817575;
 		padding: 20px 20px 10px 20px;
