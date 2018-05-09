@@ -25,10 +25,24 @@ npm run dev
 
 ## Server
 
-### Installing all dependencies:
+### Prerequisites
+
+You will need:
+1. PHP 71
+2. MongoDB driver for PHP
+3. npm
+4. Composer
 
 ```bash
-composer install
+	brew install php71
+	brew install php71-mongodb
+	echo 'extension="/usr/local/opt/php71-mongodb/mongodb.so"' >> /private/etc/php.ini
+	brew install composer
+```
+
+Don't forget to run
+```bash
+	composer install
 ```
 
 ### Running local Server:
