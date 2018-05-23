@@ -41,7 +41,7 @@ export default {
 		toggleData: function(val) {
 			this.error = false;
 			if (val && this.suggestions.length < 1) {
-				this.$root.$data.dataC.getAdditives().then((result) => {
+				this.$root.$data.netC.getAdditives().then((result) => {
 					let lang = this.$root.$data.storageC.settings.language;
 					this.suggestions = Helpers.translateAdditives(result, null, lang);
 				},

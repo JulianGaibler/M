@@ -1,9 +1,10 @@
 import moment from "moment";
+import { timeout, TimeoutError } from 'promise-timeout';
 
-export default class DataController {
+export default class NetworkController {
 
 	/**
-	 * Creates the DataController
+	 * Creates the NetworkController
 	 *
 	 * @return nothing
 	 */
@@ -13,6 +14,74 @@ export default class DataController {
 		this.additives = [];
 		this.storageC;
 		this.i18nhook = i18n;
+
+		this.config = {
+			locationOptions: {
+				enableHighAccuracy: false,
+				maximumAge: 30000,
+				timeout: 15000
+			}
+		}
+	}
+
+	getCurrentPosition(tryagain=true) {
+		return new Promise((resolve, reject) => {
+			this._getCurrentPosition().then(result => {
+				resolve(result);
+			})
+			.catch(error => {
+				let obj = {};
+				obj.timeout = 5000;
+				obj.multiline = true;
+				obj.actionOnBottom = true;
+				switch(error.code) {
+					case 0:
+						obj.message = this.i18nhook.t('result.error_location_support'); break;
+					case 1:
+						obj.message = this.i18nhook.t('result.error_location_denied'); break;
+					case 2:
+						obj.message = this.i18nhook.t('result.error_location_unavailable'); break;
+					case 3:
+						obj.message = this.i18nhook.t('result.error_location_timeout'); break;
+					default:
+						obj.message = this.i18nhook.t('result.error_location_other');
+				}
+
+				if (error.code === 1) {
+					obj.actionText = this.i18nhook.t('frame.settings');
+					obj.actionHandler = () => {bus.$emit('changeview', 'settings')};
+					reject(error);
+				} else if (error.code > 1 && tryagain) {
+					obj.actionText = this.i18nhook.t('action.tryagain');
+					obj.actionHandler = () => {
+						timeout(this.getCurrentPosition(false), 5500)
+							.then((result) => resolve(result))
+							.catch((err) => reject(error));
+					}
+				} else reject(error);
+				bus.$emit('showSnackbar', obj);
+			});
+		});
+	}
+
+	/**
+	 * [private]
+	 * Gets Location from device
+	 *
+	 * @return Promise of location data with no error handling
+	 */
+	_getCurrentPosition() {
+		if (navigator.geolocation) {
+			return new Promise(
+				(resolve, reject) => navigator.geolocation.getCurrentPosition(resolve, reject, this.config.locationOptions)
+			)
+		} else {
+			return new Promise(
+				(resolve, reject) => reject({
+					code: 0
+				})
+			)
+		}
 	}
 
 	/**

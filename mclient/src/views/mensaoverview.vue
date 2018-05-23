@@ -11,6 +11,11 @@
 				</div>
 			</div>
 		 </div>
+
+		 <div class="whitebox">
+		 	<div class="whitebox_header">In der nähe</div>
+		 </div>
+
 		 <searchBox :loading="this.loadingall" :searchword="searchword" :results="searchres.length" :placeholder="this.$t('type.all')+' '+this.$tc('type.'+this.type,2)" v-on:inputChange="changeSearchword">
 			<div v-ripple v-on:click="this.bus.$emit('changeview', 'singlemensa', item)" v-for="item in searchres" class="clickable whitebox_element mdc-ripple-surface">
 				<div class="whitebox_element_top">{{item.nameA}} {{item.nameB}}</div>
@@ -42,11 +47,13 @@ export default {
 		}
 	},
 	mounted: function() {
+		this.$root.$data.netC.getCurrentPosition().then(result => {console.warn(result)})
+
 		this.type = this.$root.$data.storageC.settings.primarytype;
 		this.subscribed = this.$root.$data.storageC.settings.mensas;
 
 		this.loadingall = 1;
-		this.$root.$data.dataC.getLightMensas().then((allMensas) => {
+		this.$root.$data.netC.getLightMensas().then((allMensas) => {
 			this.allMensas = allMensas;
 			this.loadingall = 0;
 		},
@@ -93,7 +100,7 @@ export default {
 		},
 		upgradeSubs: function () {
 			if (!this.loadedsubs[this.type]) {
-				this.$root.$data.dataC.getSingleMensa(this.$root.$data.storageC.settings.mensas[this.type]).then((result) => {
+				this.$root.$data.netC.getSingleMensa(this.$root.$data.storageC.settings.mensas[this.type]).then((result) => {
 					this.$set(this.subscribed, this.type, result);
 					this.loadedsubs[this.type] = true;
 				},

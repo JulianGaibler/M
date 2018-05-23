@@ -54,7 +54,8 @@
 		"more": "mehr",
 		"done": "Fertig",
 		"import": "importieren",
-		"export": "exportieren"
+		"export": "exportieren",
+		"tryagain": "nochmal versuchen"
 	},
 	"state": {
 		"loading": "Laden",
@@ -80,7 +81,12 @@
 		"error_base64_decoding": "Base64-Decodierung fehlgeschlagen",
 		"error_nomatches": "Keine Highlights gefunden",
 		"error_nomenu": "Dieser Ort hat standardmäßig kein Menü. Wenn du ihn deshalb hier nicht sehen möchtest, ändere die Reihenfolge deiner Coffeebars und Cafeterien in den Einstellungen",
-		"info_addhighlights": "Du kannst die Stichwörter nach denen gesucht werden soll in den Einstellungen festlegen"
+		"info_addhighlights": "Du kannst die Stichwörter nach denen gesucht werden soll in den Einstellungen festlegen",
+		"error_location_support": "Browser unterstützt keine Ortungsdienste. Verbundene Funktionen wurden deaktiviert.",
+		"error_location_denied": "Verwendung von Ortungsdiensten wurde verweigert. Verbundene Funktionen wurden deaktiviert.",
+		"error_location_unavailable": "Standort ist zur Zeit nicht verfügbar.",
+		"error_location_timeout": "Standortanfrage ist hat zu lange gedauert.",
+		"error_location_other": "Ein unbekannter Fehler ist bei der Standortanfrage aufgetreten"
 	},
 	"food": {
 		"pizza": "Pizza",

@@ -85,7 +85,7 @@ export default {
 		let res = this.$root.$data.storageC.getMensa(this.data._id, this.data.type);
 		this.basicdata = (res!==undefined) ? res : false;
 
-		this.$root.$data.dataC.getSingleMensa([{_id: this.data._id}]).then((result) => {
+		this.$root.$data.netC.getSingleMensa([{_id: this.data._id}]).then((result) => {
 			this.additionaldata = result[0];
 
 			let additives = this.$root.$data.storageC.settings.additives;
@@ -104,7 +104,7 @@ export default {
 							text: this.$t('result.additives_nosupport')+" "
 						}
 
-					this.$root.$data.dataC.getAdditives().then((result) => {
+					this.$root.$data.netC.getAdditives().then((result) => {
 						let language = this.$root.$data.storageC.settings.language;
 						let x = Helpers.translateAdditives(result, bucket, language);
 						console.log(x);
@@ -160,7 +160,7 @@ export default {
 			if (this.menu===false) return;
 			this.menu = false;
 			if (this.data.hasMenu) {
-				this.$root.$data.dataC.getMenu(this.data._id, this.showDate.mmt).then((result) => {
+				this.$root.$data.netC.getMenu(this.data._id, this.showDate.mmt).then((result) => {
 					this.menu = this.evalMenu(result);
 				},
 				(reason) => {

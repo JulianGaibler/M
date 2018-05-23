@@ -5,11 +5,11 @@ export default class LocalStorageController {
 	 *
 	 * @return nothing
 	 */
-	constructor(dataC, i18n) {
+	constructor(netC, i18n) {
 		const res = this.storageAvailable('localStorage');
 		this.settings = {};
 		this.i18nhook = i18n;
-		this.dataC = dataC;
+		this.netC = netC;
 		if (res) {
 			if(!localStorage.getItem('settings')) {
 				this.initSettings();
@@ -34,10 +34,11 @@ export default class LocalStorageController {
 	 */
 	initSettings() {
 		this.settings = {
-			"version": 5,
+			"version": 6,
 			"profileID": null,
 			"language": "de",
 			"pricetype": 0,
+			"location": 2,
 			"primarytype": 0,
 			"mensas": [[],[],[]],
 			"startpage": 0,
@@ -51,9 +52,9 @@ export default class LocalStorageController {
 
 
 	/**
-	 * foo
+	 * Tests for existing config-versions and updates them.
 	 *
-	 * @return foo
+	 * @return void
 	 */
 	upgrade() {
 		if (this.settings.version < 3) {
@@ -64,22 +65,22 @@ export default class LocalStorageController {
 		if (this.settings.version < 4) {
 			this.settings.diet = 0;
 			this.settings.additives = [];
-		
-			this.settings.version = 4;
-			this.updateStorage();
 		}
 		if (this.settings.version < 5) {
 			this.requestProfileID()
+		}
+		if (this.settings.version < 6) {
+			this.settings.location = 2;
 			
-			this.settings.version = 5;
+			this.settings.version = 6;
 			this.updateStorage();
 		}
 	}
 
 	/**
-	 * foo
+	 * Checks if user has settings stored
 	 *
-	 * @return foo
+	 * @return bool
 	 */
 	hasSettings() {
 		for (var i = this.settings.mensas.length - 1; i >= 0; i--) {
@@ -96,7 +97,7 @@ export default class LocalStorageController {
 	 * @param name - Name of Mensa
 	 * @param remove - if element is to be removed (default: false)
 	 * 
-	 * @return foo
+	 * @return void
 	 */
 	setMensas(_id, nameA, nameB, type, hasMenu, remove=false) {
 		for (var m of this.settings.mensas[type]) {
@@ -208,7 +209,7 @@ export default class LocalStorageController {
 	 * @return 
 	 */
 	requestProfileID() {
-		this.dataC.newUserID().then((_id) => {
+		this.netC.newUserID().then((_id) => {
 			this.settings.profileID = _id;
 			this.updateStorage();
 		},
@@ -223,7 +224,7 @@ export default class LocalStorageController {
 	 * @return 
 	 */
 	updateProfile() {
-		this.dataC.updateUser(this.settings.profileID);
+		this.netC.updateUser(this.settings.profileID);
 	}
 
 

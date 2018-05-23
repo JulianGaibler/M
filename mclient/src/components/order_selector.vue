@@ -75,7 +75,7 @@ export default {
 		enabled: function(val, oldVal) {
 			this.error = false;
 			if (val) {
-				this.$root.$data.dataC.getMenuSections().then((result) => {
+				this.$root.$data.netC.getMenuSections().then((result) => {
 					this.items = this.convertNames(result);
 					this.pushStorage();
 				},

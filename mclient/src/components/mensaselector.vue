@@ -65,7 +65,7 @@ export default {
 	},
 	mounted: function() {
 		this.loading = 1;
-		this.$root.$data.dataC.getLightMensas().then((allMensas) => {
+		this.$root.$data.netC.getLightMensas().then((allMensas) => {
 			for (var a = this.subscribedItems.length - 1; a >= 0; a--) {
 				for (var b = this.subscribedItems[a].length - 1; b >= 0; b--) {
 					for (var x = allMensas.length - 1; x >= 0; x--) {

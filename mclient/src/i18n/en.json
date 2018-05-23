@@ -54,7 +54,8 @@
 		"more": "more",
 		"done": "Done",
 		"import": "import",
-		"export": "export"
+		"export": "export",
+		"tryagain": "try again"
 	},
 	"state": {
 		"loading": "Loading",
@@ -80,7 +81,12 @@
 		"error_base64_decoding": "Base64 decoding failed",
 		"error_nomatches": "No highlights found",
 		"error_nomenu": "This Place has no menu by default. If you don't want to see it here, change the order of your Coffeebars and Cafeterias in the Settings.",
-		"info_addhighlights": "You can set the keywords for Highlights in the settings"
+		"info_addhighlights": "You can set the keywords for Highlights in the settings",
+		"error_location_support": "No Geolocation support. Associated features have been disabled.",
+		"error_location_denied": "Permission to access your location denied. Associated features have been disabled.",
+		"error_location_unavailable": "Your location is not available at the moment",
+		"error_location_timeout": "The location-request timed out",
+		"error_location_other": "An unknown error occured while requesting your location"
 	},
 	"food": {
 		"pizza": "Pizza",

@@ -95,7 +95,7 @@ export default {
 			for (var i = 0; i < this.places.length; i++) {
 				let infoi = this.info[i];
 				if (this.places[i].hasMenu) {
-					let x = await this.$root.$data.dataC.getMenu(this.places[i]._id, moment(this.places[i].whenOpen))
+					let x = await this.$root.$data.netC.getMenu(this.places[i]._id, moment(this.places[i].whenOpen))
 					.then((result) => {
 						infoi.menu = this.evalMenu(result);
 						infoi.status = 1;

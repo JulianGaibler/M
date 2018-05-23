@@ -7,12 +7,14 @@
 		<transition name="fadefooter">
 			<menufooter v-if="!specialScreen(currentView)" v-bind:currentView="currentView"></menufooter>
 		</transition>
+		<Snackbar></Snackbar>
 	</div>
 </template>
 
 <script>
 import menuhead from './header.vue'
 import menufooter from './footer.vue'
+import Snackbar from './../components/snackbar.vue'
 
 import highlights from './../views/highlights.vue'
 import mensaoverview from './../views/mensaoverview.vue'
@@ -45,6 +47,7 @@ export default {
 	components: {
 		menuhead,
 		menufooter,
+		Snackbar,
 		'viewhighlights':highlights,
 		'viewmensas':mensaoverview,
 		'viewsettings':settings,
@@ -114,6 +117,11 @@ export default {
 	@import "@material/checkbox/mdc-checkbox.scss";
 	@import "@material/radio/mdc-radio.scss";
 	@import "@material/switch/mdc-switch.scss";
+	@import "@material/snackbar/mdc-snackbar.scss";
+
+	.mdc-snackbar__action-button {
+		color: #c4aaff;
+	}
 </style>
 
 <style>
@@ -131,8 +139,8 @@ export default {
 		max-height: 0px;
 	}
 </style>
-<style module>
 
+<style module>
 	.mount {
 		display: flex;
 		flex-direction: column;

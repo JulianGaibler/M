@@ -83,7 +83,7 @@ export default {
 			if (this.info.additives.length < 1) return [{name: this.$t("result.none")}];
 			if (this.additivesList.length < 1) {
 				this.additivesList = null;
-				this.$root.$data.dataC.getAdditives().then((result) => {
+				this.$root.$data.netC.getAdditives().then((result) => {
 					this.additivesList = result;
 				},
 				(reason) => {

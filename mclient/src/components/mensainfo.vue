@@ -18,12 +18,28 @@
 		</div>
 	</div>
 		<div v-if="additionaldata" :class="[$style.extender, extended?$style.extended:'']">
-			<div :class="$style.elem">{{additionaldata.location.adress}}</div>
-			<div :class="$style.elem"><div v-for="item in additionaldata.location.transfer.split(' oder ')">{{item}}</div></div>
-			<div :class="$style.elem">{{additionaldata.location.phone}}</div>
-<!-- 			<div :class="$style.actions">
-				<ActionButton :class="$style.directions" :info="acBtn_a"></ActionButton>
-			</div> -->
+			<section>
+				<h3>Allgemeine Informationen</h3>
+				<div :class="$style.elem">{{additionaldata.location.adress}}</div>
+				<div :class="$style.elem"><div v-for="item in additionaldata.location.transfer.split(' oder ')">{{item}}</div></div>
+				<div :class="$style.elem">{{additionaldata.location.phone}}</div>
+			</section>
+			<section>
+				<h3>In der Nähe</h3>
+				<div :class="$style.mensabox">
+					<div class="item">
+						<div>Andere Mensa</div>
+						<div class="sub">1.5km entfernt</div>
+					</div>
+					<div class="item">
+						<div>Andere and Mensa</div>
+						<div class="sub">2.1km entfernt</div>
+					</div>
+				</div>
+			</section>
+			<!-- <div :class="$style.actions"> -->
+				<!-- <ActionButton :class="$style.directions" :info="acBtn_a"></ActionButton> -->
+			<!-- </div> -->
 		</div>
 		</div>
 </template>
@@ -73,7 +89,7 @@ export default {
 
 
 
-<style module>
+<style module  lang="scss">
 	.container {
 		color: #303030;
 		font-family: 'Roboto Condensed', sans-serif;
@@ -103,7 +119,8 @@ export default {
 	}
 
 	.elem {
-		margin-top: 15px;
+		margin-bottom: 10px;
+		margin-left: 10px;
 	}
 
 	.flexdivide {
@@ -117,9 +134,19 @@ export default {
 		overflow: hidden;
 		transition: all .4s;
 		will-change: height;
+		section {
+			h3 {
+				color: #817575;
+				padding: 0px 0px 0px 0px;
+				margin: 15px 0px 5px 0px;
+				font-size: 15px;
+				text-transform: uppercase;
+				font-family: 'Roboto Condensed', sans-serif;
+			}
+		}
 	}
 	.extended {
-		max-height: 300px;
+		max-height: 500px;
 	}
 	.actions {
 		text-align: right;
@@ -132,8 +159,8 @@ export default {
 	.directions {
 		fill: #817575;
 		height: 38px;
-    	width: 38px;
-    	transition: all .5s;
+		width: 38px;
+		transition: all .5s;
 	}
 	.directions svg {
 		transition: transform .2s;
@@ -141,5 +168,21 @@ export default {
 
 	.rotate180 svg {
 		transform: rotate(180deg);
+	}
+
+	.mensabox {
+		border: 1.25px solid #cccccc;
+		border-radius: 5px;
+
+		[class='item'] {
+			padding: 7.5px;
+			border-bottom: 1.25px solid #cccccc;
+			&:last-child {
+				border-bottom: none;
+			}
+			[class='sub'] {
+				font-size: 80%;
+			}
+		}
 	}
 </style>
