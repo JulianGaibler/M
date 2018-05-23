@@ -15,7 +15,8 @@
 		"1": "Cafeteria | Cafeterias",
 		"2": "Coffebar | Coffebars",
 		"all": "All",
-		"my": "My"
+		"my": "My",
+		"near": "near me"
 	},
 	"menuSection": {
 		"appetizers": "Appetizers / Starters",
@@ -55,7 +56,8 @@
 		"done": "Done",
 		"import": "import",
 		"export": "export",
-		"tryagain": "try again"
+		"tryagain": "try again",
+		"uselocation": "use location"
 	},
 	"state": {
 		"loading": "Loading",
@@ -64,7 +66,8 @@
 		"optional": "optional",
 		"open": "open",
 		"closed": "closed",
-		"successful": "successful"
+		"successful": "successful",
+		"km_away": "{count}km away"
 	},
 	"input": {
 		"keyword": "Enter keyword"
@@ -86,7 +89,7 @@
 		"error_location_denied": "Permission to access your location denied. Associated features have been disabled.",
 		"error_location_unavailable": "Your location is not available at the moment",
 		"error_location_timeout": "The location-request timed out",
-		"error_location_other": "An unknown error occured while requesting your location"
+		"error_location_other": "An error occured while requesting your location"
 	},
 	"food": {
 		"pizza": "Pizza",
@@ -114,7 +117,13 @@
 		"dietarypreferences": "Dietary Preferences",
 		"hideadditives": "hide additives",
 		"transport": "export/import settings",
-		"transport_info": "Place code to be imported here..."
+		"transport_info": "Place code to be imported here...",
+		"location": {
+			"this": "Location-based features",
+			"never": "Never use my location",
+			"ask": "Ask before using my location",
+			"always": "Always use my location"
+		}
 	},
 	"setup": {
 		"intro_highlights": "M can highlight food for you if a certain word occurs in it's name.",

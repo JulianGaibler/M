@@ -34,6 +34,7 @@
     "@material/checkbox": "^0.29.0",
     "@material/radio": "^0.29.0",
     "@material/ripple": "^0.29.0",
+    "@material/slider": "^0.35.0",
     "@material/snackbar": "^0.35.0",
     "@material/switch": "^0.29.0",
     "cross-env": "^5.1.3",

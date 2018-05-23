@@ -103,4 +103,8 @@ export default class Helpers {
 		return menu;
 	}
 
+	static filterByID(ids, thisMensas) {
+		return thisMensas.filter( (m)=>(ids.indexOf(m._id) >= 0) );
+	}
+
 }

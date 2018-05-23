@@ -36,8 +36,10 @@ export default class NetworkController {
 				obj.actionOnBottom = true;
 				switch(error.code) {
 					case 0:
+						this.storageC.setLocation(0);
 						obj.message = this.i18nhook.t('result.error_location_support'); break;
 					case 1:
+						this.storageC.setLocation(0);
 						obj.message = this.i18nhook.t('result.error_location_denied'); break;
 					case 2:
 						obj.message = this.i18nhook.t('result.error_location_unavailable'); break;
@@ -47,9 +49,11 @@ export default class NetworkController {
 						obj.message = this.i18nhook.t('result.error_location_other');
 				}
 
+				error.localizedMessage = obj.message;
+
 				if (error.code === 1) {
 					obj.actionText = this.i18nhook.t('frame.settings');
-					obj.actionHandler = () => {bus.$emit('changeview', 'settings')};
+					obj.actionHandler = () => {bus.$emit('changeview', 'viewsettings')};
 					reject(error);
 				} else if (error.code > 1 && tryagain) {
 					obj.actionText = this.i18nhook.t('action.tryagain');
@@ -101,6 +105,26 @@ export default class NetworkController {
 					reject(reason);
 				});
 			}
+		});
+	}
+
+	/**
+	 * Gets Mensas from longitude, latitude and radius in kilometers
+	 *
+	 * @param type is optional
+	 * @return Promise of those Mensas in [[],[],[]]-Format
+	 */
+	getNearMensas(lng,lat,r,type) {
+		return new Promise((resolve, reject) => {
+				let obj = {lng,lat,r};
+				if (type!==undefined) obj.type = type;
+				let get = this.generateGET(obj);
+				this.fetchAPI("/mensas/near?"+get).then((result) => {
+					resolve(result);
+				},
+				(reason) => {
+					reject(reason);
+				});
 		});
 	}
 
@@ -240,16 +264,17 @@ export default class NetworkController {
 
 	fetchAPI(APIpath, type='GET', bodymsg=undefined) {
 		return new Promise((resolve, reject) => {
-			let newurl = API_URL+APIpath;
+			if (!APIpath) reject(false);
 
+			let newurl = API_URL+APIpath;
 			let request = new XMLHttpRequest();
 			request.open(type, newurl, true);
 
 			request.onload = function() {
 			  if (request.status >= 200 && request.status < 400) {
-			    resolve(JSON.parse(request.responseText));
+				resolve(JSON.parse(request.responseText));
 			  } else {
-			    reject(false);
+				reject(false);
 			  }
 			};
 			request.onerror = function() {
@@ -257,7 +282,21 @@ export default class NetworkController {
 			};
 			request.send(bodymsg);
 
-  		});
+		});
+	}
+
+	/**
+	 * --
+	 *
+	 * @return --
+	 */
+	generateGET(object) {
+		let str = "";
+		for (let key in object) {
+			if (str != "") str += "&";
+			str += key + "=" + encodeURIComponent(object[key]);
+		}
+		return str;
 	}
 
 }

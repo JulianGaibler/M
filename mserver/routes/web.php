@@ -38,10 +38,13 @@ $app->group(['prefix' => 'api/'], function () use ($app) {
 	});
 
 	$app->get('/mensas', ['middleware' => ['cacheFetch', 'cachePut'], 'uses' => 'MensaController@getAll']);
+	
+	$app->get('/mensas/near', ['uses' => 'MensaController@getNear']);
 
 	$app->get('/mensas/{multiple}', ['middleware' => ['cacheFetch', 'cachePut'], 'uses' => 'MensaController@getSome']);
 
 	$app->get('/menu/{mensaID}', ['middleware' => ['cacheFetch', 'cachePut'], 'uses' => 'CrawlerController@getMenu']);
+
 
 	$app->get('/additives', ['middleware' => ['cacheFetch', 'cachePut'], function() use ($app) {
 		$v = DB::collection('additives')->project(['_id' => 0,'supportedBy' => 0])->get();

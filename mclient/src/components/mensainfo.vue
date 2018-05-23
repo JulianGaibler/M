@@ -24,7 +24,7 @@
 				<div :class="$style.elem"><div v-for="item in additionaldata.location.transfer.split(' oder ')">{{item}}</div></div>
 				<div :class="$style.elem">{{additionaldata.location.phone}}</div>
 			</section>
-			<section>
+<!-- 			<section>
 				<h3>In der Nähe</h3>
 				<div :class="$style.mensabox">
 					<div class="item">
@@ -36,7 +36,7 @@
 						<div class="sub">2.1km entfernt</div>
 					</div>
 				</div>
-			</section>
+			</section> -->
 			<!-- <div :class="$style.actions"> -->
 				<!-- <ActionButton :class="$style.directions" :info="acBtn_a"></ActionButton> -->
 			<!-- </div> -->
@@ -89,7 +89,7 @@ export default {
 
 
 
-<style module  lang="scss">
+<style module lang="scss">
 	.container {
 		color: #303030;
 		font-family: 'Roboto Condensed', sans-serif;

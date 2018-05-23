@@ -40,12 +40,6 @@ You will need:
 	brew install composer
 ```
 
-For secure testing:
-
-```bash
-composer global require mpyw/php-hyper-builtin-server:^2.0
-```
-
 Don't forget to run
 ```bash
 	composer install
@@ -57,10 +51,6 @@ Replace `localhost` with `0.0.0.0` if you want the server to be public in your l
 
 ```bash
 php -S 0.0.0.0:8000 -t public
-```
-or
-```bash
-hyper-run -s 0.0.0.0:8000 -t public
 ```
 
 ## Merging into Production

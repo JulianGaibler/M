@@ -15,7 +15,8 @@
 		"1": "Cafeteria | Cafeterien",
 		"2": "Coffebar | Coffebars",
 		"all": "Alle",
-		"my": "Meine"
+		"my": "Meine",
+		"near": "in der Nähe"
 	},
 	"menuSection": {
 		"appetizers": "Vorspeisen",
@@ -55,7 +56,8 @@
 		"done": "Fertig",
 		"import": "importieren",
 		"export": "exportieren",
-		"tryagain": "nochmal versuchen"
+		"tryagain": "nochmal versuchen",
+		"uselocation": "Standort verwenden"
 	},
 	"state": {
 		"loading": "Laden",
@@ -64,7 +66,8 @@
 		"optional": "optional",
 		"open": "offen",
 		"closed": "geschlossen",
-		"successful": "erfolgreich"
+		"successful": "erfolgreich",
+		"km_away": "{count}km entfernt"
 	},
 	"input": {
 		"keyword": "Stichwort eingeben"
@@ -86,7 +89,7 @@
 		"error_location_denied": "Verwendung von Ortungsdiensten wurde verweigert. Verbundene Funktionen wurden deaktiviert.",
 		"error_location_unavailable": "Standort ist zur Zeit nicht verfügbar.",
 		"error_location_timeout": "Standortanfrage ist hat zu lange gedauert.",
-		"error_location_other": "Ein unbekannter Fehler ist bei der Standortanfrage aufgetreten"
+		"error_location_other": "Ein Fehler ist bei der Standortanfrage aufgetreten"
 	},
 	"food": {
 		"pizza": "Pizza",
@@ -114,7 +117,13 @@
 		"dietarypreferences": "Ernährungsvorlieben",
 		"hideadditives": "Zusatzstoffe ausfiltern",
 		"transport": "Einstellungen exportieren/importieren",
-		"transport_info": "Zu importierenden code hier platzieren..."
+		"transport_info": "Zu importierenden code hier platzieren...",
+		"location": {
+			"this": "Standortbezogene Features",
+			"never": "Niemals meinen Standort verwenden",
+			"ask": "Mich vor der verwendung meines Standortes fragen",
+			"always": "Immer meinen Standort verwenden"
+		}
 	},
 	"setup": {
 		"intro_highlights": "M kann nach Essen hervorheben, wenn ein bestimmtes Wort im Namen vorkommt.",

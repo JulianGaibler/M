@@ -1,31 +1,58 @@
-<template> 
-	
+<template>
+	<div v-if="status===0" :class="$style.flex">
+		<div class="a">{{requestor}}</div>
+		<div>
+			<button class="mdc-button" v-on:click="getLocation()">{{$t('action.uselocation')}}</button>
+		</div>
+	</div>
+	<div v-else-if="status===1" :class="$style.flex">
+		<div class="a">Locating...</div>
+		<div :class="$style.spinner"></div>
+	</div>
+	<component v-else-if="status===2 && component" :data="data" :location="loc.coords" :is="component"></component>
+	<div v-else-if="status===2"><slot :location="loc.coords"></slot></div>
+	<div v-else-if="status===-2" :class="$style.flex">
+		<div class="a">{{$t('result.error_location_other')}}</div>
+		<div>
+			<button class="mdc-button" v-on:click="getLocation()">{{$t('action.tryagain')}}</button>
+		</div>
+	</div>
 </template>
 
 <script>
-import icon from './../components/icon.vue';
-import {MDCRipple, MDCRippleFoundation, util} from '@material/ripple';
 
 export default {
+	// status
+	// -2: error
+	// -1: disabled
+	//  0: ask
+	//  1: loading
+	//  2: show
 	name: 'LocationFrame',
+	props: ['requestor', 'component', 'data'],
 	data () {
-		return {}
-	},
-	methods: {
-		getRandomArbitrary: function (min, max) {
-			return Math.random() * (max - min) + min;
+		let pref = this.$root.$data.storageC.settings.location;
+		return {
+			locationSetting: pref,
+			status: (pref===0) ? -1 : (pref===1) ? 0 : 1,
+			loc: undefined
 		}
 	},
-	components: {
-		icon
+	mounted: function() {
+		if (this.locationSetting==2) this.getLocation();
 	},
-	directives: {
-		ripple: {
-			bind(el, binding, vnode) {
-				MDCRipple.attachTo(el);
-			}, update(el, binding, vnode) {
-				MDCRipple.attachTo(el);
-			}
+	methods: {
+		getLocation: function (data) {
+			let that = this;
+			this.status = 1;
+			this.$root.$data.netC.getCurrentPosition()
+				.then(result => {
+					that.loc = result;
+					that.status = 2;
+				})
+				.catch(error => {
+					that.status = -2;
+				})
 		}
 	}
 }
@@ -33,39 +60,53 @@ export default {
 
 
 
-<style module>
-	.wrapper {
-		display: inline-block;
-		margin: 5px;
-	}
-	.button {
-		border-radius: 50%;
-		display: inline-block;
-		cursor: pointer;
-		height: 38px;
-		width: 38px;
-	}
-	.button svg {
-		height: 26px;
-		width: 26px;
-		margin: 6px;
-	}
-
-	.txtbutton {
-		display: inline-block;
-		cursor: pointer;
-		border-radius: 2px;
-		color: rgb(101, 31, 255);
-		padding: 10px;
+<style module lang="scss">
+	.flex {
+		display: flex;
+		padding: 5px 5px 5px 15px;
+		[class="a"] {
+			flex: 1;
+			color: #817575;
+			font-size: 14px;
+			text-transform: uppercase;
+			font-family: 'Roboto Condensed', sans-serif;
+		}
+		@media screen and (max-width: 400px) {
+			flex-direction: column;
+			padding: 15px 10px 5px 10px;
+			text-align: center;
+		}
 	}
 
-	.largebtn {
-		height: 51px;
-		width: 51px;
+.spinner {
+	width: 36px;
+	height: 36px;
+	position: relative;
+	margin-right: 5px;
+	&::after, &::before {
+		opacity: 0;
+		position: absolute;
+		left: 0; right: 0;
+		top: 0; bottom: 0;
+		content: '';
+		animation: sk-scaleout 1.5s infinite cubic-bezier(.22,.61,.36,1);
+		border-radius: 100%;
+		background-color: var(--mdc-theme-primary, #651fff);
 	}
-	.largebtn svg {
-		height: 36px;
-		width: 36px;
-		margin: 8px;
+	&::after {
+		animation-delay: .75s;
 	}
+}
+
+@keyframes sk-scaleout {
+	0% { 
+		-webkit-transform: scale(0);
+		transform: scale(0);
+		opacity: 1;
+	} 100% {
+		-webkit-transform: scale(1.0);
+		transform: scale(1.0);
+		opacity: 0;
+	}
+}
 </style>

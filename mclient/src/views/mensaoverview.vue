@@ -12,9 +12,7 @@
 			</div>
 		 </div>
 
-		 <div class="whitebox">
-		 	<div class="whitebox_header">In der nähe</div>
-		 </div>
+		<LocationFrame class="whitebox" :requestor="$t('type.near')" :data="{type: this.type}" :component="nearMe"></LocationFrame>
 
 		 <searchBox :loading="this.loadingall" :searchword="searchword" :results="searchres.length" :placeholder="this.$t('type.all')+' '+this.$tc('type.'+this.type,2)" v-on:inputChange="changeSearchword">
 			<div v-ripple v-on:click="this.bus.$emit('changeview', 'singlemensa', item)" v-for="item in searchres" class="clickable whitebox_element mdc-ripple-surface">
@@ -29,7 +27,9 @@
 import verticalSelect from './../components/vertical_select.vue';
 import searchBox from './../components/search_box.vue';
 import loadGlow from './../components/loadGlow.vue';
+import nearMe from './../components/near_me.vue';
 import openingTimes from './../components/opening_times.vue';
+import LocationFrame from './../components/Location_frame.vue';
 import {MDCRipple, MDCRippleFoundation, util} from '@material/ripple';
 
 export default {
@@ -43,12 +43,11 @@ export default {
 			allMensas: [[],[],[]],
 			loadedsubs: [false, false, false],
 			subscribed_loaded_additional: [false,false,false],
-			vertical_data: [this.$tc('type.1',2),this.$tc('type.0',2),this.$tc('type.2',2)]
+			vertical_data: [this.$tc('type.1',2),this.$tc('type.0',2),this.$tc('type.2',2)],
+			nearMe: nearMe
 		}
 	},
 	mounted: function() {
-		this.$root.$data.netC.getCurrentPosition().then(result => {console.warn(result)})
-
 		this.type = this.$root.$data.storageC.settings.primarytype;
 		this.subscribed = this.$root.$data.storageC.settings.mensas;
 
@@ -117,6 +116,7 @@ export default {
 		verticalSelect,
 		searchBox,
 		loadGlow,
+		LocationFrame,
 		openingTimes
 	},
 	directives: {

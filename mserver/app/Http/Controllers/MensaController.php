@@ -72,6 +72,68 @@ class MensaController extends Controller
 	}
 
 	/**
+	 * 
+	 *
+	 * @return void
+	 */
+	public function getNear(Request $request) {
+		$lat = floatval($request->query('lat', 0));
+		$lng = floatval($request->query('lng', 0));
+		$r = floatval($request->query('r', 0));
+		$type = floatval($request->query('type', -1));
+		if ($lat==0 || $lng==0 || $r==0)
+			return (new Response("need coordniates 'lat' and 'lng' aswell as radius 'r'", 400));
+
+		$mongodb = DB::getMongoClient()->m->selectCollection('mensas');
+
+		$pipeline = array(
+			array(
+				'$geoNear'=> array(
+					'near' => array($lng, $lat),
+					'spherical' => true,
+					'maxDistance' => $r/6371,
+					'distanceMultiplier' => 6371, // Conversion to km
+					'distanceField' => "distance"
+				)
+			),
+			array(
+				'$project'=> array(
+					'_id' => 1,
+					'type' => 1,
+					'distance' => 1
+				)
+			),
+		);
+
+		if ($type!=-1) {
+			$pipeline2 = array(
+				array(
+					'$match'=> array(
+						'type' => $type
+					)
+				)
+			);
+			$pipeline = array_merge($pipeline,$pipeline2);
+		}
+
+		$pipeline2 = array(
+			array(
+				'$limit'=> 5
+			)
+		);
+		$pipeline = array_merge($pipeline,$pipeline2);
+
+		$returnCursor = $mongodb->aggregate($pipeline);
+		$arrReturn = $returnCursor->toArray();
+
+		foreach ($arrReturn as $value) {
+			$value['_id'] = (string) $value['_id'];
+		}
+
+		return $arrReturn;
+	}
+
+	/**
 	 * ---
 	 *
 	 * @return ---

@@ -35,7 +35,7 @@ export default {
 		align-items: center;
 		justify-content: center;
 		flex-flow: column;
-		min-height: 30vh;
+		min-height: 300px;
 		color: #651fff;
 		margin: 0 20px 50px 20px;
 		text-align: center;

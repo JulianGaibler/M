@@ -59,7 +59,7 @@ export default {
 		bus.$on('changeDate', this.changeDate);
 	},
 	mounted: function() {
-
+		console.log(this.data);
 		let actionsConf = [[
 			{
 			svg: this.back,

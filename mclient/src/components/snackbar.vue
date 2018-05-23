@@ -1,5 +1,5 @@
 <template> 
-	<div class="mdc-snackbar"
+	<div ref="snackbar" class="mdc-snackbar"
 			aria-live="assertive"
 			aria-atomic="true"
 			aria-hidden="true">
@@ -24,7 +24,7 @@ export default {
 		bus.$on('showSnackbar', this.show);
 	},
 	mounted: function() {
-		this.snackbar = new MDCSnackbar(document.querySelector('.mdc-snackbar'))
+		this.snackbar = new MDCSnackbar(this.$refs.snackbar)
 	},
 	methods: {
 		show: function (data) {

@@ -185,6 +185,17 @@ export default class LocalStorageController {
 	}
 
 	/**
+	 * Sets the price type
+	 * 
+	 * @param nr - Number of price type
+	 * 
+	 */
+	setLocation(nr) {
+		this.settings.location = nr;
+		this.updateStorage();
+	}
+
+	/**
 	 * updates Storage
 	 */
 	updateStorage() {

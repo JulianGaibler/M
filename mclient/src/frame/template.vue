@@ -118,6 +118,7 @@ export default {
 	@import "@material/radio/mdc-radio.scss";
 	@import "@material/switch/mdc-switch.scss";
 	@import "@material/snackbar/mdc-snackbar.scss";
+	@import "@material/slider/mdc-slider.scss";
 
 	.mdc-snackbar__action-button {
 		color: #c4aaff;

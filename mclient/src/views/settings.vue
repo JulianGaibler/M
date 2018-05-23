@@ -10,6 +10,9 @@
 	
 			<div :class="$style.section">{{ $t('settings.customize') }}</div>
 			<orderSelector></orderSelector>
+
+			<div :class="$style.section">{{ $t('settings.location.this') }}</div>
+			<locationSelector class="whitebox"></locationSelector>
 	
 			<div :class="$style.section">{{ $t('settings.dietarypreferences') }}</div>
 			<dietSelector class="whitebox"></dietSelector>
@@ -33,6 +36,7 @@ import orderSelector from './../components/order_selector.vue';
 import dietSelector from './../components/diet_selector.vue';
 import chipsfield from './../components/chipsfield.vue';
 import mensaselector from './../components/mensaselector.vue';
+import locationSelector from './../components/location_selector.vue';
 // import settingsTransport from './../components/settings_transport.vue';
 
 export default {
@@ -47,7 +51,8 @@ export default {
 		chipsfield,
 		mensaselector,
 		orderSelector,
-		dietSelector
+		dietSelector,
+		locationSelector
 	}
 }
 </script>
