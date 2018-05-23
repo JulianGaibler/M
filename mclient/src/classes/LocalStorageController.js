@@ -38,7 +38,7 @@ export default class LocalStorageController {
 			"profileID": null,
 			"language": "de",
 			"pricetype": 0,
-			"location": 2,
+			"location": 1,
 			"primarytype": 0,
 			"mensas": [[],[],[]],
 			"startpage": 0,
@@ -70,7 +70,7 @@ export default class LocalStorageController {
 			this.requestProfileID()
 		}
 		if (this.settings.version < 6) {
-			this.settings.location = 2;
+			this.settings.location = 1;
 			
 			this.settings.version = 6;
 			this.updateStorage();
