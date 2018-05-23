@@ -29,7 +29,7 @@ import searchBox from './../components/search_box.vue';
 import loadGlow from './../components/loadGlow.vue';
 import nearMe from './../components/near_me.vue';
 import openingTimes from './../components/opening_times.vue';
-import LocationFrame from './../components/Location_frame.vue';
+import LocationFrame from './../components/location_frame.vue';
 import {MDCRipple, MDCRippleFoundation, util} from '@material/ripple';
 
 export default {
