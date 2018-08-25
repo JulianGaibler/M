@@ -8,7 +8,7 @@ module.exports = merge(common, {
 	devtool: 'inline-source-map',
 	plugins: [
 		new BundleAnalyzerPlugin(),
-		new webpack.DefinePlugin({"API_URL": JSON.stringify("http://127.0.0.1:8000/api")})
+		new webpack.DefinePlugin({"API_URL": JSON.stringify("https://m.jwels.berlin/api")})
 	],
 	devServer: {
 		historyApiFallback: true,

@@ -53,11 +53,12 @@ export default {
 		evalMenu: function (menu) {
 			// [Info] Don't need to copy menu-array because of the bucket
 			let bucket = [];
-			for (var h = this.hls.length - 1; h >= 0; h--) {
-				for (var m = menu.length - 1; m >= 0; m--) {
-					for (var i = menu[m].items.length - 1; i >= 0; i--) {
+			for (var m = menu.length - 1; m >= 0; m--) {
+				for (var i = menu[m].items.length - 1; i >= 0; i--) {
+					for (var h = this.hls.length - 1; h >= 0; h--) {
 						if (menu[m].items[i].name.toLowerCase().includes(this.hls[h])) {
 							bucket.push(menu[m].items[i]);
+							break;
 						}
 					}
 				}
