@@ -13,7 +13,6 @@ module.exports = merge(common, {
 	devServer: {
 		historyApiFallback: true,
 		noInfo: true,
-		https: true,
 		host: "0.0.0.0",
 		disableHostCheck: true
 	}
