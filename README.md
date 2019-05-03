@@ -1,7 +1,4 @@
-<div align="center">
-    <img width="75" vspace="" hspace="25" src="https://qvieo.com/githubimg/mlogo_md.svg">
-  <p>Simplifies Mensa<p>
-</div>
+![M](http://qvieo.com/githubimg/m-banner.png)
 
 ## Client
 
@@ -60,3 +57,8 @@ git merge master
 git checkout master
 git merge development
 ```
+
+
+## Commits
+
+Using [gitmoji](https://gitmoji.carloscuesta.me/) for all commits
