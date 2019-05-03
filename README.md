@@ -1,5 +1,9 @@
 ![M](http://qvieo.com/githubimg/m-banner.png)
 
+## Notice
+
+This project hasn't been updated in a very long time and I'm currently trying to get this huge pile of outdated dependencies in order and clean up other mistakes I made then.
+
 ## Client
 
 ### Installing all dependencies:
@@ -21,6 +25,8 @@ npm run dev
 ```
 
 ## Server
+
+Long term goal is to move away from PHP
 
 ### Prerequisites
 
@@ -61,4 +67,4 @@ git merge development
 
 ## Commits
 
-Using [gitmoji](https://gitmoji.carloscuesta.me/) for all commits
+Using [gitmoji](https://gitmoji.carloscuesta.me/) for all new commits
