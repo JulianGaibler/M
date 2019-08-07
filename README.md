@@ -1,8 +1,14 @@
-![M](http://qvieo.com/githubimg/m-banner.png)
+![M](http://qvieo.com/githubimg/banner_m.png)
+
+## Introduction
+
+A web-app which lists the menus of Berlin’s student cafeterias. The various configuration options not only help to sort the menus according to your personal taste or food allergies but also to highlight favorite meals.
 
 ## Notice
 
-This project hasn't been updated in a very long time and I'm currently trying to get this huge pile of outdated dependencies in order and clean up other mistakes I made then.
+This project hasn't been maintained in quite a long time and I'm currently trying to get this massive pile of outdated dependencies in order and clean up other mistakes I made then.
+
+Long term goal is also to move the Laravel-server to express.js.
 
 ## Client
 
@@ -67,4 +73,4 @@ git merge development
 
 ## Commits
 
-Using [gitmoji](https://gitmoji.carloscuesta.me/) for all new commits
+Using [gitmoji](https://gitmoji.carloscuesta.me/) for all new commits.
